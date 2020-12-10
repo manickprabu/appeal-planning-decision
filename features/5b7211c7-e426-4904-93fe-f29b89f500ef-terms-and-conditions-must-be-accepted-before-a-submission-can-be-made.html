@@ -501,7 +501,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                 </a>
             </div>
             <p class="navbar-text">Feature:
-                <small>The user gives the original appellant name</small>
+                <small>Terms and Conditions must be accepted before a submission can be made</small>
             </p>
         </div>
     </nav>
@@ -513,15 +513,15 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                 
                 
                 
-                <i class="fa fa-tags fa-lg"></i>
-                <span class="tag">@smoketest</span><span class="tag">@wip</span>
+                <i class="fa fa-tag fa-lg"></i>
+                <span class="tag">@UI-ONLY</span>
                 
                 
             </div>
             <h1>Feature:
-                <small>The user gives the original appellant name</small>
+                <small>Terms and Conditions must be accepted before a submission can be made</small>
             </h1>
-            <p>  The users needs to give the original appellant name to save and continue.</p>
+            <p></p>
         </div>
 
         <div class="clearfix"></div>
@@ -558,7 +558,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
         <tr>
             <td class="chart">
                 <canvas id="scenario-chart"></canvas>
-                <div class="total">3</div>
+                <div class="total">2</div>
             </td>
             <td>
                 <table class="tile_info">
@@ -569,7 +569,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                 Passed
                             </p>
                         </td>
-                        <td class="percentage">0.00 %</td>
+                        <td class="percentage">100.00 %</td>
                     </tr>
                     <tr>
                         <td>
@@ -583,16 +583,6 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     </tr>
                     
-                    
-                    <tr>
-                        <td>
-                            <p data-toggle="tooltip" data-placement="left" title="Scenario is skipped">
-                                <i class="fa fa-arrow-circle-right skipped-color"></i>
-                                Skipped
-                            </p>
-                        </td>
-                        <td class="percentage">100.00 %</td>
-                    </tr>
                     
                 </table>
             </td>
@@ -687,17 +677,15 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                         
                         
-                            <i class="fa fa-tags fa-lg"></i>
+                            <i class="fa fa-tag fa-lg"></i>
                             
-                                <span class="tag">@smoketest</span>
-                            
-                                <span class="tag">@wip</span>
+                                <span class="tag">@UI-ONLY</span>
                             
                         
                     
                 </div>
 
-                <h2>Scenario: <small>The user provided a bad format original appellant name and cannot proceed</small></h2>
+                <h2>Scenario: <small>Prospective appellant does not accept the Terms and Conditions</small></h2>
 
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
@@ -709,13 +697,13 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
 
                     
+
+                    
+
+                    
                         <li>
-                            <span class="step skipped-background" data-toggle="tooltip" title="Scenario is skipped">2</span>
+                            <span class="step passed-background" data-toggle="tooltip" title="Scenario passed">3</span>
                         </li>
-                    
-
-                    
-
                     
 
                     
@@ -734,8 +722,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
 
                                 
                                     
-                                        <div class="label" data-toggle="tooltip" data-placement="top" title="Step is skipped">
-                                            <i class="fa fa-arrow-circle-right fa-2x skipped-color"></i>
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
                                         </div>
                                     
                                 
@@ -744,7 +732,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                     <span class="keyword highlight">When </span>
 
                                     
-                                        the user provides the name with a bad format
+                                        the user "does not accept" the terms and conditions
                                         
                                     
 
@@ -792,8 +780,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
 
                                 
                                     
-                                        <div class="label" data-toggle="tooltip" data-placement="top" title="Step is skipped">
-                                            <i class="fa fa-arrow-circle-right fa-2x skipped-color"></i>
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
                                         </div>
                                     
                                 
@@ -802,7 +790,65 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                     <span class="keyword highlight">Then </span>
 
                                     
-                                        the user is informed that the provided name has a bad format
+                                        the user is informed that they must accept the terms and conditions to proceed
+                                        
+                                    
+
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
+                            
+                        
+
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">And </span>
+
+                                    
+                                        the appeal "is not" submitted
                                         
                                     
 
@@ -857,17 +903,15 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                         
                         
-                            <i class="fa fa-tags fa-lg"></i>
+                            <i class="fa fa-tag fa-lg"></i>
                             
-                                <span class="tag">@smoketest</span>
-                            
-                                <span class="tag">@wip</span>
+                                <span class="tag">@UI-ONLY</span>
                             
                         
                     
                 </div>
 
-                <h2>Scenario: <small>The user does not provide the original and cannot proceed</small></h2>
+                <h2>Scenario: <small>Prospective appellant accepts the Terms and Conditions</small></h2>
 
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
@@ -879,13 +923,13 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
 
                     
+
+                    
+
+                    
                         <li>
-                            <span class="step skipped-background" data-toggle="tooltip" title="Scenario is skipped">2</span>
+                            <span class="step passed-background" data-toggle="tooltip" title="Scenario passed">2</span>
                         </li>
-                    
-
-                    
-
                     
 
                     
@@ -904,8 +948,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
 
                                 
                                     
-                                        <div class="label" data-toggle="tooltip" data-placement="top" title="Step is skipped">
-                                            <i class="fa fa-arrow-circle-right fa-2x skipped-color"></i>
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
                                         </div>
                                     
                                 
@@ -914,7 +958,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                     <span class="keyword highlight">When </span>
 
                                     
-                                        the user does not provides the name
+                                        the user "accepts" the terms and conditions
                                         
                                     
 
@@ -962,8 +1006,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
 
                                 
                                     
-                                        <div class="label" data-toggle="tooltip" data-placement="top" title="Step is skipped">
-                                            <i class="fa fa-arrow-circle-right fa-2x skipped-color"></i>
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
                                         </div>
                                     
                                 
@@ -972,177 +1016,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                     <span class="keyword highlight">Then </span>
 
                                     
-                                        the user is informed that the name is missing
-                                        
-                                    
-
-                                    
-
-                                </div>
-
-                                
-                                    
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-                                
-                            </div>
-
-                        
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-                        
-
-                        
-                            
-                        
-
-                    
-                
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel" style="height: auto;">
-            <div class="x_title">
-
-                <div class="tags">
-                    
-                        
-                        
-                            <i class="fa fa-tags fa-lg"></i>
-                            
-                                <span class="tag">@smoketest</span>
-                            
-                                <span class="tag">@wip</span>
-                            
-                        
-                    
-                </div>
-
-                <h2>Scenario: <small>The user provided the original appellant name and can proceed</small></h2>
-
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
-                    </li>
-
-                    
-
-                    
-
-                    
-                        <li>
-                            <span class="step skipped-background" data-toggle="tooltip" title="Scenario is skipped">2</span>
-                        </li>
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-                </ul>
-
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content" style="display: none;">
-                <div class="scenario-step-container"></div>
-                    
-                        
-                            <div class="scenario-step-container">
-
-                                
-                                    
-                                        <div class="label" data-toggle="tooltip" data-placement="top" title="Step is skipped">
-                                            <i class="fa fa-arrow-circle-right fa-2x skipped-color"></i>
-                                        </div>
-                                    
-                                
-
-                                <div class="text">
-                                    <span class="keyword highlight">When </span>
-
-                                    
-                                        the user provides the name
-                                        
-                                    
-
-                                    
-
-                                </div>
-
-                                
-                                    
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-                                
-                            </div>
-
-                        
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-                        
-
-                        
-                            
-                        
-
-                    
-                
-                        
-                            <div class="scenario-step-container">
-
-                                
-                                    
-                                        <div class="label" data-toggle="tooltip" data-placement="top" title="Step is skipped">
-                                            <i class="fa fa-arrow-circle-right fa-2x skipped-color"></i>
-                                        </div>
-                                    
-                                
-
-                                <div class="text">
-                                    <span class="keyword highlight">Then </span>
-
-                                    
-                                        the user can proceed
+                                        the appeal "is" submitted
                                         
                                     
 
@@ -1232,10 +1106,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     ],
                     datasets: [{
                         data: [
+                            2,
                             0,
                             0,
                             0,
-                            3,
                             0,
                             0
                         ],
