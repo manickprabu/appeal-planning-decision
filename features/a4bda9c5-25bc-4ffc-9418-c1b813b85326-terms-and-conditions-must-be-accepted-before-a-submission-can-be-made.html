@@ -501,7 +501,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                 </a>
             </div>
             <p class="navbar-text">Feature:
-                <small>Confirmation page feature</small>
+                <small>Terms and Conditions must be accepted before a submission can be made</small>
             </p>
         </div>
     </nav>
@@ -513,12 +513,15 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                 
                 
                 
+                <i class="fa fa-tag fa-lg"></i>
+                <span class="tag">@UI-ONLY</span>
+                
                 
             </div>
             <h1>Feature:
-                <small>Confirmation page feature</small>
+                <small>Terms and Conditions must be accepted before a submission can be made</small>
             </h1>
-            <p>  The confirmation page must display the feedback link</p>
+            <p></p>
         </div>
 
         <div class="clearfix"></div>
@@ -555,7 +558,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
         <tr>
             <td class="chart">
                 <canvas id="scenario-chart"></canvas>
-                <div class="total">1</div>
+                <div class="total">2</div>
             </td>
             <td>
                 <table class="tile_info">
@@ -674,10 +677,15 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                         
                         
+                            <i class="fa fa-tag fa-lg"></i>
+                            
+                                <span class="tag">@UI-ONLY</span>
+                            
+                        
                     
                 </div>
 
-                <h2>Scenario: <small>Required link is present</small></h2>
+                <h2>Scenario: <small>Prospective appellant does not accept the Terms and Conditions</small></h2>
 
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
@@ -721,68 +729,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                 
 
                                 <div class="text">
-                                    <span class="keyword highlight">Given </span>
-
-                                    
-                                        an appeal exists
-                                        
-                                    
-
-                                    
-
-                                </div>
-
-                                
-                                    
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-                                
-                            </div>
-
-                        
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-                        
-
-                        
-                            
-                        
-
-                    
-                
-                        
-                            <div class="scenario-step-container">
-
-                                
-                                    
-                                        <div class="label" title="Success">
-                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
-                                        </div>
-                                    
-                                
-
-                                <div class="text">
                                     <span class="keyword highlight">When </span>
 
                                     
-                                        the appeal confirmation is presented
+                                        the user "does not accept" the terms and conditions
                                         
                                     
 
@@ -840,7 +790,233 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                     <span class="keyword highlight">Then </span>
 
                                     
-                                        the required link is displayed in the page body
+                                        the user is informed that they must accept the terms and conditions to proceed
+                                        
+                                    
+
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
+                            
+                        
+
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">And </span>
+
+                                    
+                                        the appeal "is not" submitted
+                                        
+                                    
+
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
+                            
+                        
+
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel" style="height: auto;">
+            <div class="x_title">
+
+                <div class="tags">
+                    
+                        
+                        
+                            <i class="fa fa-tag fa-lg"></i>
+                            
+                                <span class="tag">@UI-ONLY</span>
+                            
+                        
+                    
+                </div>
+
+                <h2>Scenario: <small>Prospective appellant accepts the Terms and Conditions</small></h2>
+
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+                        <li>
+                            <span class="step passed-background" data-toggle="tooltip" title="Scenario passed">2</span>
+                        </li>
+                    
+
+                    
+
+                    
+                </ul>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content" style="display: none;">
+                <div class="scenario-step-container"></div>
+                    
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">When </span>
+
+                                    
+                                        the user "accepts" the terms and conditions
+                                        
+                                    
+
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
+                            
+                        
+
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">Then </span>
+
+                                    
+                                        the appeal "is" submitted
                                         
                                     
 
@@ -930,7 +1106,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     ],
                     datasets: [{
                         data: [
-                            1,
+                            2,
                             0,
                             0,
                             0,
