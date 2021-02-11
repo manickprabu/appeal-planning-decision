@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - dto/updateAppeal.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/plato.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="https://github.com/the-simian/es6-plato">ES6 Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+      <li class="active">
+        <a href="display.html">Summary Display</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>dto/updateAppeal.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">100.00</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">121</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">28.30</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.90</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">const yup = require(&#039;yup&#039;);
+const { parseDateString } = require(&#039;./helpers/parseDateString&#039;);
+
+module.exports = yup.object().shape({
+  id: yup.string().uuid().required(),
+  lpaCode: yup.string().trim().max(20).nullable().default(null),
+  decisionDate: yup.date().transform(parseDateString).nullable().default(null),
+  state: yup.string().oneOf([&#039;DRAFT&#039;, &#039;SUBMITTED&#039;]).default(&#039;DRAFT&#039;),
+  aboutYouSection: yup.object().shape({
+    yourDetails: yup.object().shape({
+      isOriginalApplicant: yup.bool().nullable().default(null),
+      name: yup.string().max(80).ensure(),
+      email: yup.string().email().max(255).ensure(),
+      appealingOnBehalfOf: yup.string().max(80).ensure(),
+    }),
+  }),
+  requiredDocumentsSection: yup.object().shape({
+    applicationNumber: yup.string().max(30).ensure(),
+    originalApplication: yup.object().shape({
+      uploadedFile: yup.object().shape({
+        name: yup.string().max(255).ensure(),
+        id: yup
+          .string()
+          .uuid()
+          .transform((value) =&gt; (!value ? null : value))
+          .nullable()
+          .default(null),
+      }),
+    }),
+    decisionLetter: yup.object().shape({
+      uploadedFile: yup.object().shape({
+        name: yup.string().max(255).ensure(),
+        id: yup
+          .string()
+          .uuid()
+          .transform((value) =&gt; (!value ? null : value))
+          .nullable()
+          .default(null),
+      }),
+    }),
+  }),
+  yourAppealSection: yup.object().shape({
+    appealStatement: yup.object().shape({
+      uploadedFile: yup.object().shape({
+        name: yup.string().max(255).ensure(),
+        id: yup
+          .string()
+          .uuid()
+          .transform((value) =&gt; (!value ? null : value))
+          .nullable()
+          .default(null),
+      }),
+      hasSensitiveInformation: yup.bool().nullable().default(null),
+    }),
+    otherDocuments: yup.object().shape({
+      uploadedFiles: yup
+        .array()
+        .of(
+          yup.object().shape({
+            name: yup.string().max(255).ensure(),
+            id: yup
+              .string()
+              .uuid()
+              .transform((value) =&gt; (!value ? null : value))
+              .nullable()
+              .default(null),
+          })
+        )
+        .nullable()
+        .default([]),
+    }),
+  }),
+  appealSiteSection: yup.object().shape({
+    siteAddress: yup.object().shape({
+      addressLine1: yup.string().max(60).ensure(),
+      addressLine2: yup.string().max(60).ensure(),
+      town: yup.string().max(60).ensure(),
+      county: yup.string().max(60).ensure(),
+      postcode: yup.string().max(8).ensure(),
+    }),
+    siteOwnership: yup.object().shape({
+      ownsWholeSite: yup.bool().nullable().default(null),
+      haveOtherOwnersBeenTold: yup.bool().nullable().default(null),
+    }),
+    siteAccess: yup.object({
+      canInspectorSeeWholeSiteFromPublicRoad: yup.bool().nullable().default(null),
+      howIsSiteAccessRestricted: yup.string().max(255).ensure(),
+    }),
+    healthAndSafety: yup.object({
+      hasIssues: yup.bool().nullable().default(null),
+      healthAndSafetyIssues: yup.string().max(255).ensure(),
+    }),
+  }),
+  sectionStates: yup.object({
+    aboutYouSection: yup.object({
+      yourDetails: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+    }),
+    requiredDocumentsSection: yup.object({
+      applicationNumber: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+      originalApplication: yup
+        .string()
+        .oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;])
+        .required(),
+      decisionLetter: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+    }),
+    yourAppealSection: yup.object({
+      appealStatement: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+      otherDocuments: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+    }),
+    appealSiteSection: yup.object({
+      siteAccess: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+      siteOwnership: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+      healthAndSafety: yup.string().oneOf([&#039;NOT STARTED&#039;, &#039;IN PROGRESS&#039;, &#039;COMPLETED&#039;]).required(),
+    }),
+  }),
+  eligibility: yup.object().shape({
+    enforcementNotice: yup.bool().nullable().default(null),
+    isClaimingCosts: yup.bool().nullable().default(null),
+  }),
+});
+</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
