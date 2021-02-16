@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
@@ -150,7 +150,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -169,20 +168,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
@@ -227,15 +227,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { addWeeks, endOfDay, isBefore, isValid, parse } = require('date-fns');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { addWeeks, endOfDay, isBefore, isValid, parseISO } = require('date-fns');
 const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
 const logger = require('../../lib/logger');
 const { VIEW } = require('../../lib/views');
 const config = require('../../config');
 &nbsp;
 const getDeadlineDate = (decisionDate) =&gt; {
-  const date = parse(decisionDate, 'yyyy-MM-dd', new Date());
-  return addWeeks(endOfDay(date), 12);
+  return addWeeks(endOfDay(decisionDate), 12);
 };
 &nbsp;
 exports.getNoDecision = (req, res) =&gt; {
@@ -245,7 +244,7 @@ exports.getNoDecision = (req, res) =&gt; {
 exports.getDecisionDate = (req, res) =&gt; {
   const { appeal } = req.session;
 &nbsp;
-  const appealDecisionDate = parse(appeal.decisionDate, 'yyyy-MM-dd', new Date());
+  const appealDecisionDate = parseISO(appeal.decisionDate);
   const decisionDate = isValid(appealDecisionDate) ? appealDecisionDate : null;
 &nbsp;
   res.render(VIEW.ELIGIBILITY.DECISION_DATE, {
@@ -260,7 +259,8 @@ exports.postDecisionDate = async (req, res) =&gt; {
   const { errors = {}, errorSummary = [] } = body;
 &nbsp;
   if (Object.keys(errors).length &gt; 0) {
-    const decisionDate = parse(appeal.decisionDate, 'yyyy-MM-dd', new Date());
+    const appealDecisionDate = parseISO(appeal.decisionDate);
+    const decisionDate = isValid(appealDecisionDate) ? appealDecisionDate : null;
 &nbsp;
     res.render(VIEW.ELIGIBILITY.DECISION_DATE, {
       decisionDate,
@@ -272,7 +272,7 @@ exports.postDecisionDate = async (req, res) =&gt; {
 &nbsp;
   const decisionDate = body['decision-date-full'];
 &nbsp;
-  appeal.decisionDate = decisionDate;
+  appeal.decisionDate = `${decisionDate}T12:00:00.000Z`;
 &nbsp;
   try {
     req.session.appeal = await createOrUpdateAppeal(appeal);
@@ -289,7 +289,7 @@ exports.postDecisionDate = async (req, res) =&gt; {
 &nbsp;
   const today = endOfDay(new Date());
 &nbsp;
-  const decisionDatePassed = isBefore(getDeadlineDate(decisionDate), today);
+  const decisionDatePassed = isBefore(getDeadlineDate(parseISO(appeal.decisionDate)), today);
 &nbsp;
   let redirectTo = decisionDatePassed
     ? `/${VIEW.ELIGIBILITY.DECISION_DATE_PASSED}`
@@ -305,8 +305,8 @@ exports.postDecisionDate = async (req, res) =&gt; {
 exports.getDecisionDatePassed = (req, res) =&gt; {
   const { appeal } = req.session;
 &nbsp;
-  const decisionDate = parse(appeal.decisionDate, 'yyyy-MM-dd', new Date());
-  const deadlineDate = isValid(decisionDate) ? getDeadlineDate(appeal.decisionDate) : null;
+  const decisionDate = parseISO(appeal.decisionDate);
+  const deadlineDate = isValid(decisionDate) ? getDeadlineDate(decisionDate) : null;
 &nbsp;
   res.render(VIEW.ELIGIBILITY.DECISION_DATE_PASSED, {
     deadlineDate,
@@ -319,7 +319,7 @@ exports.getDecisionDatePassed = (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Feb 15 2021 12:56:09 GMT+0000 (Greenwich Mean Time)
+                at Tue Feb 16 2021 11:12:50 GMT+0000 (Greenwich Mean Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
