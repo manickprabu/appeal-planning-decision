@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: PDF Service API Documentation
+  description:
+    <h2>API to generate and retrieve pdf documents</h2>
+    <p>A generic endpint is available to generate and return
+    a pdf file based on the contents of an uploaded html file.
+    The html file is expected to contain all required styling.</p>
+    <p>Another endpoint takes an Appeal identfier that is used to retrive the Appeal's submission
+    information. This information is used to generate and return a pdf file.</p>
+  version: 1.0.0
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  - url: 'http://localhost:3003/'
+paths:
+  '/api/v1/pdf':
+    post:
+      summary: Generates a pdf file from a html file
+      description: The provided html file will be used to generate and retrun a pdf file.
+      tags:
+        - PDF Service
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                htmlFile:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Returns a pdf file of the html file provided.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: The provided html file is invalid
+  '/api/v1/pdf/appeals/{id}':
+    get:
+      summary: Returns a pdf file for an appeal
+      description: The pdf file includes the information provided by the appellant.
+      tags:
+        - PDF Service
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier for an appeal
+      responses:
+        '200':
+          description: Returns a pdf file containing a summary of the state of an appeal.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: An appeal with the specified ID was not found.
+

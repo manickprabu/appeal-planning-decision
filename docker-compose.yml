@@ -216,6 +216,24 @@ services:
     ports:
       - 7000:8080
 
+  pdf-service-api:
+    image: node:14-alpine
+    environment:
+      APPEALS_SERVICE_API_URL: http://appeals-service-api:3000
+      GOTENBERG_URL: http://gotenberg:4000
+      LOCAL_PLANNING_AUTHORITIES_SERVICE_API_URL: http://appeals-service-api:3000
+      LOGGER_LEVEL: "debug"
+      SERVER_SHOW_ERRORS: "true"
+    ports:
+      - 3003:3000
+    working_dir: /opt/app
+    links:
+      - appeals-service-api
+    volumes:
+      - ./packages/common:/opt/app/node_modules/@pins/common:ro # Replace the module to avoid symlink errors
+      - ./packages/pdf-service-api:/opt/app:ro
+    command: npm run start:dev
+
   # Third-party services
   blob-storage:
     image: mcr.microsoft.com/azure-storage/azurite
@@ -249,4 +267,3 @@ services:
       DISABLE_UNOCONV: '0'
     ports:
       - 4006:4000
-
