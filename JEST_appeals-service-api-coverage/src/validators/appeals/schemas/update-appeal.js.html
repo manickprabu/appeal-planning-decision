@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.98% </span>
+                <span class="strong">94.12% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>156/166</span>
+                <span class='fraction'>160/170</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.09% </span>
+                <span class="strong">89.29% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>98/110</span>
+                <span class='fraction'>100/112</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>57/57</span>
+                <span class='fraction'>59/59</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.98% </span>
+                <span class="strong">94.12% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>156/166</span>
+                <span class='fraction'>160/170</span>
             </div>
         
             
@@ -482,11 +482,18 @@
 <a name='L423'></a><a href='#L423'>423</a>
 <a name='L424'></a><a href='#L424'>424</a>
 <a name='L425'></a><a href='#L425'>425</a>
-<a name='L426'></a><a href='#L426'>426</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L426'></a><a href='#L426'>426</a>
+<a name='L427'></a><a href='#L427'>427</a>
+<a name='L428'></a><a href='#L428'>428</a>
+<a name='L429'></a><a href='#L429'>429</a>
+<a name='L430'></a><a href='#L430'>430</a>
+<a name='L431'></a><a href='#L431'>431</a>
+<a name='L432'></a><a href='#L432'>432</a>
+<a name='L433'></a><a href='#L433'>433</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -494,10 +501,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -681,6 +685,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">116x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">142x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">148x</span>
@@ -914,17 +928,14 @@ function document() {
   return yup
     .object()
     .shape({
-      uploadedFile: yup
-        .object()
-        .shape({
-          name: yup.string().max(255).ensure().required(),
-          id: yup
-            .string()
-            .uuid()
-            .transform((value) =&gt; (!value ? <span class="branch-0 cbranch-no" title="branch not covered" >null </span>: value))
-            .required(),
-        })
-        .noUnknown(true),
+      uploadedFile: yup.object().shape({
+        name: yup.string().max(255).ensure().required(),
+        id: yup
+          .string()
+          .uuid()
+          .transform((value) =&gt; (!value ? <span class="branch-0 cbranch-no" title="branch not covered" >null </span>: value))
+          .required(),
+      }),
     })
     .noUnknown(true);
 }
@@ -1102,6 +1113,16 @@ exports.updateAppeal = yup
               });
             }
             return yup.mixed().notRequired();
+          }),
+        });
+      }
+      return yup.mixed().notRequired();
+    }),
+    appealSubmission: yup.lazy((appealSubmission) =&gt; {
+      if (appealSubmission !== undefined) {
+        return yup.object().shape({
+          appealPDFStatement: yup.lazy(() =&gt; {
+            return document();
           }),
         });
       }
@@ -1339,7 +1360,7 @@ exports.updateAppeal = yup
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Mar 12 2021 09:40:28 GMT+0000 (Coordinated Universal Time)
+                at Fri Mar 12 2021 10:34:13 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>
