@@ -19,6 +19,19 @@ on:
       - feature/*
 
 jobs:
+  build:
+    name: "Build Id"
+    if: "! contains(toJSON(github.event.commits.*.message), '[ci skip]')"
+    runs-on: ubuntu-latest
+    outputs:
+      build_number: ${{ steps.buildnumber.outputs.build_number }}
+    steps:
+      - name: Generate build number
+        id: buildnumber
+        uses: einaregilsson/build-number@v3
+        with:
+          token: ${{secrets.github_token}}
+
   cypress-ACP:
     name: "Cypress- ACP mode"
     if: "! contains(toJSON(github.event.commits.*.message), '[ci skip]')"
@@ -105,6 +118,7 @@ jobs:
           path: ${{ env.LPA_CYPRESS_SCREENSHOTS }}
 
   cypress-default:
+    needs: build
     name: "Cypress- default"
     if: "! contains(toJSON(github.event.commits.*.message), '[ci skip]')"
     runs-on: ubuntu-latest
@@ -124,6 +138,8 @@ jobs:
       - name: Install the world
         run: make install
 
+
+
       - name: Start the world without ACP integration i.e. PINS
         run: |
           export SERVER_LIMITED_ROUTING_ENABLED=false
@@ -140,7 +156,7 @@ jobs:
           record: true
           parallel: true
 
-          ci-build-id: ${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}
+          ci-build-id: ${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}-${{needs.build.outputs.build_number}}
           project: ./e2e-tests
           command: npm run test:e2e:parallel
 
