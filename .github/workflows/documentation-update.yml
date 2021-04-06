@@ -19,7 +19,7 @@ on:
   push:
     branches:
       - master
-      - feature/**
+      - feature
 
 jobs:
   context:
