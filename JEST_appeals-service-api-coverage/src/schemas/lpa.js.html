@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -169,7 +169,11 @@
 <a name='L110'></a><a href='#L110'>110</a>
 <a name='L111'></a><a href='#L111'>111</a>
 <a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -186,14 +190,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -245,20 +248,25 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -297,14 +305,13 @@ const config = require('../lib/config');
 const logger = require('../lib/logger');
 &nbsp;
 module.exports = class LPA {
-  constructor({ id, name, inTrial, england, wales, horizonId }) {
+  constructor({ id, name, inTrial, email, domain, horizonId }) {
     this.id = id;
     this.name = name;
     this.inTrial = inTrial;
+    this.email = email;
+    this.domain = domain;
 &nbsp;
-    /* Can be in multiple regions */
-    this.england = england;
-    this.wales = wales;
     this.horizonId = horizonId;
   }
 &nbsp;
@@ -357,11 +364,17 @@ module.exports = class LPA {
     return (await csvParser(lpaList))
       .filter(({ LPA19CD }) =&gt; {
         /* Filter out Scotland and Northern Ireland LPAs */
-        const include = LPA19CD.startsWith('S') === false &amp;&amp; LPA19CD.startsWith('N') === false;
-        logger.trace({ include, id: LPA19CD }, 'Filtering out Scottish and Northern Irish LPAs');
+        const include =
+          LPA19CD.startsWith('S') === false &amp;&amp;
+          LPA19CD.startsWith('N') === false &amp;&amp;
+          LPA19CD.startsWith('W') === false;
+        logger.trace(
+          { include, id: LPA19CD },
+          'Filtering out Scottish, Northern Irish and Welsh LPAs'
+        );
         return include;
       })
-      .map(({ LPA19CD: id, LPA19NM: name }) =&gt; {
+      .map(({ LPA19CD: id, LPA19NM: name, EMAIL: email, DOMAIN: domain }) =&gt; {
         /* Use our own data model format */
         const trialist = trialists.find(({ id: trialistId }) =&gt; trialistId === id);
 &nbsp;
@@ -373,10 +386,9 @@ module.exports = class LPA {
           name,
           horizonId,
           inTrial,
+          email,
+          domain,
           id: id.toUpperCase(),
-          /* A merger may happen of an English and Welsh LPA */
-          england: id.startsWith('E'),
-          wales: id.startsWith('W'),
         });
       })
       .sort(
@@ -400,7 +412,7 @@ module.exports = class LPA {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Apr 19 2021 13:43:39 GMT+0000 (Coordinated Universal Time)
+                at Tue Apr 20 2021 08:04:04 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
