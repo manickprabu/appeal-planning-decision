@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/controllers/upload-plans.js</title>
+    <title>Code coverage report for src/controllers/upload-question.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> upload-plans.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> upload-question.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/39</span>
+                <span class='fraction'>40/40</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>39/39</span>
+                <span class='fraction'>40/40</span>
             </div>
         
             
@@ -162,22 +162,27 @@
 <a name='L103'></a><a href='#L103'>103</a>
 <a name='L104'></a><a href='#L104'>104</a>
 <a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,7 +192,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
@@ -242,9 +249,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -278,13 +282,16 @@ const getAppealSideBarDetails = require('../lib/appeal-sidebar-details');
 const { getTaskStatus } = require('../services/task.service');
 const { createOrUpdateAppealReply } = require('../lib/appeal-reply-api-wrapper');
 &nbsp;
-exports.getUploadPlans = (req, res) =&gt; {
-  const { uploadedFiles = [] } = req.session.appealReply.requiredDocumentsSection.plansDecision;
+exports.getUpload = (req, res) =&gt; {
+  const { sectionName, taskName, view } = res.locals.routeInfo;
+  req.log.error({ routeInfo: res.locals.routeInfo }, 'Route Info');
+&nbsp;
+  const { uploadedFiles = [] } = req.session.appealReply[sectionName][taskName];
 &nbsp;
   // set uploaded files
   req.session.uploadedFiles = uploadedFiles;
 &nbsp;
-  res.render(VIEW.UPLOAD_PLANS, {
+  res.render(view, {
     appeal: getAppealSideBarDetails(req.session.appeal),
     appealReplyId: req.session.appealReply.id,
     backLink: req.session.backLink || `/${req.params.id}/${VIEW.TASK_LIST}`,
@@ -292,7 +299,9 @@ exports.getUploadPlans = (req, res) =&gt; {
   });
 };
 &nbsp;
-exports.postUploadPlans = async (req, res) =&gt; {
+exports.postUpload = async (req, res) =&gt; {
+  const { sectionName, taskName, view, name } = res.locals.routeInfo;
+&nbsp;
   const documents = req.body?.files?.documents || [];
 &nbsp;
   const { delete: deleteId = '', errors = {}, submit = '' } = req.body;
@@ -306,7 +315,7 @@ exports.postUploadPlans = async (req, res) =&gt; {
     try {
       await deleteFile(deleteId, req);
     } catch (err) {
-      req.log.error({ err }, `Error deleting ${deleteId} from Upload Plans`);
+      req.log.error({ err }, `Error deleting ${deleteId} from ${name}`);
     }
   } else if (documents.length) {
     // Chance for files to be attached due to non-JS solution, these need to be uploaded (with appropriate errors);
@@ -322,7 +331,7 @@ exports.postUploadPlans = async (req, res) =&gt; {
 &nbsp;
       req.session.uploadedFiles = [...(req.session?.uploadedFiles || []), ...uploadedFiles];
     } catch (err) {
-      req.log.error({ err }, 'Error uploading files to ');
+      req.log.error({ err }, 'Error uploading files to documents service');
       errorMessage = err;
     }
   }
@@ -332,7 +341,7 @@ exports.postUploadPlans = async (req, res) =&gt; {
   const constructedErrorSummary = fileErrorSummary(errorMessage, req.session?.uploadedFiles);
 &nbsp;
   if (!submit || constructedErrorSummary?.length) {
-    res.render(VIEW.UPLOAD_PLANS, {
+    res.render(view, {
       ...fileUploadNunjucksVariables(
         errorMessage,
         constructedErrorSummary,
@@ -347,9 +356,6 @@ exports.postUploadPlans = async (req, res) =&gt; {
 &nbsp;
   try {
     const { appealReply } = req.session;
-    const sectionName = 'requiredDocumentsSection';
-    const taskName = 'plansDecision';
-&nbsp;
     appealReply[sectionName][taskName].uploadedFiles = req.session.uploadedFiles;
 &nbsp;
     appealReply.sectionStates[sectionName][taskName] = getTaskStatus(
@@ -363,9 +369,9 @@ exports.postUploadPlans = async (req, res) =&gt; {
     // If it gets this far there are no errors and files must exist
     res.redirect(req.session.backLink || `/${req.params.id}/${VIEW.TASK_LIST}`);
   } catch (err) {
-    req.log.error({ err }, 'Error adding files to Upload Plans question');
+    req.log.error({ err }, `Error adding files to ${name} question`);
 &nbsp;
-    res.render(VIEW.UPLOAD_PLANS, {
+    res.render(view, {
       ...fileUploadNunjucksVariables(err, fileErrorSummary(err, req), req.session?.uploadedFiles),
       appeal: getAppealSideBarDetails(req.session.appeal),
       backLink,
@@ -379,7 +385,7 @@ exports.postUploadPlans = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Apr 21 2021 09:09:48 GMT+0000 (Greenwich Mean Time)
+                at Wed Apr 21 2021 09:22:25 GMT+0000 (Greenwich Mean Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
