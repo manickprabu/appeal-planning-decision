@@ -28,14 +28,24 @@ exports.deleteFile = (fileRef, req) => {
   );
 
   if (file) {
-    deleteDocument(req.session.appealReply.id, file.id);
+    if (!req.session.preserveDocStore) deleteDocument(req.session.appealReply.id, file.id);
 
-    req.session.uploadedFiles = req.session.uploadedFiles.filter(
-      (upload) => upload.id !== file.id || upload.name !== file.name
-    );
+    req.session.uploadedFiles = req.session.uploadedFiles.filter((upload) => upload.id !== file.id);
   } else {
     throw new Error('Delete file not found');
   }
+};
+
+exports.clearDeletedFiles = (taskFiles, uploadedFiles, appealReplyId) => {
+  if (!taskFiles || !taskFiles.length) return;
+
+  const difference = taskFiles.filter(
+    (taskFile) => !uploadedFiles.some((uploadFile) => uploadFile.id === taskFile.id)
+  );
+
+  difference.forEach(async (file) => {
+    await deleteDocument(appealReplyId, file.id);
+  });
 };
 
 /**

@@ -4,6 +4,7 @@ const {
   fileUploadNunjucksVariables,
   deleteFile,
   uploadFiles,
+  clearDeletedFiles,
 } = require('../lib/file-upload-helpers');
 const getAppealSideBarDetails = require('../lib/appeal-sidebar-details');
 const { getTaskStatus } = require('../services/task.service');
@@ -11,9 +12,11 @@ const { createOrUpdateAppealReply } = require('../lib/appeal-reply-api-wrapper')
 
 exports.getUpload = (req, res) => {
   const { sectionName, taskName, view } = res.locals.routeInfo;
-  req.log.error({ routeInfo: res.locals.routeInfo }, 'Route Info');
 
   const { uploadedFiles = [] } = req.session.appealReply[sectionName][taskName];
+
+  // Set preserve doc store session variable to prevent deletion if files exist (prevents deletion on
+  req.session.preserveDocStore = !!uploadedFiles.length;
 
   // set uploaded files
   req.session.uploadedFiles = uploadedFiles;
@@ -83,7 +86,11 @@ exports.postUpload = async (req, res) => {
 
   try {
     const { appealReply } = req.session;
-    appealReply[sectionName][taskName].uploadedFiles = req.session.uploadedFiles;
+
+    const originalTaskFiles = [...appealReply[sectionName][taskName].uploadedFiles];
+    const { uploadedFiles } = req.session;
+
+    appealReply[sectionName][taskName].uploadedFiles = uploadedFiles;
 
     appealReply.sectionStates[sectionName][taskName] = getTaskStatus(
       appealReply,
@@ -92,6 +99,8 @@ exports.postUpload = async (req, res) => {
     );
 
     req.session.appealReply = await createOrUpdateAppealReply(appealReply);
+
+    await clearDeletedFiles(originalTaskFiles, uploadedFiles, appealReply.id);
 
     // If it gets this far there are no errors and files must exist
     res.redirect(req.session.backLink || `/${req.params.id}/${VIEW.TASK_LIST}`);

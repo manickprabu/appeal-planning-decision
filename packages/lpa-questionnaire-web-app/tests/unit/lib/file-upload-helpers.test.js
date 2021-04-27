@@ -1,4 +1,4 @@
-const { createDocument } = require('../../../src/lib/documents-api-wrapper');
+const { createDocument, deleteDocument } = require('../../../src/lib/documents-api-wrapper');
 
 const {
   MIME_TYPE_DOC,
@@ -12,6 +12,7 @@ const {
   fileErrorSummary,
   fileUploadNunjucksVariables,
   uploadFiles,
+  clearDeletedFiles,
 } = require('../../../src/lib/file-upload-helpers');
 
 jest.mock('../../../src/lib/documents-api-wrapper');
@@ -143,15 +144,75 @@ describe('lib/file-upload-helpers', () => {
       expect(() => deleteFile('another-file', req)).toThrow();
     });
 
+    it('should not delete from store if preserveDocStore is set', async () => {
+      req = {
+        session: {
+          uploadedFiles: [{ name: 'mock-file' }],
+          appealReply: { id: 'mock-appeal-reply-id' },
+          preserveDocStore: true,
+        },
+      };
+
+      await deleteFile('mock-file', req);
+
+      expect(deleteDocument).not.toHaveBeenCalled();
+      expect(req.session.uploadedFiles).toEqual([]);
+    });
+
     it('should delete a file if found', async () => {
       await deleteFile('mock-file', req);
 
-      expect(req).toEqual({
-        session: {
-          uploadedFiles: [],
-          appealReply: { id: 'mock-appeal-reply-id' },
+      expect(deleteDocument).toHaveBeenCalled();
+      expect(req.session.uploadedFiles).toEqual([]);
+    });
+  });
+
+  describe('clearDeletedFiles', () => {
+    const appealReplyId = 'mock-appeal-reply-id';
+    const taskList = [
+      {
+        id: 'mock-id-1',
+        name: 'mock-name',
+      },
+    ];
+
+    it('should return immediately if task list does not exist', () => {
+      clearDeletedFiles(null, [], appealReplyId);
+
+      expect(deleteDocument).not.toHaveBeenCalled();
+    });
+
+    it('should return immediately if task list is empty', () => {
+      clearDeletedFiles([], [], appealReplyId);
+
+      expect(deleteDocument).not.toHaveBeenCalled();
+    });
+
+    it('should not call delete if no files removed', () => {
+      const uploadedFiles = [
+        ...taskList,
+        {
+          id: 'mock-id-2',
+          name: 'another-mock',
         },
-      });
+      ];
+
+      clearDeletedFiles(taskList, uploadedFiles, appealReplyId);
+
+      expect(deleteDocument).not.toHaveBeenCalled();
+    });
+
+    it('should call delete if file is removed from task removed', () => {
+      const uploadedFiles = [
+        {
+          id: 'mock-id-2',
+          name: 'another-mock',
+        },
+      ];
+
+      clearDeletedFiles(taskList, uploadedFiles, appealReplyId);
+
+      expect(deleteDocument).toHaveBeenCalledWith(appealReplyId, 'mock-id-1');
     });
   });
 
