@@ -33,6 +33,7 @@ services:
   appeals-service-api:
     image: node:14-alpine
     environment:
+      CSV_TEST: 'sdfdsfds'
       DOCS_API_PATH: /opt/app/api
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       HORIZON_HAS_PUBLISHER_HOST: rabbitmq

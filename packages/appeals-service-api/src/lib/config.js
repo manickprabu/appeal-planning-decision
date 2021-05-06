@@ -15,6 +15,9 @@ module.exports = {
       trialistPath: process.env.LPA_TRIALIST_DATA_PATH,
     },
   },
+  csv: {
+    test: process.env.CSV_TEST,
+  },
   db: {
     mongodb: {
       url: process.env.MONGODB_URL,

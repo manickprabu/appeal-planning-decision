@@ -37,6 +37,8 @@ spec:
       config:
         notify:
           secretName: akv-notify-preprod
+        csv:
+          test: 'this is preprod'
 
     documentServiceApi:
       replicaCount: 2

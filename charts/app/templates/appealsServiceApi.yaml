@@ -51,6 +51,8 @@ spec:
               path: /health
               port: {{.Values.appealsServiceApi.service.name }}
           env:
+            - name: CSV_TEST
+              value: {{ .Values.appealsServiceApi.config.csv.test }}
             - name: DOCUMENTS_SERVICE_API_URL
               value: "http://{{ include "app.fullname" . }}:{{ .Values.documentServiceApi.service.port }}"
             - name: HORIZON_HAS_PUBLISHER_HOST
