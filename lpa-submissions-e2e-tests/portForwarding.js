@@ -1,5 +1,6 @@
-import { exec } from 'child_process';
-import { Client, config } from 'kubernetes-client';
+const { exec } = require('child_process');
+const { Client } = require('kubernetes-client');
+const { config } = require('kubernetes-client/backends/request')
 
 const portConfig = {
   'appeal-reply-service-api': 3002,
