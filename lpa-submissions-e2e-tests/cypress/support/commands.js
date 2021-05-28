@@ -1,6 +1,9 @@
 require('cypress-file-upload');
 require('./visit-without-javascript-enabled');
 require('./accessibility');
+require('./cookie-consent-view-preferences/commands');
+require('./cookies/cookies-commands');
+require('./flash-message/flash-message-commands');
 
 Cypress.Commands.add('goToPage', require('./common/goToPage'));
 
@@ -57,3 +60,7 @@ Cypress.Commands.add('completeQuestionnaire', require('./common/completeQuestion
 Cypress.Commands.add('hasLink', require('./common/hasLink'));
 
 Cypress.Commands.add('clickDataCyElement', require('./common/clickDataCyElement'));
+
+Cypress.Commands.add('checkRadioButton', require('./common/checkRadioButton'));
+
+Cypress.Commands.add('assertRadioButtonState', require('./common/assertRadioButtonState'));
