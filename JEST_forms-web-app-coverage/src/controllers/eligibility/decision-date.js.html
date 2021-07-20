@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/35</span>
+                <span class='fraction'>31/31</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>35/35</span>
+                <span class='fraction'>31/31</span>
             </div>
         
             
@@ -136,20 +136,11 @@
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
 <a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -208,7 +199,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -221,20 +212,14 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { addWeeks, endOfDay, isBefore, isValid, parseISO } = require('date-fns');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { isValid, parseISO } = require('date-fns');
+const { rules, validation } = require('@pins/business-rules');
 const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
 const logger = require('../../lib/logger');
 const { VIEW } = require('../../lib/views');
-&nbsp;
-const getDeadlineDate = (decisionDate) =&gt; {
-  return addWeeks(endOfDay(decisionDate), 12);
-};
 &nbsp;
 exports.getNoDecision = (req, res) =&gt; {
   res.render(VIEW.ELIGIBILITY.NO_DECISION);
@@ -276,7 +261,7 @@ exports.postDecisionDate = async (req, res) =&gt; {
 &nbsp;
   const decisionDate = body['decision-date'];
 &nbsp;
-  appeal.decisionDate = `${decisionDate}T12:00:00.000Z`;
+  appeal.decisionDate = new Date(`${decisionDate}T12:00:00.000Z`);
 &nbsp;
   try {
     req.session.appeal = await createOrUpdateAppeal(appeal);
@@ -291,13 +276,13 @@ exports.postDecisionDate = async (req, res) =&gt; {
     return;
   }
 &nbsp;
-  const today = endOfDay(new Date());
+  const isWithinExpiryPeriod = validation.appeal.decisionDate.isWithinDecisionDateExpiryPeriod(
+    appeal.decisionDate
+  );
 &nbsp;
-  const decisionDatePassed = isBefore(getDeadlineDate(parseISO(appeal.decisionDate)), today);
-&nbsp;
-  const redirectTo = decisionDatePassed
-    ? `/${VIEW.ELIGIBILITY.DECISION_DATE_PASSED}`
-    : `/${VIEW.ELIGIBILITY.PLANNING_DEPARTMENT}`;
+  const redirectTo = isWithinExpiryPeriod
+    ? `/${VIEW.ELIGIBILITY.PLANNING_DEPARTMENT}`
+    : `/${VIEW.ELIGIBILITY.DECISION_DATE_PASSED}`;
 &nbsp;
   res.redirect(redirectTo);
 };
@@ -305,11 +290,8 @@ exports.postDecisionDate = async (req, res) =&gt; {
 exports.getDecisionDatePassed = (req, res) =&gt; {
   const { appeal } = req.session;
 &nbsp;
-  const decisionDate = parseISO(appeal.decisionDate);
-  const deadlineDate = isValid(decisionDate) ? getDeadlineDate(decisionDate) : null;
-&nbsp;
   res.render(VIEW.ELIGIBILITY.DECISION_DATE_PASSED, {
-    deadlineDate,
+    deadlineDate: appeal.decisionDate &amp;&amp; rules.appeal.deadlineDate(parseISO(appeal.decisionDate)),
   });
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -319,7 +301,7 @@ exports.getDecisionDatePassed = (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Jul 20 2021 10:20:32 GMT+0000 (Greenwich Mean Time)
+                at Tue Jul 20 2021 13:47:59 GMT+0000 (Greenwich Mean Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
