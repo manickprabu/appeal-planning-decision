@@ -536,7 +536,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
         <tr>
             <td class="chart">
                 <canvas id="feature-chart"></canvas>
-                <div class="total">8</div>
+                <div class="total">10</div>
             </td>
             <td>
                 <table class="tile_info">
@@ -547,7 +547,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                 Passed
                             </p>
                         </td>
-                        <td class="percentage">100.00 %</td>
+                        <td class="percentage">90.00 %</td>
                     </tr>
                     <tr>
                         <td>
@@ -561,6 +561,17 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     
                     
+                    
+                    <tr>
+                        <td>
+                            <p data-toggle="tooltip" data-placement="left"
+                               title="Features skipped">
+                                <i class="fa fa-arrow-circle-right skipped-color"></i>
+                                Skipped
+                            </p>
+                        </td>
+                        <td class="percentage">10.00 %</td>
+                    </tr>
                     
 
                 </table>
@@ -603,7 +614,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
         <tr>
             <td class="chart">
                 <canvas id="scenario-chart"></canvas>
-                <div class="total">44</div>
+                <div class="total">108</div>
             </td>
             <td>
                 <table class="tile_info">
@@ -614,7 +625,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                                 Passed
                             </p>
                         </td>
-                        <td class="percentage">100.00 %</td>
+                        <td class="percentage">79.63 %</td>
                     </tr>
                     <tr>
                         <td>
@@ -628,6 +639,16 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     </tr>
                     
+                    
+                    <tr>
+                        <td>
+                            <p data-toggle="tooltip" data-placement="left" title="Scenario is skipped">
+                                <i class="fa fa-arrow-circle-right skipped-color"></i>
+                                Skipped
+                            </p>
+                        </td>
+                        <td class="percentage">20.37 %</td>
+                    </tr>
                     
                 </table>
             </td>
@@ -685,6 +706,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         <th>Failed</th>
                         
                         
+                        <th>Skip</th>
+                        
                         
                         
                     </tr>
@@ -694,17 +717,12 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     <tr>
                         <td>
-                            <a href="features/4ca78f3a-5f65-4d3d-895f-649a9ba531aa-appeal-submission-save-and-continue-navigation---about-the-original-planning-application.html">Appeal Submission Save and Continue Navigation - About the Original Planning Application</a>
+                            <a href="features/477f813b-9ec6-452b-b478-2bffea8211a4-access-to-the-appeal-site.html">Access to the Appeal Site</a>
                         </td>
                         <td class="text-center">
                             
                             
                             
-                            
-                            <i class="fa fa-tag fa-lg" data-toggle="tooltip" data-placement="top"
-                               title="@UI-ONLY">
-                                <span>@UI-ONLY</span>
-                            </i>
                             
                             
                         </td>
@@ -762,8 +780,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         
                         
                         
-                        <td class="text-right ">3</td>
-                        <td class="text-right ">3</td>
+                        <td class="text-right ">5</td>
+                        <td class="text-right ">5</td>
+                        <td class="text-right none">0</td>
+                        
                         <td class="text-right none">0</td>
                         
                         
@@ -773,7 +793,83 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     <tr>
                         <td>
-                            <a href="features/8daa4c1c-5d94-4fac-8d81-a02eefc30179-a-user-checks-their-answers-and-wants-to-submit-their-appeal.html">A user checks their answers and wants to submit their appeal</a>
+                            <a href="features/751dfa22-b5dd-4f35-92a6-6b2796e10981-appeal-submission---creation-of-submission-information-file.html">Appeal Submission - Creation of submission information file</a>
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                            
+                            <i class="fa fa-check-circle passed-color fa-lg" data-toggle="tooltip" data-placement="top" title="Passed">
+                                <span>check-circle passed-color</span>
+                            </i>
+                        </td>
+                        
+                            <td class="text-center">
+                                
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
+                                    <span>question-circle not-defined-color</span>
+                                </i>
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
+                                not known
+                            </td>
+                            
+                            
+                            <td>
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
+                                not known
+                                
+                            </td>
+                            
+                        
+                        
+                        
+                        <td class="text-right ">1</td>
+                        <td class="text-right ">1</td>
+                        <td class="text-right none">0</td>
+                        
+                        <td class="text-right none">0</td>
+                        
+                        
+                        
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <a href="features/d512216d-8323-448c-bcc3-ec09b664eca8-as-an-appellant-or-agent-using-the-appeals-service.html">As an appellant or agent using the appeals service</a>
                         </td>
                         <td class="text-center">
                             
@@ -840,6 +936,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         <td class="text-right ">2</td>
                         <td class="text-right none">0</td>
                         
+                        <td class="text-right none">0</td>
+                        
                         
                         
                         
@@ -847,7 +945,159 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     <tr>
                         <td>
-                            <a href="features/650bd041-5c3e-4fdc-a0a0-20490ddf10cd-confirmation-of-original-applicant.html">Confirmation of original applicant</a>
+                            <a href="features/50be148d-1af6-4295-be57-2fc085b982cf-task-lists.html">Task lists</a>
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                            
+                            <i class="fa fa-check-circle passed-color fa-lg" data-toggle="tooltip" data-placement="top" title="Passed">
+                                <span>check-circle passed-color</span>
+                            </i>
+                        </td>
+                        
+                            <td class="text-center">
+                                
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
+                                    <span>question-circle not-defined-color</span>
+                                </i>
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
+                                not known
+                            </td>
+                            
+                            
+                            <td>
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
+                                not known
+                                
+                            </td>
+                            
+                        
+                        
+                        
+                        <td class="text-right ">34</td>
+                        <td class="text-right ">34</td>
+                        <td class="text-right none">0</td>
+                        
+                        <td class="text-right none">0</td>
+                        
+                        
+                        
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <a href="features/43e63167-7010-4a22-b6df-5ae4a976eb70-a-user-checks-their-answers-and-wants-to-submit-their-appeal.html">A user checks their answers and wants to submit their appeal</a>
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                            
+                            <i class="fa fa-check-circle passed-color fa-lg" data-toggle="tooltip" data-placement="top" title="Passed">
+                                <span>check-circle passed-color</span>
+                            </i>
+                        </td>
+                        
+                            <td class="text-center">
+                                
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
+                                    <span>question-circle not-defined-color</span>
+                                </i>
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
+                                not known
+                            </td>
+                            
+                            
+                            <td>
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
+                                not known
+                                
+                            </td>
+                            
+                        
+                        
+                        
+                        <td class="text-right ">4</td>
+                        <td class="text-right ">4</td>
+                        <td class="text-right none">0</td>
+                        
+                        <td class="text-right none">0</td>
+                        
+                        
+                        
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <a href="features/5bb534dd-5514-45e5-8bf3-0f236045f950-name-and-email-provided-for-the-first-time.html">Name and email provided for the first time</a>
                         </td>
                         <td class="text-center">
                             
@@ -915,8 +1165,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         
                         
                         
-                        <td class="text-right ">3</td>
-                        <td class="text-right ">3</td>
+                        <td class="text-right ">28</td>
+                        <td class="text-right ">28</td>
+                        <td class="text-right none">0</td>
+                        
                         <td class="text-right none">0</td>
                         
                         
@@ -926,155 +1178,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     <tr>
                         <td>
-                            <a href="features/c28347fa-e6b2-4cf3-8b2f-eac2e073ab81-back-link.html">Back link</a>
-                        </td>
-                        <td class="text-center">
-                            
-                            
-                            
-                            
-                            
-                        </td>
-                        <td class="text-center">
-                            
-                            
-                            
-                            
-                            
-                            
-                            <i class="fa fa-check-circle passed-color fa-lg" data-toggle="tooltip" data-placement="top" title="Passed">
-                                <span>check-circle passed-color</span>
-                            </i>
-                        </td>
-                        
-                            <td class="text-center">
-                                
-                                
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
-                                    <span>question-circle not-defined-color</span>
-                                </i>
-                            </td>
-                            <td>
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
-                            </td>
-                            <td>
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
-                                not known
-                            </td>
-                            
-                            
-                            <td>
-                                
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
-                                not known
-                                
-                            </td>
-                            
-                        
-                        
-                        
-                        <td class="text-right ">12</td>
-                        <td class="text-right ">12</td>
-                        <td class="text-right none">0</td>
-                        
-                        
-                        
-                        
-                    </tr>
-                    
-                    <tr>
-                        <td>
-                            <a href="features/df2bda30-61f0-4e1c-ab21-b9008dfbeaee-cookie-consent-bar---no-js.html">Cookie consent bar - no JS</a>
-                        </td>
-                        <td class="text-center">
-                            
-                            
-                            
-                            
-                            
-                        </td>
-                        <td class="text-center">
-                            
-                            
-                            
-                            
-                            
-                            
-                            <i class="fa fa-check-circle passed-color fa-lg" data-toggle="tooltip" data-placement="top" title="Passed">
-                                <span>check-circle passed-color</span>
-                            </i>
-                        </td>
-                        
-                            <td class="text-center">
-                                
-                                
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
-                                    <span>question-circle not-defined-color</span>
-                                </i>
-                            </td>
-                            <td>
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
-                            </td>
-                            <td>
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
-                                not known
-                            </td>
-                            
-                            
-                            <td>
-                                
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
-                                not known
-                                
-                            </td>
-                            
-                        
-                        
-                        
-                        <td class="text-right ">2</td>
-                        <td class="text-right ">2</td>
-                        <td class="text-right none">0</td>
-                        
-                        
-                        
-                        
-                    </tr>
-                    
-                    <tr>
-                        <td>
-                            <a href="features/f65bcc1a-e9a8-4702-8924-a1c76a75ddd1-not-necessary-cookies-to-be-disabled-by-default.html">Not necessary cookies to be disabled by default</a>
+                            <a href="features/811eaeeb-dbb7-4d69-8945-1304470098fa-cookie-consent---view-preferences-without-javascript-enabled.html">Cookie Consent - View Preferences without JavaScript enabled</a>
                         </td>
                         <td class="text-center">
                             
@@ -1141,6 +1245,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         <td class="text-right ">1</td>
                         <td class="text-right none">0</td>
                         
+                        <td class="text-right none">0</td>
+                        
                         
                         
                         
@@ -1148,7 +1254,83 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                     
                     <tr>
                         <td>
-                            <a href="features/50063690-d1ea-42cd-94d4-6b8c2420f5a6-a-prospective-appellant-supplies-a-local-planning-department-for-the-case-they-wish-to-appeal.html">A prospective appellant supplies a Local Planning Department for the case they wish to appeal</a>
+                            <a href="features/46d0db86-7acb-440e-9c20-5cab3cc61eca-claiming-for-costs-eligibility-check.html">Claiming for Costs eligibility check</a>
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                            
+                            <i class="fa fa-check-circle passed-color fa-lg" data-toggle="tooltip" data-placement="top" title="Passed">
+                                <span>check-circle passed-color</span>
+                            </i>
+                        </td>
+                        
+                            <td class="text-center">
+                                
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
+                                    <span>question-circle not-defined-color</span>
+                                </i>
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
+                                not known
+                            </td>
+                            
+                            
+                            <td>
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
+                                not known
+                                
+                            </td>
+                            
+                        
+                        
+                        
+                        <td class="text-right ">5</td>
+                        <td class="text-right ">5</td>
+                        <td class="text-right none">0</td>
+                        
+                        <td class="text-right none">0</td>
+                        
+                        
+                        
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <a href="features/d2613eb1-e3d9-4c2b-9c85-d868403a5764-google-analytics.html">Google Analytics</a>
                         </td>
                         <td class="text-center">
                             
@@ -1156,9 +1338,85 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                             
                             
                             <i class="fa fa-tag fa-lg" data-toggle="tooltip" data-placement="top"
-                               title="@smoketest">
-                                <span>@smoketest</span>
+                               title="@wip">
+                                <span>@wip</span>
                             </i>
+                            
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
+                            
+                            
+                            
+                            <i class="fa fa-arrow-circle-right skipped-color fa-lg" data-toggle="tooltip" data-placement="top" title="Skipped">
+                                <span>arrow-circle-right skipped-color</span>
+                            </i>
+                        </td>
+                        
+                            <td class="text-center">
+                                
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
+                                    <span>question-circle not-defined-color</span>
+                                </i>
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
+                            </td>
+                            <td>
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
+                                not known
+                            </td>
+                            
+                            
+                            <td>
+                                
+                                
+                                
+                                
+                                
+                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
+                                not known
+                                
+                            </td>
+                            
+                        
+                        
+                        
+                        <td class="text-right ">22</td>
+                        <td class="text-right none">0</td>
+                        <td class="text-right none">0</td>
+                        
+                        <td class="text-right ">22</td>
+                        
+                        
+                        
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <a href="features/b968eda0-3015-448b-8ce9-c017660a8f47-guidance-page---stages-of-an-appeal.html">Guidance Page - Stages of an appeal</a>
+                        </td>
+                        <td class="text-center">
+                            
+                            
+                            
                             
                             
                         </td>
@@ -1220,78 +1478,6 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         <td class="text-right ">6</td>
                         <td class="text-right none">0</td>
                         
-                        
-                        
-                        
-                    </tr>
-                    
-                    <tr>
-                        <td>
-                            <a href="features/94cc9e5c-5f86-495b-8770-d00221f90800-your-appeal-details.html">Your Appeal Details</a>
-                        </td>
-                        <td class="text-center">
-                            
-                            
-                            
-                            
-                            
-                        </td>
-                        <td class="text-center">
-                            
-                            
-                            
-                            
-                            
-                            
-                            <i class="fa fa-check-circle passed-color fa-lg" data-toggle="tooltip" data-placement="top" title="Passed">
-                                <span>check-circle passed-color</span>
-                            </i>
-                        </td>
-                        
-                            <td class="text-center">
-                                
-                                
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg" data-toggle="tooltip" data-placement="top" title="Not known">
-                                    <span>question-circle not-defined-color</span>
-                                </i>
-                            </td>
-                            <td>
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"></i> not known
-                            </td>
-                            <td>
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>question-circle not-defined-color</span></i>
-                                not known
-                            </td>
-                            
-                            
-                            <td>
-                                
-                                
-                                
-                                
-                                
-                                <i class="fa fa-question-circle not-defined-color fa-lg"><span>not known</span></i>
-                                not known
-                                
-                            </td>
-                            
-                        
-                        
-                        
-                        <td class="text-right ">15</td>
-                        <td class="text-right ">15</td>
                         <td class="text-right none">0</td>
                         
                         
@@ -1358,12 +1544,12 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         ],
                         datasets: [{
                             data: [
-                                8,
+                                9,
                                 0,
                                 0,
                                 0,
                                 0,
-                                0
+                                1
                             ],
                             backgroundColor: [
                                 "#26B99A",
@@ -1397,12 +1583,12 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
                         ],
                         datasets: [{
                             data: [
-                                44,
+                                86,
                                 0,
                                 0,
                                 0,
                                 0,
-                                0
+                                22
                             ],
                             backgroundColor: [
                                 "#26B99A",
