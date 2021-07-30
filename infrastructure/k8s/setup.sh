@@ -235,6 +235,7 @@ install_prometheus() {
   helm repo add stable https://charts.helm.sh/stable
   helm repo update
 
+
   helm upgrade \
     --reset-values \
     --install \
