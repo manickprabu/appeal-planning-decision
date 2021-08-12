@@ -14,7 +14,7 @@ variables:
   tag: '$(Build.BuildId)'
   appealsApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeals-service-api/Dockerfile'
   documentServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/document-service-api/Dockerfile'
-  appealsReplyApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeals-reply-service-api/Dockerfile'
+  appealsReplyApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeal-reply-service-api/Dockerfile'
   commonsDockerfilePath: '$(Build.SourcesDirectory)/packages/common/Dockerfile' 
   imageRepository: 'planninginspectorateappealplanningdecision'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
@@ -54,7 +54,7 @@ stages:
             inputs:
               command: buildAndPush
               repository: $(imageRepository)
-              dockerfile: '$(Build.SourcesDirectory)/packages/appeals-reply-service-api/Dockerfile'
+              dockerfile: $(appealsReplyApiDockerfilePath)
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)-appeal-reply-service-api 
