@@ -54,7 +54,7 @@ stages:
             inputs:
               command: buildAndPush
               repository: $(imageRepository)
-              dockerfile: $(appealsReplyApiDockerfilePath)
+              dockerfile: '$(Build.SourcesDirectory)/packages/appeals-reply-service-api/Dockerfile'
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)-appeal-reply-service-api 
