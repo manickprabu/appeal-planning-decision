@@ -26,9 +26,10 @@ ADD src src
 # ADD node_modules node_modules
 ADD package.json package.json
 ADD package-lock.json package-lock.json
-RUN npm prune --production \
-  && npm rebuild \
-  && npm version ${VERSION} --no-git-tag-version --allow-same-version || true
+RUN npm i --production
+# RUN npm prune --production \
+# && npm rebuild \
+# && npm version ${VERSION} --no-git-tag-version --allow-same-version || true
 EXPOSE 3000
 USER node
 #VOLUME [ "data" ]
