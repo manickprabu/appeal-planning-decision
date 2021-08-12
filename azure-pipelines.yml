@@ -42,7 +42,7 @@ stages:
                 $(tag)-commons-image
 
   - stage: Build_Pdf_Service_API
-    displayName: Build and push Document Service API stage
+    displayName: Build and push Pdf Service API stage
     jobs:
       - job: Build
         displayName: Build
