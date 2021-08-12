@@ -20,7 +20,7 @@ ADD package.json package.json
 ADD package-lock.json package-lock.json
 EXPOSE 4000
 USER node
-RUN npm i --production
+RUN npm i
 RUN npm prune --production \
   && npm rebuild \
   && npm version ${VERSION} --no-git-tag-version --allow-same-version || true

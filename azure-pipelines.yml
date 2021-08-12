@@ -4,7 +4,6 @@
 
 trigger:
   - feature/as-3074-appeal-service-api-pipeline
-  - subtask/as-3145-add-appeal-reply-service
 
 resources:
   - repo: self
