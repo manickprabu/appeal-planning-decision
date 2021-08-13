@@ -14,6 +14,7 @@ variables:
   appealsApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeals-service-api/Dockerfile'
   documentServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/document-service-api/Dockerfile'
   appealsReplyApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeal-reply-service-api/Dockerfile'
+  pdfServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/pdf-service-api/Dockerfile'
   commonsDockerfilePath: '$(Build.SourcesDirectory)/packages/common/Dockerfile' 
   imageRepository: 'planninginspectorateappealplanningdecision'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
@@ -39,6 +40,24 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)-commons-image
+
+  - stage: Build_Pdf_Service_API
+    displayName: Build and push Pdf Service API stage
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(pdfServiceApiDockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)-Pdf-service-api                           
   
   - stage: Build_Appeals_Reply_Service_API
     displayName: Build and push Appeals Reply Service API

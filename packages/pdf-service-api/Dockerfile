@@ -10,7 +10,7 @@ ENV DOCS_API_PATH=/opt/app/api
 # Do not rely on NODE_ENV - exists for performance reasons only
 ENV NODE_ENV=production
 ENV SERVER_PORT=3000
-ENV GOTENBURG_URL="http://localhost:9000"
+ENV GOTENBURG_URL="http://gotenberg:4000"
 # This must be built locally from the common package
 COPY --from=pinscommonukscontainers3887default.azurecr.io/planninginspectorateappealplanningdecision:960-commons-image /opt/app ../common
 ADD api api
