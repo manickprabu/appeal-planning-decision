@@ -10,11 +10,11 @@ ENV VERSION="${VERSION}"
 ENV NODE_ENV=production
 ENV PORT=3000
 # This must be built locally from the common package
-COPY --from=common:latest /opt/app ../common
-ADD dist dist
-ADD node_modules node_modules
+COPY --from=pinscommonukscontainers3887default.azurecr.io/planninginspectorateappealplanningdecision:960-commons-image /opt/app ../common
 ADD package.json package.json
 ADD package-lock.json package-lock.json
+RUN npm run ci
+RUN npm run build
 RUN npm prune --production \
   && npm rebuild \
   && npm version ${VERSION} --no-git-tag-version --allow-same-version || true
