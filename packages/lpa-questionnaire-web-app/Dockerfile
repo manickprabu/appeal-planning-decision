@@ -13,7 +13,7 @@ ENV PORT=3000
 COPY --from=pinscommonukscontainers3887default.azurecr.io/planninginspectorateappealplanningdecision:960-commons-image /opt/app ../common
 ADD package.json package.json
 ADD package-lock.json package-lock.json
-RUN npm run ci
+RUN npm ci
 RUN npm run build
 RUN npm prune --production \
   && npm rebuild \
