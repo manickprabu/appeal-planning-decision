@@ -42,7 +42,7 @@ stages:
               tags: |
                 $(tag)-commons-image
   
-  - stage: Build_Lpa-questionaire_Service_API
+  - stage: Build_Lpa_questionaire_Service_API
     displayName: Build and push LPA Questionnaire Service API stage
     jobs:
       - job: Build
