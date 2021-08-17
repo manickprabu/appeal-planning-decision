@@ -19,7 +19,6 @@ ADD src src
 ADD package.json package.json
 ADD package-lock.json package-lock.json
 EXPOSE 4000
-USER node
 RUN npm i
 RUN npm prune --production \
   && npm rebuild \
