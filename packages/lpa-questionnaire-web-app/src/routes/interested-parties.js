@@ -8,6 +8,7 @@ const clearUploadedFilesMiddleware = require('../middleware/clear-uploaded-files
 const alreadySubmittedMiddleware = require('../middleware/already-submitted');
 const uploadValidationRules = require('../validators/upload-tasks');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
+const authenticate = require('../middleware/authenticate');
 
 const router = express.Router();
 
@@ -25,6 +26,7 @@ const getConfig = (_, res, next) => {
 router.get(
   '/appeal-questionnaire/:id/interested-parties',
   [
+    authenticate,
     fetchAppealMiddleware,
     fetchExistingAppealReplyMiddleware,
     clearUploadedFilesMiddleware,
@@ -36,7 +38,7 @@ router.get(
 
 router.post(
   '/appeal-questionnaire/:id/interested-parties',
-  [reqFilesToReqBodyFilesMiddleware('documents'), uploadValidationRules()],
+  [authenticate, reqFilesToReqBodyFilesMiddleware('documents'), uploadValidationRules()],
   validationErrorHandler,
   getConfig,
   uploadQuestionController.postUpload
