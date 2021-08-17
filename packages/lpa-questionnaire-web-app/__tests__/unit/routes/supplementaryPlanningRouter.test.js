@@ -29,7 +29,12 @@ describe('routes/supplementary-documents', () => {
     it('should define the expected routes', () => {
       expect(get).toHaveBeenCalledWith(
         '/appeal-questionnaire/:id/supplementary-documents',
-        [fetchAppealMiddleware, fetchExistingAppealReplyMiddleware, alreadySubmittedMiddleware],
+        [
+          authenticateMiddleware,
+          fetchAppealMiddleware,
+          fetchExistingAppealReplyMiddleware,
+          alreadySubmittedMiddleware,
+        ],
         supplementaryDocumentsController.getAddDocument
       );
 
