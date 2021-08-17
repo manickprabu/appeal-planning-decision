@@ -15,6 +15,7 @@ variables:
   documentServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/document-service-api/Dockerfile'
   appealsReplyApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeal-reply-service-api/Dockerfile'
   pdfServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/pdf-service-api/Dockerfile'
+  formswebappServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/formswebapp-service-api/Dockerfile'
   lpaServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/lpa-questionnaire-web-app/Dockerfile'
   commonsDockerfilePath: '$(Build.SourcesDirectory)/packages/common/Dockerfile' 
   imageRepository: 'planninginspectorateappealplanningdecision'
@@ -42,6 +43,25 @@ stages:
               tags: |
                 $(tag)-commons-image
   
+#  - stage: Build_Forms_Webapp_API
+#    displayName: Build and forms webapp Service API stage
+#    jobs:
+#      - job: Build
+#        displayName: Build
+#        pool:
+#          vmImage: $(vmImageName)
+#        steps:
+#          - task: Docker@2
+#            displayName: Build and push an image to container registry
+#            inputs:
+#              command: buildAndPush
+#              repository: $(imageRepository)
+#              dockerfile: $(formswebappServiceApiDockerfilePath)
+#              containerRegistry: $(dockerRegistryServiceConnection)
+#              tags: |
+#                $(tag)-forms-webapp-service-api                           
+   
+
   - stage: Build_Lpa_questionaire_Service_API
     displayName: Build and push LPA Questionnaire Service API stage
     jobs:
