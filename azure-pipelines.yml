@@ -15,6 +15,7 @@ variables:
   documentServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/document-service-api/Dockerfile'
   appealsReplyApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeal-reply-service-api/Dockerfile'
   pdfServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/pdf-service-api/Dockerfile'
+  lpaServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/lpa-questionnaire-web-app/Dockerfile'
   commonsDockerfilePath: '$(Build.SourcesDirectory)/packages/common/Dockerfile' 
   imageRepository: 'planninginspectorateappealplanningdecision'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
@@ -40,6 +41,25 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)-commons-image
+  
+  - stage: Build_Lpa-questionaire_Service_API
+    displayName: Build and push LPA Questionnaire Service API stage
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(lpaServiceApiDockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)-Lpa-quesionaire-service-api                           
+  
 
   - stage: Build_Pdf_Service_API
     displayName: Build and push Pdf Service API stage
