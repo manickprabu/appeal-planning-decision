@@ -151,7 +151,7 @@ stages:
               dockerfile: $(appealsApiDockerfilePath)
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
-                $(tag)-appeal-reply-service-api
+                $(tag)-appeal-service-api
 
 
 
