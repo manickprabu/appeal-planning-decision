@@ -33,7 +33,7 @@ ENV FILE_UPLOAD_MAX_FILE_SIZE_BYTES="15000000"
 ENV FILE_UPLOAD_USE_TEMP_FILES='true'
 ENV FILE_UPLOAD_TMP_PATH='/tmp'
 ENV GOOGLE_ANALYTICS_ID="G-TZBWMVPTHV"
-ENV SESSION_MONGODB_URL='mongodb://pins-uks-mongodb-9475-dev:u5K6MuXfg1SjUF2iorpYua1j8xFcvl2x566WF9aMzNZpDYw52HGrZd9djdOLGfEui7WZrnJ       1l9En5n1NwgAKjA==@pins-uks-mongodb-9475-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleT      imeMS=120000&appName=@pins-uks-mongodb-9475-dev@/lpa-sessions
+ENV SESSION_MONGODB_URL='mongodb://pins-uks-mongodb-9475-dev:u5K6MuXfg1SjUF2iorpYua1j8xFcvl2x566WF9aMzNZpDYw52HGrZd9djdOLGfEui7WZrnJ1l9En5n1NwgAKjA==@pins-uks-mongodb-9475-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@pins-uks-mongodb-9475-dev@/lpa-sessions
 ENV SESSION_KEY="some_secure_key_goes_here"
       # please override this locally if using not using localhost or ip address to browse the site in dev.
            # SUBDOMAIN_OFFSET: 0
