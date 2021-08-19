@@ -15,7 +15,7 @@ variables:
   documentServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/document-service-api/Dockerfile'
   appealsReplyApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeal-reply-service-api/Dockerfile'
   pdfServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/pdf-service-api/Dockerfile'
-  formswebappServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/formswebapp-service-api/Dockerfile'
+  formswebappServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/forms-web-app/Dockerfile'
   lpaServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/lpa-questionnaire-web-app/Dockerfile'
   commonsDockerfilePath: '$(Build.SourcesDirectory)/packages/common/Dockerfile' 
   imageRepository: 'planninginspectorateappealplanningdecision'
