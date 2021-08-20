@@ -27,7 +27,7 @@ variables:
 
 stages:
   - stage: Build_Appeals_Microservices
-    displayName: Build and push commons stage
+    displayName: Build Appeal Planning Decision Microservices
     jobs:
       - job: BuildCommonsImage
         displayName: Build Commons Image
