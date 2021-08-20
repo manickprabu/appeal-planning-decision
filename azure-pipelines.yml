@@ -210,16 +210,12 @@ stages:
             inputs:
               PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
               artifactName: 'drop'
-          # - task: AzureFunctionApp@1
-          #   inputs:
-          #     azureSubscription: '<Azure service connection>'
-          #     appType: functionAppLinux
-          #     appName: 'horizonAddContact'
-          #     #Uncomment the next lines to deploy to a deployment slot
-          #     #Note that deployment slots is not supported for Linux Dynamic SKU
-          #     #deployToSlotOrASE: true
-          #     #resourceGroupName: '<Resource Group Name>'
-          #     #slotName: '<Slot name>'
+          - task: AzureFunctionApp@1
+            inputs:
+              azureSubscription: PINS ODTDEV
+              appType: functionAppLinux
+              appName: 'horizon-poc'
+        
 
 
 
