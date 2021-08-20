@@ -1,15 +1,3 @@
-# Docker
-- task: AzureFunctionApp@1
-  inputs:
-    azureSubscription: 'PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)'
-    appType: 'functionAppLinux'
-    appName: 'horizon-poc'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    runtimeStack: 'NODE|14'
-    startUpCommand: 'node handler.js'
-# Build and push an image to Azure Container Registry
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
   - feature/as-3074-appeal-service-api-pipeline
   - subtask/as-3238-add-horizon-azure-function
@@ -211,18 +199,19 @@ stages:
           - task: ArchiveFiles@2
             displayName: "Archive files"
             inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)"
+              rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-add-document"
               includeRootFolder: false
-              archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
+              archiveFile: "$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip"
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
-              artifactName: 'drop'
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip'
+              artifactName: 'horizon-add-function-artifact'
           - task: AzureFunctionApp@1
             inputs:
-              azureSubscription: PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)
+              azureSubscription: 'PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)'
               appType: functionAppLinux
               appName: 'horizon-poc'
+              package: $(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip
         
 
 
