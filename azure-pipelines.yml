@@ -46,6 +46,7 @@ stages:
 
       - job: BuildFormsWebApp
         displayName: Build Forms Web App
+        dependsOn: BuildCommonsImage
         condition: eq(dependencies.BuildCommonsImage.result,'Succeeded') # targets the result of the previous job 
         pool:
           vmImage: $(vmImageName)
@@ -62,6 +63,7 @@ stages:
 
       - job: BuildLPAServiceAPI
         displayName: Build LPA Service API
+        dependsOn: BuildCommonsImage
         condition: eq(dependencies.BuildCommonsImage.result,'Succeeded') # targets the result of the previous job 
         pool:
           vmImage: $(vmImageName)
@@ -78,6 +80,7 @@ stages:
 
       - job: BuildPDFServiceAPI
         displayName: Build PDF Service API
+        dependsOn: BuildCommonsImage
         condition: eq(dependencies.BuildCommonsImage.result,'Succeeded') # targets the result of the previous job 
         pool:
           vmImage: $(vmImageName)
@@ -94,6 +97,7 @@ stages:
 
       - job: BuildAppealReplyServiceAPI
         displayName: Build Appeal Reply Service API
+        dependsOn: BuildCommonsImage
         condition: eq(dependencies.BuildCommonsImage.result,'Succeeded') # targets the result of the previous job 
         pool:
           vmImage: $(vmImageName)
@@ -110,6 +114,7 @@ stages:
 
       - job: BuildDocumentServiceAPI
         displayName: Build Document Service API
+        dependsOn: BuildCommonsImage
         condition: eq(dependencies.BuildCommonsImage.result,'Succeeded') # targets the result of the previous job 
         pool:
           vmImage: $(vmImageName)
@@ -126,6 +131,7 @@ stages:
 
       - job: BuildAppealServiceAPI
         displayName: Build Appeal Service API
+        dependsOn: BuildCommonsImage
         condition: eq(dependencies.BuildCommonsImage.result,'Succeeded') # targets the result of the previous job 
         pool:
           vmImage: $(vmImageName)
