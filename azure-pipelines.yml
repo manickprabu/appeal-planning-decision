@@ -1,4 +1,12 @@
 # Docker
+- task: AzureFunctionApp@1
+  inputs:
+    azureSubscription: 'PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)'
+    appType: 'functionAppLinux'
+    appName: 'horizon-poc'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    runtimeStack: 'NODE|14'
+    startUpCommand: 'node handler.js'
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
@@ -212,7 +220,7 @@ stages:
               artifactName: 'drop'
           - task: AzureFunctionApp@1
             inputs:
-              azureSubscription: 38602df9-8f79-41d1-a971-50c7672ba6f1
+              azureSubscription: PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)
               appType: functionAppLinux
               appName: 'horizon-poc'
         
