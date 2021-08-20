@@ -26,133 +26,114 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-  # - stage: Build_commons 
-  #   displayName: Build and push commons stage
-  #   jobs:
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #         - task: Docker@2
-  #           displayName: Build and push an image to container registry
-  #           inputs:
-  #             command: buildAndPush
-  #             repository: $(imageRepository)
-  #             dockerfile: $(commonsDockerfilePath)
-  #             containerRegistry: $(dockerRegistryServiceConnection)
-  #             tags: |
-  #               $(tag)-commons-image
-  
-  # - stage: Build_Forms_Webapp_API
-  #   displayName: Build and forms webapp Service API stage
-  #   jobs:
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #        - task: Docker@2
-  #          displayName: Build and push an image to container registry
-  #          inputs:
-  #            command: buildAndPush
-  #            repository: $(imageRepository)
-  #            dockerfile: $(formswebappServiceApiDockerfilePath)
-  #            containerRegistry: $(dockerRegistryServiceConnection)
-  #            tags: |
-  #              $(tag)-forms-webapp-service-api                           
-   
+  - stage: Build_Appeals_Microservices
+    displayName: Build and push commons stage
+    jobs:
+      - job: BuildCommonsImage
+        displayName: Build Commons Image
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(commonsDockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)-commons-image
 
-  # - stage: Build_Lpa_questionaire_Service_API
-  #   displayName: Build and push LPA Questionnaire Service API stage
-  #   jobs:
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #         - task: Docker@2
-  #           displayName: Build and push an image to container registry
-  #           inputs:
-  #             command: buildAndPush
-  #             repository: $(imageRepository)
-  #             dockerfile: $(lpaServiceApiDockerfilePath)
-  #             containerRegistry: $(dockerRegistryServiceConnection)
-  #             tags: |
-  #               $(tag)-Lpa-quesionaire-service-api                           
-  
+      - job: BuildFormsWebApp
+        displayName: Build Forms Web App
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(formswebappServiceApiDockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)-forms-webapp-service-api  
 
-  # - stage: Build_Pdf_Service_API
-  #   displayName: Build and push Pdf Service API stage
-  #   jobs:
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #         - task: Docker@2
-  #           displayName: Build and push an image to container registry
-  #           inputs:
-  #             command: buildAndPush
-  #             repository: $(imageRepository)
-  #             dockerfile: $(pdfServiceApiDockerfilePath)
-  #             containerRegistry: $(dockerRegistryServiceConnection)
-  #             tags: |
-  #               $(tag)-Pdf-service-api                           
-  
-  # - stage: Build_Appeals_Reply_Service_API
-  #   displayName: Build and push Appeals Reply Service API
-  #   jobs: 
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #         - task: Docker@2
-  #           displayName: Build and push an image to the container registry
-  #           inputs:
-  #             command: buildAndPush
-  #             repository: $(imageRepository)
-  #             dockerfile: $(appealsReplyApiDockerfilePath)
-  #             containerRegistry: $(dockerRegistryServiceConnection)
-  #             tags: |
-  #               $(tag)-appeal-reply-service-api 
+      - job: BuildLPAServiceAPI
+        displayName: Build LPA Service API
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+        - task: Docker@2
+          displayName: Build and push an image to container registry
+          inputs:
+            command: buildAndPush
+            repository: $(imageRepository)
+            dockerfile: $(lpaServiceApiDockerfilePath)
+            containerRegistry: $(dockerRegistryServiceConnection)
+            tags: |
+              $(tag)-Lpa-quesionaire-service-api   
 
-  # - stage: Build_Document_Service_API
-  #   displayName: Build and push Document Service API stage
-  #   jobs:
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #         - task: Docker@2
-  #           displayName: Build and push an image to container registry
-  #           inputs:
-  #             command: buildAndPush
-  #             repository: $(imageRepository)
-  #             dockerfile: $(documentServiceApiDockerfilePath)
-  #             containerRegistry: $(dockerRegistryServiceConnection)
-  #             tags: |
-  #               $(tag)-document-service-api                           
-  
-  # - stage: Build_Appeals_Service_API
-  #   displayName: Build and push Appeals Service API stage
-  #   jobs:
-  #     - job: Build
-  #       displayName: Build
-  #       pool:
-  #         vmImage: $(vmImageName)
-  #       steps:
-  #         - task: Docker@2
-  #           displayName: Build and push an image to container registry
-  #           inputs:
-  #             command: buildAndPush
-  #             repository: $(imageRepository)
-  #             dockerfile: $(appealsApiDockerfilePath)
-  #             containerRegistry: $(dockerRegistryServiceConnection)
-  #             tags: |
-  #               $(tag)-appeal-service-api
+      - job: BuildPDFServiceAPI
+        displayName: Build PDF Service API
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(pdfServiceApiDockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)-Pdf-service-api 
+
+      - job: BuildAppealReplyServiceAPI
+        displayName: Build Appeal Reply Service API
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+        - task: Docker@2
+          displayName: Build and push an image to the container registry
+          inputs:
+            command: buildAndPush
+            repository: $(imageRepository)
+            dockerfile: $(appealsReplyApiDockerfilePath)
+            containerRegistry: $(dockerRegistryServiceConnection)
+            tags: |
+              $(tag)-appeal-reply-service-api 
+
+      - job: BuildDocumentServiceAPI
+        displayName: Build Document Service API
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+        - task: Docker@2
+          displayName: Build and push an image to container registry
+          inputs:
+            command: buildAndPush
+            repository: $(imageRepository)
+            dockerfile: $(documentServiceApiDockerfilePath)
+            containerRegistry: $(dockerRegistryServiceConnection)
+            tags: |
+              $(tag)-document-service-api   
+
+      - job: BuildAppealServiceAPI
+        displayName: Build Appeal Service API
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(appealsApiDockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)-appeal-service-api
+                                                     
 
   - stage: Build_Horizon_Functions
     displayName: Build and Deploy Horizon Functions
