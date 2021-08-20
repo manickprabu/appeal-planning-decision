@@ -4,6 +4,7 @@
 
 trigger:
   - feature/as-3074-appeal-service-api-pipeline
+  - subtask/as-3238-add-horizon-azure-function
 
 resources:
   - repo: self
@@ -25,133 +26,167 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-  - stage: Build_commons 
-    displayName: Build and push commons stage
-    jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: $(imageRepository)
-              dockerfile: $(commonsDockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
-              tags: |
-                $(tag)-commons-image
+  # - stage: Build_commons 
+  #   displayName: Build and push commons stage
+  #   jobs:
+  #     - job: Build
+  #       displayName: Build
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #         - task: Docker@2
+  #           displayName: Build and push an image to container registry
+  #           inputs:
+  #             command: buildAndPush
+  #             repository: $(imageRepository)
+  #             dockerfile: $(commonsDockerfilePath)
+  #             containerRegistry: $(dockerRegistryServiceConnection)
+  #             tags: |
+  #               $(tag)-commons-image
   
-  - stage: Build_Forms_Webapp_API
-    displayName: Build and forms webapp Service API stage
-    jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-         - task: Docker@2
-           displayName: Build and push an image to container registry
-           inputs:
-             command: buildAndPush
-             repository: $(imageRepository)
-             dockerfile: $(formswebappServiceApiDockerfilePath)
-             containerRegistry: $(dockerRegistryServiceConnection)
-             tags: |
-               $(tag)-forms-webapp-service-api                           
+  # - stage: Build_Forms_Webapp_API
+  #   displayName: Build and forms webapp Service API stage
+  #   jobs:
+  #     - job: Build
+  #       displayName: Build
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #        - task: Docker@2
+  #          displayName: Build and push an image to container registry
+  #          inputs:
+  #            command: buildAndPush
+  #            repository: $(imageRepository)
+  #            dockerfile: $(formswebappServiceApiDockerfilePath)
+  #            containerRegistry: $(dockerRegistryServiceConnection)
+  #            tags: |
+  #              $(tag)-forms-webapp-service-api                           
    
 
-  - stage: Build_Lpa_questionaire_Service_API
-    displayName: Build and push LPA Questionnaire Service API stage
-    jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: $(imageRepository)
-              dockerfile: $(lpaServiceApiDockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
-              tags: |
-                $(tag)-Lpa-quesionaire-service-api                           
+  # - stage: Build_Lpa_questionaire_Service_API
+  #   displayName: Build and push LPA Questionnaire Service API stage
+  #   jobs:
+  #     - job: Build
+  #       displayName: Build
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #         - task: Docker@2
+  #           displayName: Build and push an image to container registry
+  #           inputs:
+  #             command: buildAndPush
+  #             repository: $(imageRepository)
+  #             dockerfile: $(lpaServiceApiDockerfilePath)
+  #             containerRegistry: $(dockerRegistryServiceConnection)
+  #             tags: |
+  #               $(tag)-Lpa-quesionaire-service-api                           
   
 
-  - stage: Build_Pdf_Service_API
-    displayName: Build and push Pdf Service API stage
-    jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: $(imageRepository)
-              dockerfile: $(pdfServiceApiDockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
-              tags: |
-                $(tag)-Pdf-service-api                           
+  # - stage: Build_Pdf_Service_API
+  #   displayName: Build and push Pdf Service API stage
+  #   jobs:
+  #     - job: Build
+  #       displayName: Build
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #         - task: Docker@2
+  #           displayName: Build and push an image to container registry
+  #           inputs:
+  #             command: buildAndPush
+  #             repository: $(imageRepository)
+  #             dockerfile: $(pdfServiceApiDockerfilePath)
+  #             containerRegistry: $(dockerRegistryServiceConnection)
+  #             tags: |
+  #               $(tag)-Pdf-service-api                           
   
-  - stage: Build_Appeals_Reply_Service_API
-    displayName: Build and push Appeals Reply Service API
-    jobs: 
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-          - task: Docker@2
-            displayName: Build and push an image to the container registry
-            inputs:
-              command: buildAndPush
-              repository: $(imageRepository)
-              dockerfile: $(appealsReplyApiDockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
-              tags: |
-                $(tag)-appeal-reply-service-api 
+  # - stage: Build_Appeals_Reply_Service_API
+  #   displayName: Build and push Appeals Reply Service API
+  #   jobs: 
+  #     - job: Build
+  #       displayName: Build
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #         - task: Docker@2
+  #           displayName: Build and push an image to the container registry
+  #           inputs:
+  #             command: buildAndPush
+  #             repository: $(imageRepository)
+  #             dockerfile: $(appealsReplyApiDockerfilePath)
+  #             containerRegistry: $(dockerRegistryServiceConnection)
+  #             tags: |
+  #               $(tag)-appeal-reply-service-api 
 
-  - stage: Build_Document_Service_API
-    displayName: Build and push Document Service API stage
-    jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImageName)
-        steps:
-          - task: Docker@2
-            displayName: Build and push an image to container registry
-            inputs:
-              command: buildAndPush
-              repository: $(imageRepository)
-              dockerfile: $(documentServiceApiDockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
-              tags: |
-                $(tag)-document-service-api                           
+  # - stage: Build_Document_Service_API
+  #   displayName: Build and push Document Service API stage
+  #   jobs:
+  #     - job: Build
+  #       displayName: Build
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #         - task: Docker@2
+  #           displayName: Build and push an image to container registry
+  #           inputs:
+  #             command: buildAndPush
+  #             repository: $(imageRepository)
+  #             dockerfile: $(documentServiceApiDockerfilePath)
+  #             containerRegistry: $(dockerRegistryServiceConnection)
+  #             tags: |
+  #               $(tag)-document-service-api                           
   
-  - stage: Build_Appeals_Service_API
-    displayName: Build and push Appeals Service API stage
+  # - stage: Build_Appeals_Service_API
+  #   displayName: Build and push Appeals Service API stage
+  #   jobs:
+  #     - job: Build
+  #       displayName: Build
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #         - task: Docker@2
+  #           displayName: Build and push an image to container registry
+  #           inputs:
+  #             command: buildAndPush
+  #             repository: $(imageRepository)
+  #             dockerfile: $(appealsApiDockerfilePath)
+  #             containerRegistry: $(dockerRegistryServiceConnection)
+  #             tags: |
+  #               $(tag)-appeal-service-api
+
+  - stage: Build_Horizon_Functions
+    displayName: Build and Deploy Horizon Functions
     jobs:
-      - job: Build
-        displayName: Build
+      - job: BuildHorizonAddContactFunction
         pool:
           vmImage: $(vmImageName)
+        displayName: Build Horizon Add Contact Function
         steps:
-          - task: Docker@2
-            displayName: Build and push an image to container registry
+          - bash: |
+              cd packages/horizon-add-document
+              npm install 
+              npm run build --if-present
+              npm prune --production
+          - task: ArchiveFiles@2
+            displayName: "Archive files"
             inputs:
-              command: buildAndPush
-              repository: $(imageRepository)
-              dockerfile: $(appealsApiDockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
-              tags: |
-                $(tag)-appeal-service-api
+              rootFolderOrFile: "$(System.DefaultWorkingDirectory)"
+              includeRootFolder: false
+              archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
+              artifactName: 'drop'
+          # - task: AzureFunctionApp@1
+          #   inputs:
+          #     azureSubscription: '<Azure service connection>'
+          #     appType: functionAppLinux
+          #     appName: 'horizonAddContact'
+          #     #Uncomment the next lines to deploy to a deployment slot
+          #     #Note that deployment slots is not supported for Linux Dynamic SKU
+          #     #deployToSlotOrASE: true
+          #     #resourceGroupName: '<Resource Group Name>'
+          #     #slotName: '<Slot name>'
 
 
 
