@@ -7,7 +7,6 @@ ENV APP_NAME="${APP_NAME}"
 ENV BUILD_ID="${BUILD_ID}"
 ENV VERSION="${VERSION}"
 # Do not rely on NODE_ENV - exists for performance reasons only
-ENV NODE_ENV=production
 ENV PORT=3000
 # This must be built locally from the common package
 COPY --from=pinscommonukscontainers3887default.azurecr.io/planninginspectorateappealplanningdecision:960-commons-image /opt/app ../common
@@ -24,6 +23,8 @@ RUN npm run build
 RUN npm prune --production \
   && npm rebuild \
   && npm version ${VERSION} --no-git-tag-version --allow-same-version || true
+
+RUN npm run test
 ENV ALLOW_APPEAL_REPLY_CREATE="true"
 ENV APPEALS_SERVICE_API_URL="https://appeals-service-api.azurewebsites.net"
 ENV PDF_SERVICE_API_URL="https://dev-pdfserviceapi.azurewebsites.net"
