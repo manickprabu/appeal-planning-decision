@@ -3,6 +3,7 @@ const replyController = require('../controllers/reply');
 
 const routes = new Router();
 
+routes.get('/', replyController.getAppealStatus);
 routes.post('/', replyController.create);
 routes.get('/:id', replyController.get);
 routes.put('/:id', replyController.update);

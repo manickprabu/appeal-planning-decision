@@ -8,6 +8,8 @@ const {
 
 const router = express.Router();
 
+router.get('/', appealsController.getAppealStatus);
+
 router.get('/:id', appealsController.getAppeal);
 
 router.post('/', appealsController.createAppeal);

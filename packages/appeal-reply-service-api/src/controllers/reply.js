@@ -41,6 +41,12 @@ module.exports = {
     }
   },
 
+  async getAppealStatus(req, res) {
+    res.status(200).json({
+      message: 'minor change update',
+    });
+  },
+
   async get(req, res) {
     const idParam = req.params.id;
     logger.debug({ idParam }, `Retrieving reply from MongoDb`);
