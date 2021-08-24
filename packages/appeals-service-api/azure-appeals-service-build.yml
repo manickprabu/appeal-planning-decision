@@ -38,6 +38,8 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)-commons-image
+
+         
                 
   - stage: Build_Appeals_Service_API
     displayName: Build and push Appeals Service API stage
@@ -56,4 +58,14 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)-appeal-service-api               
+
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(appealsApiDockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                latest                   
   
