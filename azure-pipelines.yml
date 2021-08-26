@@ -1,6 +1,5 @@
 trigger:
   - feature/as-3074-appeal-service-api-pipeline
-  - subtask/as-3238-add-horizon-azure-function
 
 resources:
   - repo: self
@@ -212,6 +211,8 @@ stages:
               appType: functionAppLinux
               appName: 'horizon-poc'
               package: $(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip
+              startUpCommand: node handler.js
+              deploymentMethod: zipDeploy
         
 
 
