@@ -1,6 +1,12 @@
 {
-    "type": "http",
-    "direction": "out",
-    "name": "$return",
-    "scriptFile": "./handler.js"
+    "bindings": [
+      {
+        "name": "mySbMsg",
+        "type": "serviceBusTrigger",
+        "direction": "in",
+        "queueName": "myinputqueue",
+        "connection": "pinsuksmessagequeuedev_SERVICEBUS"
+      }
+    ]
   }
+  
