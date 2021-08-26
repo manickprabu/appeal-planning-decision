@@ -1,0 +1,6 @@
+{
+    "type": "http",
+    "direction": "out",
+    "name": "$return",
+    "scriptFile": "./handler.js"
+  }
