@@ -65,10 +65,10 @@ stages:
             inputs:
               PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-create-contact.zip'
               artifactName: 'horizon-create-contact-artifact'
-      - job: BuildHorizonAddContactFunction
+      - job: BuildHorizonAddDocumentFunction
         pool:
           vmImage: $(vmImageName)
-        displayName: Build Horizon Add Contact Function
+        displayName: Build Horizon Add Document Function
         steps:
           - bash: |
               cd packages/horizon-add-document
