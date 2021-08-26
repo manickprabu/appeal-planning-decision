@@ -40,10 +40,10 @@ stages:
             inputs:
               rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-householder-appeal-publish"
               includeRootFolder: false
-              archiveFile: "$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip"
+              archiveFile: "$(System.DefaultWorkingDirectory)/build/horizon-appeal-publish.zip"
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip'
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-appeal-publish.zip'
               artifactName: 'horizon-householder-appeal-publish-artifact'
       - job: BuildHorizonCreateContactFunction
         pool:
@@ -60,10 +60,10 @@ stages:
             inputs:
               rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-create-contact"
               includeRootFolder: false
-              archiveFile: "$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip"
+              archiveFile: "$(System.DefaultWorkingDirectory)/build/horizon-create-contact.zip"
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip'
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-create-contact.zip'
               artifactName: 'horizon-create-contact-artifact'
       - job: BuildHorizonAddContactFunction
         pool:
@@ -80,17 +80,17 @@ stages:
             inputs:
               rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-add-document"
               includeRootFolder: false
-              archiveFile: "$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip"
+              archiveFile: "$(System.DefaultWorkingDirectory)/build/horizon-add-document.zip"
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip'
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-add-document.zip'
               artifactName: 'horizon-add-document-artifact'
           - task: AzureFunctionApp@1
             inputs:
               azureSubscription: 'PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)'
               appType: functionAppLinux
               appName: 'horizon-poc'
-              package: $(System.DefaultWorkingDirectory)/build/$(Build.BuildId).zip
+              package: $(System.DefaultWorkingDirectory)/build/horizon-add-document.zip
               startUpCommand: node handler.js
               deploymentMethod: zipDeploy
         
