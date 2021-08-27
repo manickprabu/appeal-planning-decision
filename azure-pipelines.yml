@@ -25,73 +25,32 @@ stages:
   - stage: Build_Horizon_Functions
     displayName: Build and Deploy Horizon Functions
     jobs:
-      - job: BuildHorizonHouseholderAppealPublish
+      - job: BuildHorizonFunctionsFunction
         pool:
           vmImage: $(vmImageName)
-        displayName: Build Horizon Householder Appeal Publish Function
+        displayName: Build Horizon Serverless Functions
         steps:
           - bash: |
-              cd packages/horizon-householder-appeal-publish
+              cd packages/horizon-functions
               npm install 
               npm run build --if-present
               npm prune --production
           - task: ArchiveFiles@2
             displayName: "Archive files"
             inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-householder-appeal-publish"
+              rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-functions"
               includeRootFolder: false
-              archiveFile: "$(System.DefaultWorkingDirectory)/build/horizon-appeal-publish.zip"
+              archiveFile: "$(System.DefaultWorkingDirectory)/build/horizon-functions.zip"
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-appeal-publish.zip'
-              artifactName: 'horizon-householder-appeal-publish-artifact'
-      - job: BuildHorizonCreateContactFunction
-        pool:
-          vmImage: $(vmImageName)
-        displayName: Build Horizon Create Contact Function
-        steps:
-          - bash: |
-              cd packages/horizon-create-contact
-              npm install 
-              npm run build --if-present
-              npm prune --production
-          - task: ArchiveFiles@2
-            displayName: "Archive files"
-            inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-create-contact"
-              includeRootFolder: false
-              archiveFile: "$(System.DefaultWorkingDirectory)/build/horizon-create-contact.zip"
-          - task: PublishBuildArtifacts@1
-            inputs:
-              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-create-contact.zip'
-              artifactName: 'horizon-create-contact-artifact'
-      - job: BuildHorizonAddDocumentFunction
-        pool:
-          vmImage: $(vmImageName)
-        displayName: Build Horizon Add Document Function
-        steps:
-          - bash: |
-              cd packages/horizon-add-document
-              npm install 
-              npm run build --if-present
-              npm prune --production
-          - task: ArchiveFiles@2
-            displayName: "Archive files"
-            inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)/packages/horizon-add-document"
-              includeRootFolder: false
-              archiveFile: "$(System.DefaultWorkingDirectory)/build/horizon-add-document.zip"
-          - task: PublishBuildArtifacts@1
-            inputs:
-              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-add-document.zip'
-              artifactName: 'horizon-add-document-artifact'
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/build/horizon-functions.zip'
+              artifactName: 'horizon-functions-artifact'
           - task: AzureFunctionApp@1
             inputs:
               azureSubscription: 'PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)'
               appType: functionAppLinux
               appName: 'horizon-poc'
-              package: $(System.DefaultWorkingDirectory)/build/horizon-add-document.zip
-              startUpCommand: node handler.js
+              package: $(System.DefaultWorkingDirectory)/build/horizon-functions.zip
               deploymentMethod: zipDeploy
         
 
