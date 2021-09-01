@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>58/58</span>
+                <span class='fraction'>59/59</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>38/38</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>56/56</span>
+                <span class='fraction'>57/57</span>
             </div>
         
             
@@ -197,11 +197,22 @@
 <a name='L138'></a><a href='#L138'>138</a>
 <a name='L139'></a><a href='#L139'>139</a>
 <a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">12x</span>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
@@ -235,12 +246,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
@@ -323,13 +336,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -347,6 +367,7 @@ const { deleteDocument } = require('../lib/documents-api-wrapper');
 const getAppealSideBarDetails = require('../lib/appeal-sidebar-details');
 const { getTaskStatus } = require('../services/task.service');
 const { createOrUpdateAppealReply } = require('../lib/appeal-reply-api-wrapper');
+const { renderView, redirect } = require('../util/render');
 &nbsp;
 const docArrayFromInputString = (tempDocsString) =&gt; {
   return tempDocsString &amp;&amp; typeof tempDocsString === 'string'
@@ -367,9 +388,10 @@ exports.getUpload = (req, res) =&gt; {
     appealReplyId = req.session.appealReply.id;
   }
 &nbsp;
-  res.render(view, {
+  renderView(res, view, {
+    prefix: 'appeal-questionnaire',
     appeal: getAppealSideBarDetails(req.session.appeal),
-    backLink: req.session.backLink || `/${req.params.id}/${VIEW.TASK_LIST}`,
+    backLink: req.session.backLink ? req.session.backLink : `/${req.params.id}/${VIEW.TASK_LIST}`,
     ...fileUploadNunjucksVariables(null, null, uploadedFiles),
     appealReplyId,
   });
@@ -381,7 +403,8 @@ exports.postUpload = async (req, res) =&gt; {
   const { appealReplyId } = appealReply;
   const documents = req.body?.files?.documents || [];
   const { delete: deleteId = '', errors = {}, submit = '' } = req.body;
-  const backLink = req.session.backLink || `/${req.params.id}/${VIEW.TASK_LIST}`;
+  const backLink =
+    req.session.backLink || `/appeal-questionnaire/${req.params.id}/${VIEW.TASK_LIST}`;
 &nbsp;
   const uploadedFiles = docArrayFromInputString(req.body.tempDocs);
   let validFiles = [];
@@ -456,21 +479,28 @@ exports.postUpload = async (req, res) =&gt; {
     req.session.appealReply = await createOrUpdateAppealReply(appealReply);
 &nbsp;
     if (!submit || constructedErrorSummary?.length) {
-      res.render(view, {
+      renderView(res, view, {
+        prefix: 'appeal-questionnaire',
         ...fileUploadNunjucksVariables(errorMessage, constructedErrorSummary, validFiles),
         appeal: getAppealSideBarDetails(req.session.appeal),
         backLink,
         appealReplyId,
       });
     } else {
-      res.redirect(req.session.backLink || `/${req.params.id}/${VIEW.TASK_LIST}`);
+      redirect(
+        res,
+        'appeal-questionnaire',
+        `${req.params.id}/${VIEW.TASK_LIST}`,
+        req.session.backLink
+      );
     }
     // If it gets this far there are no errors and files must exist
   } catch (err) {
     req.log.error({ err }, `Error adding files to ${name} question`);
 &nbsp;
-    res.render(view, {
-      ...fileUploadNunjucksVariables(err, fileErrorSummary(err, req), validFiles),
+    renderView(res, view, {
+      prefix: 'appeal-questionnaire',
+      ...fileUploadNunjucksVariables(errorMessage, constructedErrorSummary, validFiles),
       appeal: getAppealSideBarDetails(req.session.appeal),
       backLink,
       appealReplyId,
@@ -484,7 +514,7 @@ exports.postUpload = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Sep 01 2021 13:39:06 GMT+0000 (Greenwich Mean Time)
+                at Wed Sep 01 2021 16:37:36 GMT+0000 (Greenwich Mean Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

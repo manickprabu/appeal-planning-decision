@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>61/61</span>
+                <span class='fraction'>62/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>26/26</span>
+                <span class='fraction'>25/25</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>57/57</span>
+                <span class='fraction'>58/58</span>
             </div>
         
             
@@ -217,28 +217,33 @@
 <a name='L158'></a><a href='#L158'>158</a>
 <a name='L159'></a><a href='#L159'>159</a>
 <a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -372,6 +377,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -382,6 +388,7 @@ const getAppealSideBarDetails = require('../../lib/appeal-sidebar-details');
 const { uploadFiles } = require('../../lib/file-upload-helpers');
 const { createOrUpdateAppealReply } = require('../../lib/appeal-reply-api-wrapper');
 const errorTexts = require('../../validators/validation-messages/supplementary-documents-validation-messages');
+const { renderView, redirect } = require('../../util/render');
 &nbsp;
 const question = {
   heading: 'Supplementary planning documents',
@@ -395,12 +402,13 @@ exports.question = question;
 exports.getAddDocument = (req, res) =&gt; {
   // TODO: when list page is created logic around backlink will need adding. If new page normal backlink is fine
   // but if coming from new document button need to set the res.locals.backlink to that page. Session still needed for list page
+  const backLink =
+    res.locals.backLink || req.session.backLink || `/${req.params.id}/${VIEW.TASK_LIST}`;
 &nbsp;
-  const backLink = res.locals.backLink || req.session.backLink;
-&nbsp;
-  res.render(VIEW.SUPPLEMENTARY_DOCUMENTS.ADD_DOCUMENT, {
+  renderView(res, VIEW.SUPPLEMENTARY_DOCUMENTS.ADD_DOCUMENT, {
+    prefix: 'appeal-questionnaire',
     appeal: getAppealSideBarDetails(req.session.appeal),
-    backLink: backLink || `/${req.params.id}/${VIEW.TASK_LIST}`,
+    backLink,
     question,
   });
 };
@@ -480,7 +488,7 @@ exports.postAddDocument = async (req, res) =&gt; {
   } = req;
 &nbsp;
   if (isFormFullyBlank(rawErrorSummary)) {
-    res.redirect(`/${appealId}/task-list`);
+    redirect(res, 'appeal-questionnaire', `${appealId}/task-list`);
     return;
   }
 &nbsp;
@@ -523,8 +531,9 @@ exports.postAddDocument = async (req, res) =&gt; {
     if (err.toString() !== 'Error: Validation failed')
       req.log.error({ err }, 'Error adding supplementary document');
 &nbsp;
-    res.render(VIEW.SUPPLEMENTARY_DOCUMENTS.ADD_DOCUMENT, {
-      appeal: getAppealSideBarDetails(req.session.appeal),
+    renderView(res, VIEW.SUPPLEMENTARY_DOCUMENTS.ADD_DOCUMENT, {
+      appeal: null,
+      prefix: 'appeal-questionnaire',
       backLink: backLink || `/${appealId}/${VIEW.TASK_LIST}`,
       errors,
       errorSummary: errorSummary.length ? errorSummary : [{ text: err.toString() }],
@@ -535,7 +544,7 @@ exports.postAddDocument = async (req, res) =&gt; {
     return;
   }
 &nbsp;
-  res.redirect(`/${appealId}/supplementary-documents/uploaded-documents`);
+  redirect(res, 'appeal-questionnaire', `${appealId}/supplementary-documents/uploaded-documents`);
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -544,7 +553,7 @@ exports.postAddDocument = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Sep 01 2021 13:39:06 GMT+0000 (Greenwich Mean Time)
+                at Wed Sep 01 2021 16:37:36 GMT+0000 (Greenwich Mean Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
