@@ -5,7 +5,7 @@
 trigger:
   branches:
     include:
-      - feature/as-3074-appeal-service-api-pipeline
+      - feature/3074b-appeal-service-api-pipeline-tests
   #    - master
   paths:
     include:
@@ -25,11 +25,12 @@ variables:
 
   # Container registry service connection established during pipeline creation
   documentServiceApiDockerfilePath: '$(Build.SourcesDirectory)/packages/document-service-api/Dockerfile'
-  imageRepository: 'planninginspectorateappealplanningdecision'
+  imageRepository: 'document-service-api'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
   dockerRegistryServiceConnection: 'appeals-service-api-registry-connection'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  # pipelineId: '49'
 
 stages:
   - stage: Increment_Version
@@ -49,45 +50,92 @@ stages:
                 Write-Host "Setting the name of the build to '$buildName'."
                 Write-Host "##vso[build.updatebuildnumber]$buildName"
 
-  - stage: Build_Documents_Service_API
-    displayName: Build Document Service API stage
+  # - stage: Run_Common_Package
+  #   displayName: Run Common Package
+  #   jobs:
+  #     - job: Run_Common
+  #       displayName: Run Common
+  #       pool:
+  #         vmImage: $(vmImageName)
+  #       steps:
+  #         - task: PowerShell@2
+  #           displayName: Running second pipeline
+  #           inputs:
+  #             targetType: 'inline'
+  #             script: |
+  #               Write-Host "Waiting for common to complete..."
+
+  #               $base64AuthInfo= [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$(PAT)"))
+
+  #               $PipelineUrl = "https://dev.azure.com/planninginspectorate/appeal-planning-decision/_apis/pipelines/$(pipelineId)/runs?api-version=6.0-preview.1"
+  #               Write-Host "Pipeline url: $PipelineUrl"
+
+  #               $responseList = Invoke-RestMethod -Uri $PipelineUrl -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} | ConvertFrom-Json
+  #               $curDate = "2000-01-01T00:00:00.3310266Z"
+
+  #               Foreach ($resp in $responseList)
+  #               {
+  #                 Write-Host $resp;
+  #                 Write-Host $resp.value;
+
+  #                 if ((get-date $resp.value.createdDate) -gt (get-date $curDate))
+  #                 {
+  #                   $response = $resp;
+  #                   $curDate = $resp.value.createdDate;
+  #                 }
+  #               }
+
+  #               Write-Host "Response: $response"
+  #               $BuildUrl = "https://dev.azure.com/planninginspectorate/appeal-planning-decision/_apis/build/builds/$($response.value.id)?api-version=6.1-preview.6"
+  #               Write-Host  $BuildUrl
+
+  #               $TimeoutAfter = New-TimeSpan -Minutes 15
+  #               $WaitBetweenPolling = New-TimeSpan -Seconds 10
+  #               $Timeout = (Get-Date).Add($TimeoutAfter)
+  #               do
+  #               {
+  #                 $Response = Invoke-RestMethod -Uri $BuildUrl -ContentType "application/json" -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)}
+  #                 Write-Host $Response.status
+  #                 Start-Sleep -Seconds $WaitBetweenPolling.Seconds
+  #               }
+  #               while ((($Response.status -eq "notStarted") -or ($Response.status -eq "inProgress")) -and ((Get-Date) -lt $Timeout))
+
+  #               if ($Response.result -ne "succeeded")
+  #               {
+  #                   Write-Host $Response.result
+  #                   exit 1
+  #               }
+  - stage: Build_and_Push_Documents_Service_API
+    displayName: Build, Test and Push Document Service API
     jobs:
-      - job: Build
-        displayName: Build
+      - job: Build_Test_Push_Documents_Service
+        displayName: Build Document Service API
         pool:
           vmImage: $(vmImageName)
         steps:
           - task: Docker@2
-            displayName: Build Document Service API image
+            displayName: Build and Test Image
             inputs:
               command: build
               repository: $(imageRepository)
               dockerfile: $(documentServiceApiDockerfilePath)
               containerRegistry: $(dockerRegistryServiceConnection)
               arguments: >
-                --build-arg APP_NAME=dcoument-service-api
+                --build-arg APP_NAME=document-service-api
                 --build-arg BUILD_ID=$(Build.BuildNumber)
                 --build-arg VERSION=$(versionNumber)
               tags: |
-                $(versionNumber)-document-service-api
-
-  - stage: Run_Unit_And_Publish_Tests
-    displayName: Run Unit Tests
-    dependsOn: Build_Document_Service_API
-    condition: succeeded()
-    jobs:
-      - job: Run
-        displayName: Run Unit Tests and Publish Results
-        pool:
-          vmImage: $(vmImageName)
-        steps:
+                $(versionNumber)
+                document-service-api
+                latest
           - task: PowerShell@2
-            displayName: Run tests
+            displayName: Copy Test Results
             inputs:
               targetType: 'inline'
               script: |
-                Write-Host "Looking for images with label com.azure.dev.image.build.buildNumber=$(Build.BuildNumber)"
-                $imageId = (docker images -a --filter "label=com.azure.dev.image.build.buildNumber=$(Build.BuildNumber)" --format "{{.ID}}")
+                Write-Host "Looking for images with tag $(versionNumber)"
+                $imageId = (docker images ***/$(imageRepository):$(versionNumber) --quiet)
+
                 Write-Host "Setting the imageId to '${imageId}'."
 
                 Write-Host "Running Docker..."            
@@ -98,16 +146,20 @@ stages:
                 # A more elegant retry solution would be better
                 Start-Sleep -Seconds 2
 
-                $testLocation = "${containerId}:/src/junit.xml"
+                $testLocation = "${containerId}:/opt/app/junit.xml"
+                $coverageLocation = "${containerId}:/opt/app/coverage"
                 $exitCodeLocation = "${containerId}:/npm.exitcode"
 
                 Write-Host "Copying test results from '$testLocation'"
                 docker cp "${testLocation}" "$(Pipeline.Workspace)/junit.xml"
 
+                Write-Host "Copying coverage results from '$coverageLocation'"
+                docker cp "${coverageLocation}" "$(Pipeline.Workspace)/coverage"
+
                 Write-Host "Copying exit code from '$exitCodeLocation'."
                 docker cp "${exitCodeLocation}" "$(Pipeline.Workspace)/npm.exitcode"
           - task: PublishTestResults@2
-            displayName: Publish test results
+            displayName: Publish Test Results
             condition: succeededOrFailed()
             inputs:
               testResultsFormat: 'JUnit'
@@ -115,9 +167,14 @@ stages:
               searchFolder: $(Pipeline.Workspace)
               mergeTestResults: true
               failTaskOnFailedTests: true
-              restRunTitle: 'Jest Tests'
+              testRunTitle: 'Document Service API Jest Tests'
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish Code Coverage Results
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: $(Pipeline.Workspace)/coverage/cobertura-coverage.xml
           - task: PowerShell@2
-            displayName: Verify tests passed
+            displayName: Verify Tests Passed
             inputs:
               targetType: 'inline'
               script: |
@@ -133,22 +190,13 @@ stages:
                       Write-Host "Tests failed"
                       exit $exitCode
                   }
-
-  - stage: Push_Document_Service_API
-    displayName: Push Document Service API Docker Image stage
-    jobs:
-      - job: Push
-        displayName: Push
-        pool:
-          vmImage: $(vmImageName)
-        steps:
           - task: Docker@2
-            displayName: Push Document Service API image
+            displayName: Push Image
             inputs:
               command: push
               repository: $(imageRepository)
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
-                $(versionNumber)-document-service-api
-
-# TODO add Cypress tests
+                $(versionNumber)
+                document-service-api
+                latest

@@ -5,7 +5,7 @@
 trigger:
   branches:
     include:
-      - feature/as-3074-appeal-service-api-pipeline
+      - feature/3074b-appeal-service-api-pipeline-tests
   #    - master
   paths:
     include:
@@ -25,7 +25,7 @@ variables:
 
   # Container registry service connection established during pipeline creation
   appealsApiDockerfilePath: '$(Build.SourcesDirectory)/packages/appeals-service-api/Dockerfile'
-  imageRepository: 'planninginspectorateappealplanningdecision'
+  imageRepository: 'appeals-service-api'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
   dockerRegistryServiceConnection: 'appeals-service-api-registry-connection'
   # Agent VM image name
@@ -49,16 +49,16 @@ stages:
                 Write-Host "Setting the name of the build to '$buildName'."
                 Write-Host "##vso[build.updatebuildnumber]$buildName"
 
-  - stage: Build_Appeals_Service_API
-    displayName: Build Appeals Service API stage
+  - stage: Build_and_Push_Appeals_Service_API
+    displayName: Build, Test and Push Appeals Service API
     jobs:
-      - job: Build
-        displayName: Build
+      - job: Build_Test_Push_Appeal_Service
+        displayName: Build Appeal Service API
         pool:
           vmImage: $(vmImageName)
         steps:
           - task: Docker@2
-            displayName: Build Appeals Service API image
+            displayName: Build and Test Image
             inputs:
               command: build
               repository: $(imageRepository)
@@ -69,25 +69,17 @@ stages:
                 --build-arg BUILD_ID=$(Build.BuildNumber)
                 --build-arg VERSION=$(versionNumber)
               tags: |
-                $(versionNumber)-appeal-service-api
-
-  - stage: Run_Unit_And_Publish_Tests
-    displayName: Run Unit Tests
-    dependsOn: Build_Appeals_Service_API
-    condition: succeeded()
-    jobs:
-      - job: Run
-        displayName: Run Unit Tests and Publish Results
-        pool:
-          vmImage: $(vmImageName)
-        steps:
+                $(versionNumber)
+                appeals-service-api
+                latest
           - task: PowerShell@2
-            displayName: Run tests
+            displayName: Copy Test Results
             inputs:
               targetType: 'inline'
               script: |
-                Write-Host "Looking for images with label com.azure.dev.image.build.buildNumber=$(Build.BuildNumber)"
-                $imageId = (docker images -a --filter "label=com.azure.dev.image.build.buildNumber=$(Build.BuildNumber)" --format "{{.ID}}")
+                Write-Host "Looking for images with tag $(versionNumber)"
+                $imageId = (docker images ***/$(imageRepository):$(versionNumber) --quiet)
+
                 Write-Host "Setting the imageId to '${imageId}'."
 
                 Write-Host "Running Docker..."            
@@ -98,16 +90,20 @@ stages:
                 # A more elegant retry solution would be better
                 Start-Sleep -Seconds 2
 
-                $testLocation = "${containerId}:/src/junit.xml"
+                $testLocation = "${containerId}:/opt/app/junit.xml"
+                $coverageLocation = "${containerId}:/opt/app/coverage"
                 $exitCodeLocation = "${containerId}:/npm.exitcode"
 
                 Write-Host "Copying test results from '$testLocation'"
                 docker cp "${testLocation}" "$(Pipeline.Workspace)/junit.xml"
 
+                Write-Host "Copying coverage results from '$coverageLocation'"
+                docker cp "${coverageLocation}" "$(Pipeline.Workspace)/coverage"
+
                 Write-Host "Copying exit code from '$exitCodeLocation'."
                 docker cp "${exitCodeLocation}" "$(Pipeline.Workspace)/npm.exitcode"
           - task: PublishTestResults@2
-            displayName: Publish test results
+            displayName: Publish Test Results
             condition: succeededOrFailed()
             inputs:
               testResultsFormat: 'JUnit'
@@ -115,9 +111,14 @@ stages:
               searchFolder: $(Pipeline.Workspace)
               mergeTestResults: true
               failTaskOnFailedTests: true
-              restRunTitle: 'Jest Tests'
+              testRunTitle: 'Appeal Service API Jest Tests'
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish Code Coverage Results
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: $(Pipeline.Workspace)/coverage/cobertura-coverage.xml
           - task: PowerShell@2
-            displayName: Verify tests passed
+            displayName: Verify Tests Passed
             inputs:
               targetType: 'inline'
               script: |
@@ -133,22 +134,13 @@ stages:
                       Write-Host "Tests failed"
                       exit $exitCode
                   }
-
-  - stage: Push_Appeals_Service_API
-    displayName: Push Appeals Service API Docker Image stage
-    jobs:
-      - job: Push
-        displayName: Push
-        pool:
-          vmImage: $(vmImageName)
-        steps:
           - task: Docker@2
-            displayName: Push Appeals Service API image
+            displayName: Push Image
             inputs:
               command: push
               repository: $(imageRepository)
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
-                $(versionNumber)-appeal-service-api
-
-# TODO add Cypress tests
+                $(versionNumber)
+                appeals-service-api
+                latest

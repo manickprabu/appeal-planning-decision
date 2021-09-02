@@ -5,7 +5,7 @@
 trigger:
   branches:
     include:
-      - feature/as-3074-appeal-service-api-pipeline
+      - feature/3074b-appeal-service-api-pipeline-tests
   #    - master
   paths:
     include:
@@ -13,6 +13,8 @@ trigger:
 
 resources:
   - repo: self
+
+name: '0.0.0' # set dynamically below in a task
 
 variables:
   # VERSION INFO ----------------------------------------------------------
@@ -23,7 +25,7 @@ variables:
 
   # Container registry service connection established during pipeline creation
   commonsDockerfilePath: '$(Build.SourcesDirectory)/packages/common/Dockerfile'
-  imageRepository: 'planninginspectorateappealplanningdecision'
+  imageRepository: 'common'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
   dockerRegistryServiceConnection: 'appeals-service-api-registry-connection'
   # Agent VM image name
@@ -35,6 +37,8 @@ stages:
     jobs:
       - job: Set_Version
         displayName: Set Version Number
+        pool:
+          vmImage: $(vmImageName)
         steps:
           - task: PowerShell@2
             displayName: Set the name of the build (i.e. the Build.BuildNumber)
@@ -61,7 +65,8 @@ stages:
               dockerfile: $(commonsDockerfilePath)
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
-                $(versionNumber)-common-image
+                $(versionNumber)
+                common
+                latest
 
 # TODO add Jest tests
-# TODO add Cypress tests
