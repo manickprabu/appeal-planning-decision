@@ -34,12 +34,6 @@ module.exports = {
     res.status(500).send(appeal);
   },
 
-  async getAppealStatus(req, res) {
-    res.status(200).json({
-      message: 'minor change update',
-    });
-  },
-
   async getAppeal(req, res) {
     const idParam = req.params.id;
 
