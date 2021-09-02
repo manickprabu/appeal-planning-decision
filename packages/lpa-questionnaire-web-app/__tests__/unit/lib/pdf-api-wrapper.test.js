@@ -1,4 +1,7 @@
+global.TextEncoder = require('util').TextEncoder;
+
 const fetch = require('node-fetch');
+
 const { generatePDF } = require('../../../src/lib/pdf-api-wrapper');
 
 const mockLogger = jest.fn();

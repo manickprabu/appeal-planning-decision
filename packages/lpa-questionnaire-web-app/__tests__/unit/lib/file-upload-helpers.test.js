@@ -215,14 +215,35 @@ describe('lib/file-upload-helpers', () => {
   describe('uploadFiles', () => {
     const mockId = 'abc-123';
 
+    it('should not upload a file if it has an ID', async () => {
+      const uploadedFiles2 = [{ name: 'mock-file', id: 'mock-id' }];
+
+      const result = await uploadFiles(uploadedFiles2, mockId);
+
+      expect(createDocument).not.toHaveBeenCalled();
+      expect(result).toEqual([
+        {
+          fileName: 'mock-file',
+          id: 'mock-id',
+          location: undefined,
+          message: {
+            text: 'mock-file',
+          },
+          name: 'mock-file',
+          originalFileName: 'mock-file',
+          size: undefined,
+        },
+      ]);
+    });
+
     it('should return an array of uploaded files', async () => {
       createDocument
         .mockImplementationOnce(() => ({ id: 'mock-id-1' }))
         .mockImplementationOnce(() => ({ id: 'mock-id-2' }));
 
-      const uploadedFiles = [{ name: 'mock-file' }, { name: 'another-file' }];
+      const uploadedFiles1 = [{ name: 'mock-file' }, { name: 'another-file' }];
 
-      const result = await uploadFiles(uploadedFiles, mockId);
+      const result = await uploadFiles(uploadedFiles1, mockId);
 
       expect(result).toEqual([
         {
@@ -250,36 +271,15 @@ describe('lib/file-upload-helpers', () => {
       ]);
     });
 
-    it('should not upload a file if it has an ID', async () => {
-      const uploadedFiles = [{ name: 'mock-file', id: 'mock-id' }];
-
-      const result = await uploadFiles(uploadedFiles, mockId);
-
-      expect(createDocument).not.toHaveBeenCalled();
-      expect(result).toEqual([
-        {
-          fileName: 'mock-file',
-          id: 'mock-id',
-          location: undefined,
-          message: {
-            text: 'mock-file',
-          },
-          name: 'mock-file',
-          originalFileName: 'mock-file',
-          size: undefined,
-        },
-      ]);
-    });
-
     it('should throw an error if there is a problem with the document service', async () => {
       createDocument
         .mockImplementationOnce(() => ({ id: 'mock-id-1' }))
         .mockRejectedValueOnce('API is down');
 
-      const uploadedFiles = [{ name: 'mock-file' }, { name: 'another-file' }];
+      const uploadedFiles3 = [{ name: 'mock-file' }, { name: 'another-file' }];
 
       try {
-        await uploadFiles(uploadedFiles, mockId);
+        await uploadFiles(uploadedFiles3, mockId);
       } catch (err) {
         expect(err).toEqual('API is down');
       }
