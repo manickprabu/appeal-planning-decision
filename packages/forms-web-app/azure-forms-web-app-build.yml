@@ -57,6 +57,12 @@ stages:
         pool:
           vmImage: $(vmImageName)
         steps:
+          - task: AzureKeyVault@2
+            inputs:
+              azureSubscription: 'PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)'
+              KeyVaultName: 'pins-uk-dev-vault'
+              SecretsFilter: '*'
+              RunAsPreJob: true
           - task: Docker@2
             displayName: Build and Test Image
             inputs:
