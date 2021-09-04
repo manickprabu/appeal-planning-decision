@@ -56,6 +56,12 @@ stages:
         displayName: Build Appeal Service API
         pool:
           vmImage: $(vmImageName)
+          - task: AzureKeyVault@2
+            inputs:
+              azureSubscription: 'PINS ODTDEV (38602df9-8f79-41d1-a971-50c7672ba6f1)'
+              KeyVaultName: 'pins-uk-dev-vault'
+              SecretsFilter: '*'
+              RunAsPreJob: true
         steps:
           - task: Docker@2
             displayName: Build and Test Image
