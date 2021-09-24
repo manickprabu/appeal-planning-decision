@@ -2,16 +2,20 @@
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
-trigger:
-  branches:
-    include:
-      - master
-  paths:
-    include:
-      - packages/pdf-service-api
-
 resources:
-  - repo: self
+  repositories:
+    - repository: appeal-plannning-decision
+      pr: # Optional; pr triggers are disabled by default
+        autoCancel: true # cancel the pr triggered pipelines when the pr is updated.
+        branches: # branch conditions to filter the events, optional; Defaults to all branches.
+          include: 
+           - feature/*
+           - fix/*
+           - subtask/*
+           - master
+        paths:
+          include:
+           - packages/pdf-service-api
 
 name: '0.0.0' # set dynamically below in a task
 
@@ -133,13 +137,4 @@ stages:
                       Write-Host "Tests failed"
                       exit $exitCode
                   }
-          - task: Docker@2
-            displayName: Push Image
-            inputs:
-              command: push
-              repository: $(imageRepository)
-              containerRegistry: $(dockerRegistryServiceConnection)
-              tags: |
-                $(versionNumber)
-                pdf-service-api
-                latest
+      
