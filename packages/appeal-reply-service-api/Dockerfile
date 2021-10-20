@@ -9,10 +9,12 @@ ENV VERSION="${VERSION}"
 RUN mkdir -p /opt/app/data
 
 # This must be built locally from the common package
+RUN true
 COPY --from=pinscommonukscontainers3887default.azurecr.io/common:latest /opt/app ../common
 # This must be built locally from the common package
+RUN true
 COPY --from=pinscommonukscontainers3887default.azurecr.io/common:latest /opt/app ../common
-ADD api-new api
+ADD api api
 ADD src src
 ADD __tests__ __tests__
 ADD jest.config.js jest.config.js
