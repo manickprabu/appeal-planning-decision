@@ -24,8 +24,10 @@ const { router: statutoryDevelopmentRouter } = require('./statutory-development'
 const informationSubmittedRouter = require('./information-submitted');
 const booleanQuestionRouter = require('./question-type/boolean');
 const supplementaryDocumentsRouter = require('./supplementary-documents');
+const contactUsRouter = require('./contact-us');
 const alreadySubmittedRouter = require('./already-submitted');
 
+router.use(contactUsRouter);
 router.use(homeRouter);
 router.use(filesRouter);
 router.use(taskListRouter);
