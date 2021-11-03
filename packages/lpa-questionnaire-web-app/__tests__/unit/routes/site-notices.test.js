@@ -11,6 +11,7 @@ const alreadySubmittedMiddleware = require('../../../src/middleware/already-subm
 
 const uploadTasksValidationRules = require('../../../src/validators/upload-tasks');
 const { validationErrorHandler } = require('../../../src/validators/validation-error-handler');
+const authenticateMiddleware = require('../../../src/middleware/authenticate');
 
 const { VIEW } = require('../../../src/lib/views');
 
@@ -35,6 +36,7 @@ describe('routes/site-notices', () => {
       expect(get).toHaveBeenCalledWith(
         '/appeal-questionnaire/:id/site-notice',
         [
+          authenticateMiddleware,
           fetchAppealMiddleware,
           fetchExistingAppealReplyMiddleware,
           clearUploadedFilesMiddleware,
@@ -46,7 +48,11 @@ describe('routes/site-notices', () => {
 
       expect(post).toHaveBeenCalledWith(
         '/appeal-questionnaire/:id/site-notice',
-        [reqFilesToReqBodyFilesMiddleware('documents'), uploadTasksValidationRules()],
+        [
+          authenticateMiddleware,
+          reqFilesToReqBodyFilesMiddleware('documents'),
+          uploadTasksValidationRules(),
+        ],
         validationErrorHandler,
         getConfig,
         uploadQuestionController.postUpload

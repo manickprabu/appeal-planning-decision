@@ -48,3 +48,7 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
 exports.getAppeal = async (appealId) => {
   return handler(`/api/v1/appeals/${appealId}`);
 };
+
+exports.getLPA = async (lpaCode) => {
+  return handler(`/api/v1/local-planning-authorities/${lpaCode}`);
+};

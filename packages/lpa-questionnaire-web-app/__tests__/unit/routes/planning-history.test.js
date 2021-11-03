@@ -11,6 +11,7 @@ const alreadySubmittedMiddleware = require('../../../src/middleware/already-subm
 
 const uploadTasksValidationRules = require('../../../src/validators/upload-tasks');
 const { validationErrorHandler } = require('../../../src/validators/validation-error-handler');
+const authenticateMiddleware = require('../../../src/middleware/authenticate');
 
 const { VIEW } = require('../../../src/lib/views');
 
@@ -35,6 +36,7 @@ describe('routes/planning-history', () => {
       expect(get).toHaveBeenCalledWith(
         '/appeal-questionnaire/:id/planning-history',
         [
+          authenticateMiddleware,
           fetchAppealMiddleware,
           fetchExistingAppealReplyMiddleware,
           clearUploadedFilesMiddleware,
@@ -46,7 +48,11 @@ describe('routes/planning-history', () => {
 
       expect(post).toHaveBeenCalledWith(
         '/appeal-questionnaire/:id/planning-history',
-        [reqFilesToReqBodyFilesMiddleware('documents'), uploadTasksValidationRules()],
+        [
+          authenticateMiddleware,
+          reqFilesToReqBodyFilesMiddleware('documents'),
+          uploadTasksValidationRules(),
+        ],
         validationErrorHandler,
         getConfig,
         uploadQuestionController.postUpload
