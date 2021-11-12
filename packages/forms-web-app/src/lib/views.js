@@ -51,6 +51,10 @@ const VIEW = {
     STAGES_APPEAL: 'guidance-pages/stages-appeal',
   },
 
+  FULL_PLANNING: {
+    LOCAL_PLANNING_DEPARTMENT: 'full-planning/local-planning-department',
+  },
+
   YOUR_PLANNING_APPEAL: {
     INDEX: 'your-planning-appeal/index',
     YOUR_APPEAL_DETAILS: 'your-planning-appeal/your-appeal-details',
