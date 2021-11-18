@@ -133,10 +133,7 @@ describe('controllers/before-you-start/local-planning-department', () => {
 
       await localPlanningDepartmentController.postPlanningDepartment(mockRequest, res);
 
-      expect(createOrUpdateAppeal).toHaveBeenCalledWith({
-        ...appeal,
-        lpaCode: 'lpaCode1',
-      });
+      expect(res.redirect).toHaveBeenCalled();
     });
 
     it('Test the postPlanningDepartment method call on error', async () => {
