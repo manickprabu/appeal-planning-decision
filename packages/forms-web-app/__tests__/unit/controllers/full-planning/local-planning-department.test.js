@@ -1,4 +1,4 @@
-const localPlanningDepartmentController = require('../../../../src/controllers/full-planning/local-planning-department');
+const localPlanningDepartmentController = require('../../../../src/controllers/before-you-start/local-planning-department');
 const { getDepartmentFromId } = require('../../../../src/services/department.service');
 const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
@@ -14,7 +14,7 @@ jest.mock('../../../../src/lib/empty-appeal');
 jest.mock('../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../src/lib/logger');
 
-describe('controllers/full-planning/local-planning-department', () => {
+describe('controllers/before-you-start/local-planning-department', () => {
   let req;
   let res;
   let appeal;
