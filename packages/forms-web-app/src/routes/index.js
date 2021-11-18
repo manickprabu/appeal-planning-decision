@@ -9,6 +9,7 @@ const beforeYouStartRouter = require('./before-you-start');
 const cookieRouter = require('./cookies');
 const guidancePagesRouter = require('./guidance-pages');
 const yourPlanningAppealRouter = require('./your-planning-appeal');
+const beforeYouStartRouter = require('./before-you-start');
 const checkDecisionDateDeadline = require('../middleware/check-decision-date-deadline');
 
 router.use('/', homeRouter);
