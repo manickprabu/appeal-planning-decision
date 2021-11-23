@@ -55,6 +55,11 @@ describe('lib/views', () => {
         STAGES_APPEAL: 'guidance-pages/stages-appeal',
       },
 
+      BEFORE_YOU_START: {
+        LOCAL_PLANNING_DEPARTMENT: 'before-you-start/local-planning-department',
+        TYPE_OF_PLANNING_APPLICATION: 'before-you-start/type-of-planning-application',
+      },
+
       YOUR_PLANNING_APPEAL: {
         INDEX: 'your-planning-appeal/index',
         YOUR_APPEAL_DETAILS: 'your-planning-appeal/your-appeal-details',
