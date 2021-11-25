@@ -34,7 +34,6 @@ module.exports = {
 
         // check file for Virus
         // await validAV(value, name);
-
         return true;
       },
     },
