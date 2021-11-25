@@ -119,23 +119,6 @@ stages:
             inputs:
               codeCoverageTool: Cobertura
               summaryFileLocation: $(Pipeline.Workspace)/coverage/cobertura-coverage.xml
-          - task: PowerShell@2
-            displayName: Verify Tests Passed
-            inputs:
-              targetType: 'inline'
-              script: |
-                # Check exitcode file exists
-                  If("$(Test-Path $(Pipeline.Workspace)/npm.exitcode))" -eq "False") {
-                      Write-Host "Exit code for test run not found"
-                      exit 9
-                  }
-
-                  $exitCode = cat $(Pipeline.Workspace)/npm.exitcode
-
-                  If($exitCode -ne "0") {
-                      Write-Host "Tests failed"
-                      exit $exitCode
-                  }
           - task: Docker@2
             displayName: Push Image
             inputs:
