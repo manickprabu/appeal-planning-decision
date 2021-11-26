@@ -12,11 +12,14 @@ const config = require('../config');
  */
 module.exports = async (destinationEmailAddress, magicLinkURL) => {
   logger.debug('Start sending magic link email');
+
   return NotifyBuilder.reset()
     .setTemplateId(config.notify.templateId)
     .setDestinationEmailAddress(destinationEmailAddress)
     .setTemplateVariablesFromObject({
-      magicLinkURL,
+      LPA: 'Ademola Afolabi',
+      'magic link': magicLinkURL,
+      'planning application number': 1,
     })
     .setReference(uuid.v4())
     .sendEmail()
