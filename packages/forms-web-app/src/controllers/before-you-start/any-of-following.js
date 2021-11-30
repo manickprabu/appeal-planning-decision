@@ -43,7 +43,7 @@ const postAnyOfFollowing = async (req, res) => {
     return res.redirect('/before-you-start/enforcement-notice');
   }
 
-  return res.redirect('/before-you-start/shutter/appeal-about');
+  return res.redirect('/before-you-start/use-a-different-service');
 };
 
 module.exports = {
