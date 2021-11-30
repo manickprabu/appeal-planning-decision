@@ -40,10 +40,10 @@ const postAnyOfFollowing = async (req, res) => {
   }
 
   if (routeUserOption(option) === true) {
-    return res.render(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+    return res.redirect('/before-you-start/enforcement-notice');
   }
 
-  return res.render(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+  return res.redirect('/before-you-start/shutter/appeal-about');
 };
 
 module.exports = {
