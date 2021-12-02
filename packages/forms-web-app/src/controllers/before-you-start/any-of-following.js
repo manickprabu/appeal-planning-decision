@@ -27,7 +27,9 @@ const routeUserOption = (options) => {
 };
 
 const getAnyOfFollowing = async (req, res) => {
-  res.render(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+  res.render(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {
+    errors: {},
+  });
 };
 
 const postAnyOfFollowing = async (req, res) => {
@@ -35,7 +37,14 @@ const postAnyOfFollowing = async (req, res) => {
 
   if (typeof option === 'undefined') {
     return res.render(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {
-      errorSummary: [{ text: 'Select if your appeal is about any of the following', href: '#' }],
+      errorSummary: [
+        { text: 'Select if your appeal is about any of the following', href: '#gds_checkbox-1' },
+      ],
+      errors: {
+        'any-of-following': {
+          msg: 'Select if your appeal is about any of the following',
+        },
+      },
     });
   }
 

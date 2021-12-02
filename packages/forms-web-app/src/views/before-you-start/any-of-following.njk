@@ -28,10 +28,10 @@
     <form action="" method="post" novalidate>
     <span class="govuk-caption-l"> Before you start </span>
     {{ govukCheckboxes({
-        idPrefix: "select_option",
+        idPrefix: "gds_checkbox",
         name: "option",
-            fieldset: {
-                legend: {
+        fieldset: {
+            legend: {
                 text: "Is your appeal about any of the following?",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--l"
@@ -39,9 +39,6 @@
         },
         hint: {
             text: "Select all that apply."
-        },
-        errorMessage: errors['any-of-following'] and {
-            text: errors['any-of-following'].msg
         },
         items: [
             {
@@ -72,7 +69,10 @@
                 text: "None of these",
                 behaviour: "exclusive"      
             }
-        ]
+        ],
+        errorMessage: errors['any-of-following'] and {
+            text: errors['any-of-following'].msg
+        }
         }) }}
 
         {{ govukButton({

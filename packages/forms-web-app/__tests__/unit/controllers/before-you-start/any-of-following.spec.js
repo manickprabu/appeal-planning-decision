@@ -18,7 +18,9 @@ describe('controllers/before-you-start/any-of-following', () => {
   describe('getAnyOfFollowing', () => {
     it('should render any of following page', async () => {
       await anyOfFollowingController.getAnyOfFollowing(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {
+        errors: {},
+      });
     });
   });
 
@@ -34,7 +36,14 @@ describe('controllers/before-you-start/any-of-following', () => {
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
 
       expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {
-        errorSummary: [{ text: 'Select if your appeal is about any of the following', href: '#' }],
+        errorSummary: [
+          { text: 'Select if your appeal is about any of the following', href: '#checkbox' },
+        ],
+        errors: {
+          'any-of-following': {
+            msg: 'Select if your appeal is about any of the following',
+          },
+        },
       });
     });
 
@@ -47,7 +56,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/use-a-different-service');
     });
 
     it('should send user to shutter page when choosing wrong multiple options', async () => {
@@ -59,7 +68,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/use-a-different-service');
     });
 
     it('should send user to shutter page when sending invalid inputs', async () => {
@@ -71,7 +80,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/use-a-different-service');
     });
 
     it('should send user to enforcement page when choosing none of these option', async () => {
@@ -83,7 +92,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {});
+      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/enforcement-notice');
     });
   });
 });
