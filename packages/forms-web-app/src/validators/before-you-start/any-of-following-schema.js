@@ -13,8 +13,12 @@ module.exports = {
       options: async (value, { req }) => {
         const { option } = req.body;
 
-        if (typeof option === 'string') {
+        if (typeof option === 'string' && !anyOfFollowingOptions.includes(option)) {
           return true;
+        }
+
+        if (typeof option === 'undefined' || option === '') {
+          return false;
         }
 
         if (Array.isArray(option)) {
