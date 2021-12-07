@@ -13,6 +13,15 @@ on:
       - feature/*
 
 jobs:
+  prepare-environment: 
+    name: "Prepare Environment"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install packages
+      run: | 
+        sudo apt-get install node=15.0.0
+        sudo apt-get install npm=7.0.0
+
   context:
     name: "Build ID"
     if: "! contains(toJSON(github.event.commits.*.message), '[ci skip]')"
