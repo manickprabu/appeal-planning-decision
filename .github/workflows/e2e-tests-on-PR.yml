@@ -17,11 +17,9 @@ jobs:
     name: "Prepare Environment"
     runs-on: ubuntu-latest
     steps:
-    - name: Install packages
-      run: |
-        sudo apt-get install nodejs
-        sudo apt-get install npm
-        sudo apt-get update && sudo apt-get upgrade
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14.18.2'
 
 
   context:
