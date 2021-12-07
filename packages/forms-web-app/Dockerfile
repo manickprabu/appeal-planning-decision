@@ -5,7 +5,6 @@ ARG VERSION
 WORKDIR /opt/app
 ENV APP_NAME="${APP_NAME}"
 ENV BUILD_ID="${BUILD_ID}"
-ENV VERSION="${VERSION}"
 
 # This must be built locally from the common package
 COPY --from=pinscommonukscontainers3887default.azurecr.io/common:latest /opt/app ../common
