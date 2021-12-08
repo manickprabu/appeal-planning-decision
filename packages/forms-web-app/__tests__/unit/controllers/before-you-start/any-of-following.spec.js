@@ -18,9 +18,7 @@ describe('controllers/before-you-start/any-of-following', () => {
   describe('getAnyOfFollowing', () => {
     it('should render any of following page', async () => {
       await anyOfFollowingController.getAnyOfFollowing(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {
-        errors: {},
-      });
+      expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING);
     });
   });
 
@@ -36,11 +34,9 @@ describe('controllers/before-you-start/any-of-following', () => {
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
 
       expect(res.render).toHaveBeenCalledWith(VIEW.BEFORE_YOU_START.ANY_OF_FOLLOWING, {
-        errorSummary: [
-          { text: 'Select if your appeal is about any of the following', href: '#gds_checkbox-1' },
-        ],
+        errorSummary: [{ text: 'Select if your appeal is about any of the following' }],
         errors: {
-          'any-of-following': {
+          option: {
             msg: 'Select if your appeal is about any of the following',
           },
         },
