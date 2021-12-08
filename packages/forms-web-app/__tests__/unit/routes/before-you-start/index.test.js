@@ -1,4 +1,7 @@
 const { use } = require('../router-mock');
+const localPlanningDepartmentRouter = require('../../../../src/routes/before-you-start/local-planning-department');
+const typeOfPlanningApplication = require('../../../../src/routes/before-you-start/type-of-planning-application');
+const enforcementNoticeRouter = require('../../../../src/routes/before-you-start/enforcement-notice');
 
 describe('routes/before-you-start/index', () => {
   beforeEach(() => {
@@ -8,11 +11,10 @@ describe('routes/before-you-start/index', () => {
     require('../../../../src/routes/before-you-start');
   });
 
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
   it('should define the expected routes', () => {
-    expect(use.mock.calls.length).toBe(2);
+    expect(use).toHaveBeenCalledWith(localPlanningDepartmentRouter);
+    expect(use).toHaveBeenCalledWith(typeOfPlanningApplication);
+    expect(use).toHaveBeenCalledWith(enforcementNoticeRouter);
+    expect(use.mock.calls.length).toBe(3);
   });
 });
