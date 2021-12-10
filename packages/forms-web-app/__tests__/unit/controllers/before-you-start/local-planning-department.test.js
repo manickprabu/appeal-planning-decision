@@ -14,7 +14,7 @@ jest.mock('../../../../src/lib/empty-appeal');
 jest.mock('../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../src/lib/logger');
 
-describe('controllers/before-you-start/local-planning-department', () => {
+describe('controllers/eligibility/local-planning-department', () => {
   let req;
   let res;
   let appeal;
@@ -133,7 +133,7 @@ describe('controllers/before-you-start/local-planning-department', () => {
 
       await localPlanningDepartmentController.postPlanningDepartment(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/use-a-different-service');
+      expect(res.redirect).toHaveBeenCalledWith('/eligibility/use-a-different-service');
     });
 
     it('Test the postPlanningDepartment method call on error', async () => {

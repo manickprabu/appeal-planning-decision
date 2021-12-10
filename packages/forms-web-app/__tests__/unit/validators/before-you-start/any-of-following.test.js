@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 const { testExpressValidatorMiddleware } = require('../validation-middleware-helper');
 const { rules } = require('../../../../src/validators/before-you-start/any-of-following');
 
-describe('validators/before-you-start/any-of-following', () => {
+describe('validators/eligibility/any-of-following', () => {
   describe('rules', () => {
     it('has a rule for `option`', () => {
       const rule = rules()[0].builder.build();

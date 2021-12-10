@@ -4,7 +4,7 @@ const { VIEW } = require('../../../../src/lib/views');
 
 jest.mock('../../../../src/lib/logger');
 
-describe('controllers/before-you-start/any-of-following', () => {
+describe('controllers/eligibility/any-of-following', () => {
   let req;
   let res;
 
@@ -57,7 +57,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/use-a-different-service');
+      expect(res.redirect).toHaveBeenCalledWith('/eligibility/use-a-different-service');
     });
 
     it('should send user to shutter page when choosing wrong multiple options', async () => {
@@ -69,7 +69,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/use-a-different-service');
+      expect(res.redirect).toHaveBeenCalledWith('/eligibility/use-a-different-service');
     });
 
     it('should send user to shutter page when sending invalid inputs', async () => {
@@ -81,7 +81,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/use-a-different-service');
+      expect(res.redirect).toHaveBeenCalledWith('/eligibility/use-a-different-service');
     });
 
     it('should send user to enforcement page when choosing none of these option', async () => {
@@ -93,7 +93,7 @@ describe('controllers/before-you-start/any-of-following', () => {
       };
 
       await anyOfFollowingController.postAnyOfFollowing(mockRequest, res);
-      expect(res.redirect).toHaveBeenCalledWith('/before-you-start/enforcement-notice');
+      expect(res.redirect).toHaveBeenCalledWith('/eligibility/enforcement-notice');
     });
   });
 });
