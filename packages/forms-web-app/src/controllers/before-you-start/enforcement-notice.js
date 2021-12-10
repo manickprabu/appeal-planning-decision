@@ -5,7 +5,7 @@ const {
     BEFORE_YOU_START: {
       ENFORCEMENT_NOTICE: currentPage,
       GRANTED_REFUSED_PERMISSION: nextPage,
-      TYPE_OF_PLANNING_APPLICATION: previousPage,
+      ANY_OF_FOLLOWING: previousPage,
       USE_A_DIFFERENT_SERVICE: shutterPage,
     },
   },
