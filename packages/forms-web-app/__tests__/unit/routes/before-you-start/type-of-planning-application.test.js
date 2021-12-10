@@ -6,7 +6,7 @@ const {
   rules: typeOfPlanningValidationRules,
 } = require('../../../../src/validators/before-you-start/type-of-planning-application');
 
-jest.mock('../../../../src/validators/before-you-start/type-of-planning-application');
+jest.mock('../../../../src/validators/eligibility/type-of-planning-application');
 
 describe('routes/eligibility/planning-department', () => {
   beforeEach(() => {

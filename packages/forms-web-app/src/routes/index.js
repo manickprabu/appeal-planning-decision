@@ -17,6 +17,6 @@ router.use('/cookies', cookieRouter);
 router.use('/appellant-submission', checkDecisionDateDeadline, appellantSubmissionRouter);
 router.use('/eligibility', checkDecisionDateDeadline, eligibilityRouter);
 router.use('/your-planning-appeal', yourPlanningAppealRouter);
-router.use('/before-you-start', beforeYouStartRouter);
+router.use('/eligibility', beforeYouStartRouter);
 
 module.exports = router;

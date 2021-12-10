@@ -6,9 +6,9 @@ const {
   rules: localPlanningDepartmentValidationRules,
 } = require('../../../../src/validators/before-you-start/local-planning-department');
 
-jest.mock('../../../../src/validators/before-you-start/local-planning-department');
+jest.mock('../../../../src/validators/eligibility/local-planning-department');
 
-describe('routes/before-you-start/local-planning-department', () => {
+describe('routes/eligibility/local-planning-department', () => {
   beforeEach(() => {
     // eslint-disable-next-line global-require
     require('../../../../src/routes/before-you-start/local-planning-department');
