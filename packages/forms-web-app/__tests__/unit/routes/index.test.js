@@ -30,7 +30,7 @@ describe('routes/index', () => {
     );
     expect(use).toHaveBeenCalledWith('/eligibility', checkDecisionDateDeadline, eligibilityRouter);
     expect(use).toHaveBeenCalledWith('/your-planning-appeal', yourPlanningAppealRouter);
-    expect(use).toHaveBeenCalledWith('/before-you-start', beforeYouStartRouter);
+    expect(use).toHaveBeenCalledWith('/eligibility', beforeYouStartRouter);
 
     expect(use.mock.calls.length).toBe(7);
   });

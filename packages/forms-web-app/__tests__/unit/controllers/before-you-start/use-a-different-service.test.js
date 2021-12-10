@@ -3,7 +3,7 @@ const useADifferentServiceController = require('../../../../src/controllers/befo
 const { VIEW } = require('../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../mocks');
 
-describe('controllers/before-you-start/use-a-different-service', () => {
+describe('controllers/eligibility/use-a-different-service', () => {
   const req = mockReq();
   const res = mockRes();
 
