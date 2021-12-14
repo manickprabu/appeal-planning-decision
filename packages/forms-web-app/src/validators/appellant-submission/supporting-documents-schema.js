@@ -1,4 +1,4 @@
-// const validAV = require('pins-clamav');
+const validAV = require('@planning-inspectorate/pins-clamav');
 const { validMimeType, validateMimeBinaryType } = require('pins-mime-validation');
 const config = require('../../config');
 const validateFileSize = require('../custom/file-size');
@@ -34,7 +34,8 @@ module.exports = {
         );
 
         // check file for Virus
-        // await validAV(value, name);
+        await validAV(value, name);
+        await validAV(value, { fileName: name, location: '' });
 
         // check binary mime type of file
         await validateMimeBinaryType(
