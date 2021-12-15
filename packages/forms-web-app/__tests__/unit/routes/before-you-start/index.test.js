@@ -5,7 +5,7 @@ const typeOfPlanningRouter = require('../../../../src/routes/before-you-start/ty
 const anyOfFollowingRouter = require('../../../../src/routes/before-you-start/any-of-following');
 const useADifferentServiceRouter = require('../../../../src/routes/before-you-start/use-a-different-service');
 
-describe('routes/before-you-start/index', () => {
+describe('routes/eligibility/index', () => {
   beforeEach(() => {
     jest.resetModules();
 
