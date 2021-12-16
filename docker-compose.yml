@@ -130,8 +130,10 @@ services:
   forms-web-app:
     image: node:14-alpine
     environment:
+      CLAMAV_HOST: http://clamav-proxy:3000
       APPEALS_SERVICE_API_URL: http://appeals-service-api:3000
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
+      CLAM_AV_HOST: https://dev-clamav.azurewebsites.net
       FILE_UPLOAD_DEBUG: 'false'
       FILE_UPLOAD_MAX_FILE_SIZE_BYTES: 15000000
       FILE_UPLOAD_USE_TEMP_FILES: 'true'
@@ -169,6 +171,7 @@ services:
   lpa-questionnaire-web-app:
     image: node:14-alpine
     environment:
+      CLAMAV_HOST: http://clamav-proxy:3000
       ALLOW_APPEAL_REPLY_CREATE: "true"
       APPEALS_SERVICE_API_URL: http://appeals-service-api:3000
       APPEAL_REPLY_SERVICE_API_URL: http://appeal-reply-service-api:3000
@@ -280,6 +283,25 @@ services:
       dockerfile: ../Dockerfile
     ports:
       - 5002:3000
+
+  clamav-proxy: 
+    build:
+      context: ./packages/clamav-proxy
+      dockerfile: ../Dockerfile
+    ports: 
+      - 3100:3000
+    links: 
+      - clamav-server
+    environment: 
+      CLAMAV_HOST: clamav-server
+      CLAMAV_PORT: 3310
+    restart: on-failure
+    command: npm run start:dev
+
+  clamav:
+    image: clamav/clamav
+    ports:
+      - 3310:3310
 
   docs-horizon:
     image: swaggerapi/swagger-ui
