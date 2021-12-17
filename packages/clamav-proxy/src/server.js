@@ -1,7 +1,3 @@
-/**
- * server
- */
-
 const http = require('http');
 require('express-async-errors');
 

@@ -5,7 +5,7 @@ const { prometheus } = require('@pins/common');
 const uuid = require('uuid');
 const multer = require('multer');
 const logger = require('./lib/logger');
-const proxyController = require('./controllers/proxyController');
+const proxyController = require('./controllers/proxy-controller');
 
 const upload = multer();
 
