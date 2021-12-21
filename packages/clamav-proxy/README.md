@@ -1,6 +1,6 @@
-# Appeals Service API
+# ClamAV Proxy API
 
-The microservice API for the appeals service
+The microservice API for the clamav proxy.
 
 ## Commands
 
@@ -14,11 +14,6 @@ All these are to be run with `npm run <command>`.
 - `test:cov`: runs the unit test suite and tests coverage
 - `test:watch`: runs the unit test suite and watches for changes
 - `test:tdd`: runs the unit tests and watches all files for changes
-
-## Endpoints
-
-The API spec doc is available at `/api/openapi.yaml`.
-The app will serve this at the `/api-docs` endpoint.
 
 ## Project Structure
 

@@ -1,6 +1,6 @@
 {
-  "name": "appeals-service-api",
-  "version": "0.0.0",
+  "name": "clamav-proxy",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "node": ">=14.0.0 <15.0.0",
@@ -19,7 +19,6 @@
     "test:tdd": "jest --watchAll --verbose",
     "documentation": "jest --bail --coverage --coverageReporters=cobertura --reporters=default --reporters=jest-junit"
   },
-  "author": "Foundry4 <www.foundry4.com>",
   "lint-staged": {
     "./**/*.js": "npm run lint:fix",
     "./**/*.{js, json}": "npm run format"
