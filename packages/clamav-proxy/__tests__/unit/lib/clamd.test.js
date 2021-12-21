@@ -1,4 +1,4 @@
-const clamd = require('../../src/lib/clamd');
+const clamd = require('../../../src/lib/clamd');
 
 describe('lib/clamd', () => {
   describe('send file', () => {
@@ -8,6 +8,16 @@ describe('lib/clamd', () => {
         given: () => Buffer.from([]),
         expected: true,
       },
+      {
+        description: "send infected jpg file to clamav server",
+        given: () => Buffer.from([]),
+        expected: true
+      },
+      {
+        description: "send infected png file to clamav server",
+        given: () => Buffer.from([]),
+        expected: true
+      }
     ].forEach(({ description, given, expected }) => {
       it(`should process negative file responses - ${description}`, async () => {
         const result = await clamd.sendFile(given());
