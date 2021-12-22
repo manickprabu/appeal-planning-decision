@@ -281,6 +281,25 @@ services:
     ports:
       - 5002:3000
 
+  clamav-proxy: 
+    build:
+      context: ./packages/clamav-proxy
+      dockerfile: ../Dockerfile
+    ports: 
+      - "80:3000"
+    links: 
+      - clamav-server
+    environment: 
+      CLAMAV_HOST: clamav-server
+      CLAMAV_PORT: 3310
+    restart: on-failure
+    command: npm run start:dev
+
+  clamav:
+    image: clamav/clamav
+    ports:
+      - 3310:3310
+
   docs-horizon:
     image: swaggerapi/swagger-ui
     environment:
