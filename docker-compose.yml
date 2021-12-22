@@ -9,13 +9,25 @@
 
 version: '3.7'
 services:
-  pdf-service-api:
-    build: './packages/pdf-service-api'
-    environment:
-      SERVER_SHOW_ERRORS: 'true'
-      LOGGER_LEVEL: 'debug'
-    ports:
-      - 3003:3000
+  # pdf-service-api:
+  #   build: './packages/pdf-service-api'
+  #   environment:
+  #     SERVER_SHOW_ERRORS: 'true'
+  #     LOGGER_LEVEL: 'debug'
+  #   ports:
+  #     - 3003:3000
+
+  clamav-proxy: 
+    build: './packages/clamav-proxy'
+    ports: 
+      - 3100:3000
+    links: 
+      - clamav-server
+    environment: 
+      CLAMAV_HOST: clamav-server
+      CLAMAV_PORT: 3310
+    restart: on-failure
+    command: npm run start
 
   appeal-reply-service-api:
     image: node:14-alpine
@@ -283,21 +295,9 @@ services:
     ports:
       - 5002:3000
 
-  clamav-proxy: 
-    build:
-      context: ./packages/clamav-proxy
-      dockerfile: ../Dockerfile
-    ports: 
-      - 3100:3000
-    links: 
-      - clamav-server
-    environment: 
-      CLAMAV_HOST: clamav-server
-      CLAMAV_PORT: 3310
-    restart: on-failure
-    command: npm run start:dev
+  
 
-  clamav:
+  clamav-server:
     image: clamav/clamav
     ports:
       - 3310:3310
