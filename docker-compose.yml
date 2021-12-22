@@ -9,13 +9,13 @@
 
 version: '3.7'
 services:
-  # pdf-service-api:
-  #   build: './packages/pdf-service-api'
-  #   environment:
-  #     SERVER_SHOW_ERRORS: 'true'
-  #     LOGGER_LEVEL: 'debug'
-  #   ports:
-  #     - 3003:3000
+  pdf-service-api:
+    build: './packages/pdf-service-api'
+    environment:
+      SERVER_SHOW_ERRORS: 'true'
+      LOGGER_LEVEL: 'debug'
+    ports:
+      - 3003:3000
 
   clamav-proxy: 
     build: './packages/clamav-proxy'
