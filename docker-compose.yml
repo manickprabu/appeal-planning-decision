@@ -18,7 +18,7 @@ services:
       - 3003:3000
 
   clamav-proxy: 
-    build: './packages/clamav-proxy'
+    image: node:14-alpine
     ports: 
       - 3100:3000
     links: 
@@ -26,8 +26,11 @@ services:
     environment: 
       CLAMAV_HOST: clamav-server
       CLAMAV_PORT: 3310
+    volumes:
+      - ./packages/common:/opt/app/node_modules/@pins/common:ro # Replace the module to avoid symlink errors
+      - ./packages/clamav-proxy:/opt/app:ro
     restart: on-failure
-    command: npm run start
+    command: npm run start:dev
 
   appeal-reply-service-api:
     image: node:14-alpine
