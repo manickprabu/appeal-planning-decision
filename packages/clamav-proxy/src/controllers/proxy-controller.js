@@ -16,7 +16,7 @@ const processFile = async (req, res) => {
     return res.send(result);
   } catch (error) {
     logger.error(error, 'error uploading file to clamav');
-    return res.send(error?.message || 'error uploading file to clamav');
+    return res.send('error uploading file to clamav');
   }
 };
 

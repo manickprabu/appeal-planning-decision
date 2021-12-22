@@ -17,6 +17,7 @@ const mockRes = () => ({
   render: jest.fn(),
   sendStatus: jest.fn(),
   status: jest.fn(),
+  send: jest.fn(),
 });
 
 module.exports = {

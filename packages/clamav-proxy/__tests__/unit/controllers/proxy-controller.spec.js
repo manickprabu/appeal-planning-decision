@@ -1,9 +1,10 @@
-const { mockRes } = require('../../../../forms-web-app/__tests__/unit/mocks');
+jest.mock("../../../src/lib/clamd")
+const clamd = require('../../../src/lib/clamd');
 const controller = require('../../../src/controllers/proxy-controller');
-const { mockReq } = require('../mocks');
+const { mockReq, mockRes } = require('../mocks');
 
 describe('controllers/proxy-controller', () => {
-  let req; 
+  let req;
   let res;
 
   beforeEach(() => {
@@ -14,10 +15,22 @@ describe('controllers/proxy-controller', () => {
   })
 
   it('should process file sent via form data', async () => {
+
+    clamd.sendFile.mockResolvedValue({
+      file: "",
+      isInfected: true,
+      viruses: []
+    })
+
+    const sampleFile = {
+      title: 'sample',
+      buffer: Buffer.from([])
+    }
+
     const mockRequest = {
       ...req,
       files: {
-        file: Buffer.from([])
+        file: [sampleFile]
       }
     };
 
@@ -29,7 +42,7 @@ describe('controllers/proxy-controller', () => {
     })
   });
 
-  it('should return error for file that has not been sent', async () => {
+  it('should return 400 for file is undefined', async () => {
     const mockRequest = {
       ...req,
       files: {
@@ -38,7 +51,18 @@ describe('controllers/proxy-controller', () => {
     };
 
     await controller.processFile(mockRequest, res);
-    expect(res.send).toHaveBeenCalled()
-
+    expect(res.sendStatus).toHaveBeenCalledWith(400)
   });
+
+  it('should return message after error', async () => {
+    const mockRequest = {
+      ...req,
+      files: {
+        file: [undefined]
+      }
+    };
+
+    await controller.processFile(mockRequest, res);
+    expect(res.send).toHaveBeenCalledWith('error uploading file to clamav')
+  })
 });
