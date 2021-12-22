@@ -103,6 +103,11 @@ const appeal = {
       },
     },
   },
+  contactDetailsSection: {
+    name: 'a name',
+    email: 'anemail@gmail.com',
+    companyName: 'Test Company',
+  },
   sectionStates: {
     aboutYouSection: {
       yourDetails: 'COMPLETED',
