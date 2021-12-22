@@ -28,6 +28,14 @@ describe('schemas/full-planning/update', () => {
     });
 
     describe('id', () => {
+      it('should strip leading/trailing spaces', async () => {
+        appeal2.id = '  271c9b5b-af90-4b45-b0e7-0a7882da1e03  ';
+        appeal.id = '271c9b5b-af90-4b45-b0e7-0a7882da1e03';
+
+        const result = await update.validate(appeal2, config);
+        expect(result).toEqual(appeal);
+      });
+
       it('should throw an error when not given a UUID', async () => {
         appeal.id = 'abc123';
 
@@ -176,6 +184,141 @@ describe('schemas/full-planning/update', () => {
 
         await expect(() => update.validate(appeal, config)).rejects.toThrow(
           'beforeYouStartSection.typeOfPlanningApplication is a required field',
+        );
+      });
+    });
+
+    describe('requiredDocumentsSection', () => {
+      it('should remove unknown fields', async () => {
+        appeal2.requiredDocumentsSection.unknownField = 'unknown field';
+
+        const result = await update.validate(appeal2, config);
+        expect(result).toEqual(appeal);
+      });
+
+      it('should throw an error when given a null value', async () => {
+        appeal.requiredDocumentsSection = null;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection must be a `object` type, but the final value was: `null`',
+        );
+      });
+    });
+
+    describe('requiredDocumentsSection.originalApplication', () => {
+      it('should remove unknown fields', async () => {
+        appeal2.requiredDocumentsSection.originalApplication.unknownField = 'unknown field';
+
+        const result = await update.validate(appeal2, config);
+        expect(result).toEqual(appeal);
+      });
+
+      it('should throw an error when given a null value', async () => {
+        appeal.requiredDocumentsSection.originalApplication = null;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication must be a `object` type, but the final value was: `null`',
+        );
+      });
+    });
+
+    describe('requiredDocumentsSection.originalApplication.uploadedFile', () => {
+      it('should remove unknown fields', async () => {
+        appeal2.requiredDocumentsSection.originalApplication.uploadedFile.unknownField =
+          'unknown field';
+
+        const result = await update.validate(appeal2, config);
+        expect(result).toEqual(appeal);
+      });
+
+      it('should throw an error when given a null value', async () => {
+        appeal.requiredDocumentsSection.originalApplication.uploadedFile = null;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication.uploadedFile must be a `object` type, but the final value was: `null`',
+        );
+      });
+    });
+
+    describe('requiredDocumentsSection.originalApplication.uploadedFile.name', () => {
+      it('should throw an error when given a value with more than 255 characters', async () => {
+        appeal.requiredDocumentsSection.originalApplication.uploadedFile.name = 'a'.repeat(256);
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication.uploadedFile.name must be at most 255 characters',
+        );
+      });
+
+      it('should strip leading/trailing spaces', async () => {
+        appeal2.requiredDocumentsSection.originalApplication.uploadedFile.name = '  test-pdf.pdf  ';
+        appeal.requiredDocumentsSection.originalApplication.uploadedFile.name = 'test-pdf.pdf';
+
+        const result = await update.validate(appeal2, config);
+        expect(result).toEqual(appeal);
+      });
+
+      it('should throw an error when not given a value', async () => {
+        delete appeal.requiredDocumentsSection.originalApplication.uploadedFile.name;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication.uploadedFile.name is a required field',
+        );
+      });
+    });
+
+    describe('requiredDocumentsSection.originalApplication.uploadedFile.originalFileName', () => {
+      it('should throw an error when given a value with more than 255 characters', async () => {
+        appeal.requiredDocumentsSection.originalApplication.uploadedFile.originalFileName =
+          'a'.repeat(256);
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication.uploadedFile.originalFileName must be at most 255 characters',
+        );
+      });
+
+      it('should strip leading/trailing spaces', async () => {
+        appeal2.requiredDocumentsSection.originalApplication.uploadedFile.originalFileName =
+          '  test-pdf.pdf  ';
+        appeal.requiredDocumentsSection.originalApplication.uploadedFile.originalFileName =
+          'test-pdf.pdf';
+
+        const result = await update.validate(appeal2, config);
+        expect(result).toEqual(appeal);
+      });
+
+      it('should throw an error when not given a value', async () => {
+        delete appeal.requiredDocumentsSection.originalApplication.uploadedFile.originalFileName;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication.uploadedFile.originalFileName is a required field',
+        );
+      });
+    });
+
+    describe('requiredDocumentsSection.originalApplication.uploadedFile.id', () => {
+      it('should strip leading/trailing spaces', async () => {
+        appeal2.requiredDocumentsSection.originalApplication.uploadedFile.id =
+          '  271c9b5b-af90-4b45-b0e7-0a7882da1e03  ';
+        appeal.requiredDocumentsSection.originalApplication.uploadedFile.id =
+          '271c9b5b-af90-4b45-b0e7-0a7882da1e03';
+
+        const result = await update.validate(appeal2, config);
+        expect(result).toEqual(appeal);
+      });
+
+      it('should throw an error when not given a UUID', async () => {
+        appeal.requiredDocumentsSection.originalApplication.uploadedFile.id = 'abc123';
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication.uploadedFile.id must be a valid UUID',
+        );
+      });
+
+      it('should throw an error when not given a value', async () => {
+        delete appeal.requiredDocumentsSection.originalApplication.uploadedFile.id;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'requiredDocumentsSection.originalApplication.uploadedFile.id is a required field',
         );
       });
     });
