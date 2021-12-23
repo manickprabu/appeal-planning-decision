@@ -1,5 +1,4 @@
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
-import { verifyPageTitle } from '../../../../../../../e2e-tests/cypress/support/common/verify-page-title';
 import {
   applicationStatusDetailedText,
   applicationStatusText,
@@ -13,13 +12,15 @@ import {
   statusUploadDocsFromPlanningApplication,
   statusUploadDocsForYourAppeal, statusCheckYourAnswers,
 } from '../../../../support/full-planning/appeals-service/page-objects/appeal-form-task-list-po';
+import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
+import { verifyPageTitle } from '../../../../support/common/verify-page-title';
 
 const pageHeading = 'Appeal a planning decision';
-const url = '/full-appeal/task-list';
+const url = 'full-appeal/task-list';
 const pageTitle = 'Appeal a planning decision - Appeal a planning decision - GOV.UK';
 
 Given('Appellant has been successful on their eligibility',()=> {
- cy.visit('http://localhost:9003/full-appeal/task-list');
+ goToAppealsServicePage(url);
 })
 When("they are on the 'Appeal a Planning Decision' page",()=> {
   verifyPageTitle(pageTitle);
