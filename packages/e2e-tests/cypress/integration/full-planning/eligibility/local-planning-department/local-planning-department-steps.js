@@ -1,5 +1,4 @@
 import {Given, When,Then} from 'cypress-cucumber-preprocessor/steps';
-import { goToPage } from '../../../../support/common/go-to-page/goToPage';
 import { enterLocalPlanningDepart } from '../../../../support/full-planning/eligibility/local-planning-depart/enter-local-planning-depart';
 import { getContinueButton, getErrorMessageSummary} from '../../../../support/common-page-objects/common-po';
 import { verifyPageHeading } from '../../../../support/common/verify-page-heading';
@@ -7,12 +6,13 @@ import { verifyPageTitle } from '../../../../support/common/verify-page-title';
 import { verifyErrorMessage } from '../../../../support/common/verify-error-message';
 import { getLocalPlanningDepartmentError } from '../../../../support/full-planning/eligibility/page-objects/local-planning-department-po';
 import { acceptCookiesBanner } from '../../../../support/common/accept-cookies-banner';
+import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
 
 const pageTitle = 'Which local planning department dealt with your planning application? - Before you start - Appeal a householder planning decision - GOV.UK';
 const pageHeading = 'Which local planning department dealt with your planning application?';
-const url = `${Cypress.env('APPEALS_BASE_URL')}/before-you-start/local-planning-depart`;
+const url = 'before-you-start/local-planning-depart';
 Given('appellant is on the Local Planning Authority Page',()=> {
-  goToPage(url);
+  goToAppealsServicePage(url);
   acceptCookiesBanner();
   verifyPageTitle(pageTitle);
   verifyPageHeading(pageHeading)
