@@ -8,7 +8,7 @@ trigger:
       - master
   paths:
     include:
-      - packages/clamav-proxy
+      - packages/clamav-rest-server
 
 resources:
   - repo: self
@@ -23,8 +23,8 @@ variables:
   # -----------------------------------------------------------------------
 
   # Container registry service connection established during pipeline creation
-  clamAVProxyDockerfile: '$(Build.SourcesDirectory)/packages/clamav-proxy/Dockerfile'
-  imageRepository: 'clamav-proxy'
+  clamAVProxyDockerfile: '$(Build.SourcesDirectory)/packages/clamav-rest-server/Dockerfile'
+  imageRepository: 'clamav-rest-server'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
   dockerRegistryServiceConnection: 'appeals-service-api-registry-connection'
   # Agent VM image name
@@ -64,12 +64,12 @@ stages:
               dockerfile: $(clamAVProxyDockerfile)
               containerRegistry: $(dockerRegistryServiceConnection)
               arguments: >
-                --build-arg APP_NAME=clamav-proxy
+                --build-arg APP_NAME=clamav-rest-server
                 --build-arg BUILD_ID=$(Build.BuildNumber)
                 --build-arg VERSION=$(versionNumber)
               tags: |
                 $(versionNumber)
-                clamav-proxy
+                clamav-rest-server
                 latest
           - task: Docker@2
             displayName: Push Image
@@ -79,5 +79,5 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(versionNumber)
-                clamav-proxy
+                clamav-rest-server
                 latest
