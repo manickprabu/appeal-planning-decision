@@ -1,17 +1,18 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { verifyPageTitle } from '../../../../../../../e2e-tests/cypress/support/common/verify-page-title';
 import {
   CheckYourAnswersLink, getPageCaption, getPlanningAppMadeInYourName, getSectionHeading, yourContactDetails,
 } from '../../../../support/full-planning/appeals-service/page-objects/check-your-answers-po';
 import { getBackLink } from '../../../../support/common-page-objects/common-po';
-import { verifyPageHeading } from '../../../../../../../e2e-tests/cypress/support/common/verify-page-heading';
+import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
+import { verifyPageTitle } from '../../../../support/common/verify-page-title';
+import { verifyPageHeading } from '../../../../support/common/verify-page-heading';
 
-const url = 'localhost:9003/full-appeal/task-list';
+const url = 'full-appeal/task-list';
 const pageTitle = 'Check your answers - Appeal a householder planning decision - GOV.UK';
 const pageHeading = 'Check your answers';
 
 Given("the appellant is on the 'Appeal a planning decision' page",()=> {
-  cy.visit(url);
+ goToAppealsServicePage(url);
 })
 When("they click on 'Check your answers and submit your appeal' link",()=> {
   CheckYourAnswersLink().click();
@@ -26,10 +27,10 @@ Then('the information they have inputted will be displayed',()=> {
   yourContactDetails().should('contain','Your contact details');
 })
 Given("the agent is on the 'Appeal a planning decision' page",()=> {
-  cy.visit(url);
+  goToAppealsServicePage(url);
 })
 Given("the {string} is on the 'Check your answers' page",()=> {
-  cy.visit(url);
+  goToAppealsServicePage(url);
   CheckYourAnswersLink().click();
   verifyPageTitle(pageTitle);
 })
