@@ -19,6 +19,20 @@ const update = pinsYup
           .required(),
       })
       .noUnknown(true),
+    contactDetailsSection: pinsYup
+      .object()
+      .shape({
+        name: pinsYup
+          .string()
+          .min(2)
+          .max(80)
+          .matches(/^[a-z\-' ]+$/i)
+          .required(),
+        companyName: pinsYup.string().max(50).nullable(),
+        email: pinsYup.string().email().max(255).required(),
+      })
+      .noUnknown(true),
+    sectionStates: pinsYup.object().shape({}),
   });
 
 module.exports = update;
