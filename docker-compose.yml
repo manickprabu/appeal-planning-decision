@@ -26,6 +26,7 @@ services:
     environment: 
       CLAMAV_HOST: clamav-server
       CLAMAV_PORT: 3310
+    working_dir: /opt/app
     volumes:
       - ./packages/common:/opt/app/node_modules/@pins/common:ro # Replace the module to avoid symlink errors
       - ./packages/clamav-rest-server:/opt/app:ro
