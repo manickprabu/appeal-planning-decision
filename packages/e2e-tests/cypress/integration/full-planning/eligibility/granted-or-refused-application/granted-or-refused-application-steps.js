@@ -1,23 +1,27 @@
 import {Given, When,Then} from 'cypress-cucumber-preprocessor/steps';
-import { goToPage } from '../../../../support/common/go-to-page/goToPage';
-import { verifyPageTitle } from '../../../../../../../e2e-tests/cypress/support/common/verify-page-title';
-import { verifyPageHeading } from '../../../../../../../e2e-tests/cypress/support/common/verify-page-heading';
 
 import { selectPlanningApplicationDecision } from '../../../../support/full-planning/eligibility/granted-or-refused-application/select-planning-application-decision';
 import { verifyErrorMessage } from '../../../../support/common/verify-error-message';
 import { acceptCookiesBanner } from '../../../../support/common/accept-cookies-banner';
-import { getBackLink, getContinueButton, getErrorMessageSummary } from '../../../../../../../e2e-tests/cypress/support/page-objects/common-po';
 import { getPlanningApplicationDecisionError } from '../../../../support/full-planning/eligibility/page-objects/granted-or-refused-application-po';
+import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
+import { verifyPageTitle } from '../../../../support/common/verify-page-title';
+import { verifyPageHeading } from '../../../../support/common/verify-page-heading';
+import {
+  getBackLink,
+  getContinueButton,
+  getErrorMessageSummary,
+} from '../../../../support/common-page-objects/common-po';
 
 const pageTitle = 'Was your planning application granted or refused? - Before you start - Appeal a planning decision - GOV.UK';
 const pageHeading = 'Was your planning application granted or refused?';
-const url = `${Cypress.env('APPEALS_BASE_URL')}/before-you-start/granted-or-refused`;
+const url = 'before-you-start/granted-or-refused';
 const decisionDatePageUrl = '/before-you-start/decision-date';
 const decisionDateDuePageUrl = '/before-you-start/date-decision-due';
 const previousPageUrl = '/before-you-start/any-of-following';
 
 Given('appellant is on the was your planning application granted or refused page', () => {
-    goToPage(url);
+    goToAppealsServicePage(url);
     acceptCookiesBanner();
     verifyPageTitle(pageTitle);
     verifyPageHeading(pageHeading);
