@@ -17,7 +17,7 @@ services:
     ports:
       - 3003:3000
 
-  clamav-proxy: 
+  clamav-rest-server: 
     image: node:14-alpine
     ports: 
       - 3100:3000
@@ -28,7 +28,7 @@ services:
       CLAMAV_PORT: 3310
     volumes:
       - ./packages/common:/opt/app/node_modules/@pins/common:ro # Replace the module to avoid symlink errors
-      - ./packages/clamav-proxy:/opt/app:ro
+      - ./packages/clamav-rest-server:/opt/app:ro
     restart: on-failure
     command: npm run start:dev
 
@@ -145,7 +145,7 @@ services:
   forms-web-app:
     image: node:14-alpine
     environment:
-      CLAM_AV_HOST: http://clamav-proxy:3000
+      CLAM_AV_HOST: http://clamav-rest-server:3000
       APPEALS_SERVICE_API_URL: http://appeals-service-api:3000
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       FILE_UPLOAD_DEBUG: 'false'
@@ -185,7 +185,7 @@ services:
   lpa-questionnaire-web-app:
     image: node:14-alpine
     environment:
-      CLAM_AV_HOST: http://clamav-proxy:3000
+      CLAM_AV_HOST: http://clamav-rest-server:3000
       ALLOW_APPEAL_REPLY_CREATE: "true"
       APPEALS_SERVICE_API_URL: http://appeals-service-api:3000
       APPEAL_REPLY_SERVICE_API_URL: http://appeal-reply-service-api:3000
