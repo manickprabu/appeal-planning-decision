@@ -4,7 +4,6 @@ describe('/lib/householder-planning/views', () => {
   it('should have the expected defined constants', () => {
     expect(VIEW).toEqual({
       HOUSEHOLDER_PLANNING: {
-        LISTED_BUILDING: 'householder-planning/eligibility/listed-building-householder',
         ELIGIBILITY: {
           CLAIMING_COSTS: 'householder-planning/eligibility/claiming-costs-householder',
           ENFORCEMENT_NOTICE_HOUSEHOLDER:
@@ -12,6 +11,8 @@ describe('/lib/householder-planning/views', () => {
           GRANTED_OR_REFUSED_HOUSEHOLDER:
             'householder-planning/eligibility/granted-or-refused-householder',
           HAS_APPEAL_FORM: 'householder-planning/eligibility/results-householder',
+          DECISION_DATE_HOUSEHOLDER: 'householder-planning/eligibility/decision-date-householder',
+          LISTED_BUILDING: 'householder-planning/eligibility/listed-building-householder',
         },
       },
     });
