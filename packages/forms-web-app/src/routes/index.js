@@ -11,6 +11,7 @@ const cookieRouter = require('./cookies');
 const guidancePagesRouter = require('./guidance-pages');
 const yourPlanningAppealRouter = require('./your-planning-appeal');
 const documentRouter = require('./document');
+const householderPlanningRouter = require('./householder-planning');
 const checkDecisionDateDeadline = require('../middleware/check-decision-date-deadline');
 
 router.use('/', homeRouter);
@@ -22,5 +23,6 @@ router.use('/eligibility', checkDecisionDateDeadline, eligibilityRouter);
 router.use('/your-planning-appeal', yourPlanningAppealRouter);
 router.use('/before-you-start', fullAppealRouter);
 router.use('/document', documentRouter);
+router.use('/before-you-start', householderPlanningRouter);
 
 module.exports = router;
