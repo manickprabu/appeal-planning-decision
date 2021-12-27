@@ -22,7 +22,7 @@ describe('controllers/full-planning/out-of-time-shutter-page', () => {
       const mockRequest = {
         ...req,
         session: {
-          appealDeadline,
+          appeal: { eligibility: { appealDeadline } },
         },
       };
 
