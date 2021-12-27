@@ -63,6 +63,7 @@ describe('lib/views', () => {
         ENFORCEMENT_NOTICE: 'full-planning/enforcement-notice',
         GRANTED_OR_REFUSED: 'full-planning/granted-or-refused',
         LOCAL_PLANNING_DEPARTMENT: 'full-planning/local-planning-department',
+        OUT_OF_TIME: 'full-planning/out-of-time-shutter-page',
         TYPE_OF_PLANNING_APPLICATION: 'full-planning/type-of-planning-application',
         USE_A_DIFFERENT_SERVICE: 'full-planning/use-a-different-service',
       },
