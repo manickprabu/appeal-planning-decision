@@ -6,7 +6,8 @@ const appellantSubmissionRouter = require('./appellant-submission');
 const fullPlanningAppellantSubmissionRouter = require('./full-planning/full-appeal');
 const eligibilityRouter = require('./eligibility');
 const homeRouter = require('./home');
-const fullPlanningRouter = require('./full-planning');
+const fullPlanningEligibilityRouter = require('./full-planning');
+const householderPlanningEligibilityRouter = require('./householder-planning/eligibility');
 const cookieRouter = require('./cookies');
 const guidancePagesRouter = require('./guidance-pages');
 const yourPlanningAppealRouter = require('./your-planning-appeal');
@@ -19,6 +20,7 @@ router.use('/appellant-submission', checkDecisionDateDeadline, appellantSubmissi
 router.use('/full-appeal', checkDecisionDateDeadline, fullPlanningAppellantSubmissionRouter);
 router.use('/eligibility', checkDecisionDateDeadline, eligibilityRouter);
 router.use('/your-planning-appeal', yourPlanningAppealRouter);
-router.use('/before-you-start', fullPlanningRouter);
+router.use('/before-you-start', fullPlanningEligibilityRouter);
+router.use('/before-you-start', householderPlanningEligibilityRouter);
 
 module.exports = router;
