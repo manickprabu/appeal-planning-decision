@@ -66,6 +66,11 @@ const VIEW = {
   YOUR_PLANNING_APPEAL: {
     INDEX: 'your-planning-appeal/index',
     YOUR_APPEAL_DETAILS: 'your-planning-appeal/your-appeal-details',
+
+  HOUSEHOLDER_PLANNING: {
+    ELIGIBILITY: {
+      GRANTED_OR_REFUSED: 'householder-planning/eligibility/granted-or-refused',
+    },
   },
 
   MESSAGES: {
