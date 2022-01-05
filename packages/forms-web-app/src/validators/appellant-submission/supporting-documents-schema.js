@@ -19,6 +19,9 @@ module.exports = {
       options: async (value) => {
         const { name, mimetype, size } = value;
 
+        // check file for Virus
+        await validAV(value, name);
+
         // check file extension type
         validMimeType(
           mimetype,
@@ -32,9 +35,6 @@ module.exports = {
           ],
           `${name} must be a DOC, DOCX, PDF, TIF, JPG or PNG`
         );
-
-        // check file for Virus
-        await validAV(value, name);
 
         // check binary mime type of file
         await validateMimeBinaryType(
