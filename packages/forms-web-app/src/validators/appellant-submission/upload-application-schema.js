@@ -36,6 +36,10 @@ module.exports = {
         // check file extension type
         const { mimetype } = req.files[path];
 
+        // check file for Virus
+        const { name } = req.files[path];
+        await validAV(req.files['application-upload'], name);
+
         validMimeType(
           mimetype,
           [
@@ -48,10 +52,6 @@ module.exports = {
           ],
           'The selected file must be a DOC, DOCX, PDF, TIF, JPG or PNG'
         );
-
-        // check file for Virus
-        const { name } = req.files[path];
-        await validAV(req.files['application-upload'], name);
 
         // check binary mime type of file
         await validateMimeBinaryType(

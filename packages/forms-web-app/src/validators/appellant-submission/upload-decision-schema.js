@@ -33,6 +33,10 @@ module.exports = {
           return true;
         }
 
+        // check file for Virus
+        const { name } = req.files[path];
+        await validAV(req.files['decision-upload'], name);
+
         // check file extension type
         const { mimetype } = req.files[path];
 
@@ -53,10 +57,6 @@ module.exports = {
         const { size } = req.files[path];
 
         validateFileSize(size, config.fileUpload.pins.uploadApplicationMaxFileSize);
-
-        // check file for Virus
-        const { name } = req.files[path];
-        await validAV(req.files['decision-upload'], name);
 
         // check binary mime type of file
         await validateMimeBinaryType(
