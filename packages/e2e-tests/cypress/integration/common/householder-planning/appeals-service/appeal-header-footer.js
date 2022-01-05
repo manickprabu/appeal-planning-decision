@@ -8,7 +8,7 @@ import { confirmHomepageLinkIsDisplayed } from '../../../../support/householder-
 import { confirmBackButtonNotDisplayed } from '../../../../support/householder-planning/appeals-service/appeal-header-footer/confirmBackButtonNotDisplayed';
 import { confirmBackButtonDisplayed } from '../../../../support/householder-planning/appeals-service/appeal-header-footer/confirmBackButtonDisplayed';
 import { confirmGoogleAnalyticsLinkIsPresent } from '../../../../support/householder-planning/appeals-service/appeal-header-footer/confirmGoogleAnalyticsLinkIsPresent';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from './pageURLAppeal';
 
 Given('an appeal is being made', () => {});

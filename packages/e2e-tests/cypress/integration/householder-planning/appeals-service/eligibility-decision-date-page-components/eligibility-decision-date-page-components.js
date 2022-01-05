@@ -4,12 +4,13 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps"
 import PO_EligibilityDecisionDate from './PageObjects/PO_EligibilityDecisionDate'
 import PO_EligibilityNoDecision from "./PageObjects/PO_EligibilityNoDecision"
 import {eligibleDate} from "../eligibility-decision-date/eligibility-decision-date";
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 const eligPage = new PO_EligibilityDecisionDate()
 const eligNoDecPage = new PO_EligibilityNoDecision()
 
 
 Given('I navigate to {string}', (url) => {
-    cy.visit(url);
+    goToAppealsPage(url);
 })
 
 Then('I am on {string}', (url) => {

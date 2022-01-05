@@ -13,7 +13,7 @@ Feature: The Decision Date page has the right structure
 
 # -> abstract language re: when i want to review my last piece of data then i can easily
     Scenario: User selects the back link
-        Given I navigate to "/eligibility/planning-department"
+        Given I navigate to "eligibility/planning-department"
         And I navigate to the Eligibility checker page
         When I select the Back link
         Then I am on "/eligibility/planning-department"

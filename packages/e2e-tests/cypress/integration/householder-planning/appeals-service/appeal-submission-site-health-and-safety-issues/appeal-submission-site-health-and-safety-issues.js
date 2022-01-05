@@ -8,7 +8,7 @@ import { confirmHealthAndSafetyPage } from '../../../../support/householder-plan
 import { confirmSiteHasIssuesAnswered } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/confirmSiteHasIssuesAnswered';
 import { confirmSiteSafetyRejectedBecause } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/confirmSiteSafetyRejectedBecause';
 import { confirmSafetyIssuesConcernsValue } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/confirmSafetyIssuesConcernsValue';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 const CONCERNS = "There's no roof and only one wall.";

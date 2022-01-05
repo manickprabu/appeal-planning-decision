@@ -8,7 +8,7 @@ import { clickReEnterTheDecisionDate } from '../../../../support/householder-pla
 import { confirmNavigationDecisionDatePage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmNavigationDecisionDatePage';
 import { confirmProvidedDecisionDateError } from '../../../../support/householder-planning/appeals-service/eligibility-decision-date/confirmProvidedDecisionDateError';
 import { confirmProvidedDecisionDateErrorHighlight } from '../../../../support/householder-planning/appeals-service/eligibility-decision-date/confirmProvidedDecisionDateErrorHighlight';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 export const dateForXDaysAgo = (x) => {

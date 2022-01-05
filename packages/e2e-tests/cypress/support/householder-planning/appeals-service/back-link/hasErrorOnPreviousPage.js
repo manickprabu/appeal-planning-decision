@@ -1,7 +1,7 @@
 import { clickSaveAndContinue } from '../appeal-navigation/clickSaveAndContinue';
 import { confirmPlanningApplicationNumberRejectedBecause } from '../appellant-submission-planning-application-number/confirmPlanningApplicationNumberRejectedBecause';
 import { providePlanningApplicationNumber } from '../appellant-submission-planning-application-number/providePlanningApplicationNumber';
-import { goToAppealsPage } from '../go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../../integration/common/householder-planning/appeals-service/pageURLAppeal';
 
 export const hasErrorOnPreviousPage = () => {

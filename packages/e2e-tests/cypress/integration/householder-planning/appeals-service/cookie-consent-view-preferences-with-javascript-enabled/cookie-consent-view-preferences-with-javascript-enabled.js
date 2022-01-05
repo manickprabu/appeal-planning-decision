@@ -3,7 +3,7 @@ import { confirmGenericPageContentExists } from '../../../../support/householder
 import { confirmPageHeadingWithJavaScriptEnabled } from '../../../../support/householder-planning/appeals-service/cookie-consent-view-preferences/confirmPageHeadingWithJavaScriptEnabled';
 import { confirmBodyContentWithJavaScriptEnabled } from '../../../../support/householder-planning/appeals-service/cookie-consent-view-preferences/confirmBodyContentWithJavaScriptEnabled';
 import { userIsNavigatedToPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation/userIsNavigatedToPage';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('a user has elected to manage their cookie preference', () => {

@@ -16,7 +16,7 @@ import { provideMoreDetails } from '../../../../support/householder-planning/app
 import { answerSiteHasNoIssues } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/answerSiteHasNoIssues';
 import { answerSiteHasIssues } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/answerSiteHasIssues';
 import { provideSafetyIssuesConcerns } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/provideSafetyIssuesConcerns';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('the "Site location" is presented', () => {

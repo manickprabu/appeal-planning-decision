@@ -3,16 +3,16 @@ import {
   CheckYourAnswersLink, getPageCaption, getPlanningAppMadeInYourName, getSectionHeading, yourContactDetails,
 } from '../../../../support/full-planning/appeals-service/page-objects/check-your-answers-po';
 import { getBackLink } from '../../../../support/common-page-objects/common-po';
-import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
 import { verifyPageTitle } from '../../../../support/common/verify-page-title';
 import { verifyPageHeading } from '../../../../support/common/verify-page-heading';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 
 const url = 'full-appeal/task-list';
 const pageTitle = 'Check your answers - Appeal a householder planning decision - GOV.UK';
 const pageHeading = 'Check your answers';
 
 Given("the appellant is on the 'Appeal a planning decision' page",()=> {
- goToAppealsServicePage(url);
+ goToAppealsPage(url);
 })
 When("they click on 'Check your answers and submit your appeal' link",()=> {
   CheckYourAnswersLink().click();
@@ -27,10 +27,10 @@ Then('the information they have inputted will be displayed',()=> {
   yourContactDetails().should('contain','Your contact details');
 })
 Given("the agent is on the 'Appeal a planning decision' page",()=> {
-  goToAppealsServicePage(url);
+  goToAppealsPage(url);
 })
 Given("the {string} is on the 'Check your answers' page",()=> {
-  goToAppealsServicePage(url);
+  goToAppealsPage(url);
   CheckYourAnswersLink().click();
   verifyPageTitle(pageTitle);
 })

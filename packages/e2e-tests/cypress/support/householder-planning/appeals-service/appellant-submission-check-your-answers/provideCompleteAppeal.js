@@ -36,7 +36,7 @@ import { answerSiteHasNoIssues } from '../appeal-submission-site-health-and-safe
 import { provideIneligibleLocalPlanningDepartment } from '../eligibility-local-planning-department/provideIneligibleLocalPlanningDepartment';
 import { provideAnswerYes } from '../appellant-submission-your-details/provideAnswerYes';
 import { provideAnswerNo } from '../appellant-submission-your-details/provideAnswerNo';
-import { goToAppealsPage } from '../go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../../integration/common/householder-planning/appeals-service/pageURLAppeal';
 
 

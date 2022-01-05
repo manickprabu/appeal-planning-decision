@@ -23,6 +23,7 @@ import { assertHasLinkToViewYourAppealDetails } from '../../../../support/househ
 import { assertCyTagHasExactText } from '../../../../support/common/assertCyTagHasExactText';
 import { assertMultifileUploadDisplay } from '../../../../support/common/assertMultifileUploadDisplay';
 import { STANDARD_APPEAL } from '../../../common/householder-planning/appeals-service/standard-appeal';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 
 
 beforeEach(() => {
@@ -33,7 +34,7 @@ Given('an appellant has submitted an appeal', () => {
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
   });
 });
 
@@ -41,7 +42,7 @@ Given('an agent has submitted an appeal', () => {
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
   });
 });
 
@@ -49,7 +50,7 @@ Given('an appellant is viewing a valid appeal with JavaScript enabled', () => {
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });
@@ -58,7 +59,7 @@ Given('an agent is viewing a valid appeal with JavaScript enabled', () => {
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });
@@ -67,7 +68,7 @@ Given('an appellant is viewing a valid appeal', () => {
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });
@@ -76,7 +77,7 @@ Given('an agent is viewing a valid appeal', () => {
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });
@@ -85,7 +86,7 @@ Given('an appellant is viewing the appeal details with Javascript disabled', () 
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`, { script: false });
+    goToAppealsPage(`your-planning-appeal/${appealId}`, { script: false });
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });
@@ -94,7 +95,7 @@ Given('an agent is viewing the appeal details with Javascript disabled', () => {
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`, { script: false });
+    goToAppealsPage(`your-planning-appeal/${appealId}`, { script: false });
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });
@@ -103,7 +104,7 @@ Given('an appellant is viewing a valid appeal with all sections closed', () => {
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     assertYourAppealDetailsAccordionPanelStatus({
@@ -117,7 +118,7 @@ Given('an agent is viewing a valid appeal with all sections closed', () => {
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     assertYourAppealDetailsAccordionPanelStatus({
@@ -131,7 +132,7 @@ Given('an appellant is viewing a valid appeal with all sections open', () => {
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     assertYourAppealDetailsAccordionPanelStatus({
@@ -150,7 +151,7 @@ Given('an agent is viewing a valid appeal with all sections open', () => {
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     assertYourAppealDetailsAccordionPanelStatus({
@@ -169,7 +170,7 @@ Given('an appellant is viewing a valid appeal where at least one section is clos
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     assertYourAppealDetailsAccordionPanelStatus({
@@ -183,7 +184,7 @@ Given('an agent is viewing a valid appeal where at least one section is closed',
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     assertYourAppealDetailsAccordionPanelStatus({
@@ -197,7 +198,7 @@ Given('an appellant is viewing an appeal where at least one section is open', ()
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     toggleAllYourAppealDetailsAccordionPanels({ expectedEndState: accordionState.OPEN });
@@ -208,7 +209,7 @@ Given('an agent is viewing an appeal where at least one section is open', () => 
   createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
 
     toggleAllYourAppealDetailsAccordionPanels({ expectedEndState: accordionState.OPEN });
@@ -224,7 +225,7 @@ Given(`an appellant is on the 'Your planning appeal' page`, () => {
   createAppellantAppealWithoutFiles();
 
   cy.get('@appellantAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
   });
 });
 
@@ -232,14 +233,14 @@ Given(`an agent is on the 'Your planning appeal' page`, () => {
  createAgentAppealWithoutFiles();
 
   cy.get('@agentAppealWithoutFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
   });
 });
 Given('an appellant has submitted an appeal that includes multiple documents', () => {
   createAppellantAppealWithFiles();
 
   cy.get('@appellantAppealWithFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });
@@ -248,7 +249,7 @@ Given('an agent has submitted an appeal that includes multiple documents', () =>
  createAgentAppealWithFiles();
 
   cy.get('@agentAppealWithFilesAppealId').then((appealId) => {
-    cy.visit(`/your-planning-appeal/${appealId}`);
+    goToAppealsPage(`your-planning-appeal/${appealId}`);
     cy.get('[data-cy="view-your-appeal-details-link"]').click();
   });
 });

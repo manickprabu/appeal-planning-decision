@@ -5,7 +5,7 @@ import { clickSaveAndContinue } from '../../../../support/householder-planning/a
 import { confirmNumberSupportingDocumentsAccepted } from '../../../../support/householder-planning/appeals-service/appellant-submission-supporting-documents/confirmNumberSupportingDocumentsAccepted';
 import { confirmSupportingDocumentAccepted } from '../../../../support/householder-planning/appeals-service/appellant-submission-supporting-documents/confirmSupportingDocumentAccepted';
 import { confirmSupportingDocumentRejectedBecause } from '../../../../support/householder-planning/appeals-service/appellant-submission-supporting-documents/confirmSupportingDocumentRejectedBecause';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 const VALID_DOCUMENTS = [

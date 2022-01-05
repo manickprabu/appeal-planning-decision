@@ -6,7 +6,7 @@ import { confirmPlanningApplicationAccepted } from '../../../../support/househol
 import { confirmPlanningApplicationIsNotUploaded } from '../../../../support/householder-planning/appeals-service/appellant-submission-upload-application/confirmPlanningApplicationIsNotUploaded';
 import { confirmPlanningApplicationFileIsUploaded } from '../../../../support/householder-planning/appeals-service/appellant-submission-upload-application/confirmPlanningApplicationFileIsUploaded';
 import { confirmThatNoErrorTriggered } from '../../../../support/householder-planning/appeals-service/appeal-statement-submission/confirmThatNoErrorTriggered';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 

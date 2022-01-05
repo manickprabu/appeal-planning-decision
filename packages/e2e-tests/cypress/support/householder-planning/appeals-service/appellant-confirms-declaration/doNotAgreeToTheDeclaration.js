@@ -1,5 +1,7 @@
+import { goToAppealsPage } from '../../../common/go-to-page/goToAppealsPage';
+
 export const doNotAgreeToTheDeclaration = () => {
-  cy.visit('/appellant-submission/submission');
+ goToAppealsPage('appellant-submission/submission');
 
   cy.get('[data-cy="title"]').should('contain', 'Declaration');
 

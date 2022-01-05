@@ -18,7 +18,7 @@ import { confirmLocalPlanningDepartmentIsNotParticipating } from '../../../../su
 import { confirmLocalPlanningDepartmentIsRequired } from '../../../../support/householder-planning/appeals-service/eligibility-local-planning-department/confirmLocalPlanningDepartmentIsRequired';
 import { selectIneligibleLocalPlanningDepartmentWithoutJs } from '../../../../support/householder-planning/appeals-service/eligibility-local-planning-department/selectIneligibleLocalPlanningDepartmentWithoutJs';
 import { selectLocalPlanningDepartmentWithoutJs } from '../../../../support/householder-planning/appeals-service/eligibility-local-planning-department/selectLocalPlanningDepartmentWithoutJs';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 
 Given('the list of Local Planning Department is presented', () => {
   //goToPlanningDepartmentPage();

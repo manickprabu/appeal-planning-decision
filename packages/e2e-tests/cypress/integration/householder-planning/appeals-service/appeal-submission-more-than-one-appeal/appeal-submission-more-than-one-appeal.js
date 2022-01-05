@@ -11,7 +11,7 @@ import { agreeToTheDeclaration } from '../../../../support/householder-planning/
 import { confirmAppealSubmitted } from '../../../../support/householder-planning/appeals-service/appellant-confirms-declaration/confirmAppealSubmitted';
 import { userIsNavigatedToPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation/userIsNavigatedToPage';
 import { provideHouseholderAnswerYes } from '../../../../support/householder-planning/appeals-service/eligibility-householder/provideHouseholderAnswerYes';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('an appellant has successfully submitted an appeal', () => {

@@ -12,15 +12,15 @@ import {
   statusUploadDocsFromPlanningApplication,
   statusUploadDocsForYourAppeal, statusCheckYourAnswers,
 } from '../../../../support/full-planning/appeals-service/page-objects/appeal-form-task-list-po';
-import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
 import { verifyPageTitle } from '../../../../support/common/verify-page-title';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 
 const pageHeading = 'Appeal a planning decision';
 const url = 'full-appeal/task-list';
 const pageTitle = 'Appeal a planning decision - Appeal a planning decision - GOV.UK';
 
 Given('Appellant has been successful on their eligibility',()=> {
- goToAppealsServicePage(url);
+ goToAppealsPage(url);
 })
 When("they are on the 'Appeal a Planning Decision' page",()=> {
   verifyPageTitle(pageTitle);

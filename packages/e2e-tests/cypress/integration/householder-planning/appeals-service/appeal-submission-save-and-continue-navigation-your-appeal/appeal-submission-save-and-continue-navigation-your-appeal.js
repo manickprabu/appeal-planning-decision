@@ -3,7 +3,7 @@ import { checkNoSensitiveInformation } from '../../../../support/householder-pla
 import { uploadAppealStatementFile } from '../../../../support/householder-planning/appeals-service/appeal-statement-submission/uploadAppealStatementFile';
 import { clickSaveAndContinue } from '../../../../support/householder-planning/appeals-service/appeal-navigation/clickSaveAndContinue';
 import { uploadSupportingDocuments } from '../../../../support/householder-planning/appeals-service/appellant-submission-supporting-documents/uploadSupportingDocuments';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('the "Appeal statement" is presented', () => {

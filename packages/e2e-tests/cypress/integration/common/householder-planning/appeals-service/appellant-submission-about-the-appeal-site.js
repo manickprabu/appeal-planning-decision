@@ -6,7 +6,7 @@ import { provideTownOrCity } from '../../../../support/householder-planning/appe
 import { providePostcode } from '../../../../support/householder-planning/appeals-service/appeal-submission-appeal-site-address/providePostcode';
 import { clickSaveAndContinue } from '../../../../support/householder-planning/appeals-service/appeal-navigation/clickSaveAndContinue';
 import { checkStatusForTask } from '../../../../support/householder-planning/appeals-service/appeal-submission-tasklist/checkStatusForTask';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from './pageURLAppeal';
 
 When('appeal site address is requested', () => {

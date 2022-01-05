@@ -31,7 +31,7 @@ import { provideMoreDetails } from '../../../../support/householder-planning/app
 import { answerSiteHasIssues } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/answerSiteHasIssues';
 import { provideSafetyIssuesConcerns } from '../../../../support/householder-planning/appeals-service/appeal-submission-site-health-and-safety-issues/provideSafetyIssuesConcerns';
 import { uploadSupportingDocuments } from '../../../../support/householder-planning/appeals-service/appellant-submission-supporting-documents/uploadSupportingDocuments';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from './pageURLAppeal';
 
 Given('the completed task list page is displayed', () => {

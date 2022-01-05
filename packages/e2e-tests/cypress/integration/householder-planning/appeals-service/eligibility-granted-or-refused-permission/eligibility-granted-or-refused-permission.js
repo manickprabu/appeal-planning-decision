@@ -9,7 +9,7 @@ import { provideHouseholderPlanningPermissionStatusNoDecision } from '../../../.
 import { confirmNavigationNoDecisionDatePage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmNavigationNoDecisionDatePage';
 import { confirmNavigationGrantedOrRefusedPermissionPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmNavigationGrantedOrRefusedPermissionPage';
 import { confirmTextOnPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmTextOnPage';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('Householder Planning Permission Status is requested', () => {

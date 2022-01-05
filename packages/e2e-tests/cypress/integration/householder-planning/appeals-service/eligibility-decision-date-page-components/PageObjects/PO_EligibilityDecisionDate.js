@@ -1,6 +1,9 @@
+import { goToAppealsPage } from '../../../../../support/common/go-to-page/goToAppealsPage';
+import { clickSaveAndContinue } from '../../../../../support/common/clickSaveAndContinue';
+
 class PO_EligibilityDecisionDate {
   navigatetoEligDatePageURL() {
-    cy.visit('/eligibility/decision-date');
+    goToAppealsPage('eligibility/decision-date');
   }
 
   validatePageTitle() {
@@ -108,7 +111,7 @@ class PO_EligibilityDecisionDate {
 
   continueBtn() {
     cy.wait(Cypress.env('demoDelay'));
-    cy.clickSaveAndContinue();
+    clickSaveAndContinue();
     cy.wait(Cypress.env('demoDelay'));
   }
 

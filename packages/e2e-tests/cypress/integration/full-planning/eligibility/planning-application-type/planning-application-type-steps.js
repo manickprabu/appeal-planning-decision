@@ -8,14 +8,18 @@ import { verifyErrorMessage } from '../../../../support/common/verify-error-mess
 import { acceptCookiesBanner } from '../../../../support/common/accept-cookies-banner';
 import { verifyPageTitle } from '../../../../support/common/verify-page-title';
 import { verifyPageHeading } from '../../../../support/common/verify-page-heading';
-import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
-import { getBackLink, getContinueButton } from '../../../../support/common-page-objects/common-po';
+import {
+  getBackLink,
+  getContinueButton,
+  getErrorMessageSummary,
+} from '../../../../support/common-page-objects/common-po';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 
 const pageTitle = 'What type of planning application is your appeal about? - Before you start - Appeal a householder planning decision - GOV.UK';
 const pageHeading = 'What type of planning application is your appeal about?';
 const url = 'before-you-start/type-of-planning-application';
 Given('an appellant is on the select the type of planning application you made page',()=>{
-  goToAppealsServicePage(url);
+  goToAppealsPage(url);
   acceptCookiesBanner();
   verifyPageTitle(pageTitle);
   verifyPageHeading(pageHeading);
@@ -48,7 +52,7 @@ Then('an appellant is navigated to the what local planning department did you su
 cy.url().should('contain','/before-you-start/local-planning-depart');
 });
 Then('any information they have inputted for planning type will not be saved',()=>{
-  goToAppealsServicePage(url);
+  goToAppealsPage(url);
   getHouseHolderPlanningRadio().should('not.be.checked');
 });
 

@@ -22,7 +22,7 @@ import { answerDoesNotOwnTheWholeAppeal } from '../../../../support/householder-
 import { confirmBackButtonNotDisplayed } from '../../../../support/householder-planning/appeals-service/appeal-header-footer/confirmBackButtonNotDisplayed';
 import { checkStatusForTask } from '../../../../support/householder-planning/appeals-service/appeal-submission-tasklist/checkStatusForTask';
 import { confirmTaskIsAvailableForSelection } from '../../../../support/householder-planning/appeals-service/appeal-submission-tasklist/confirmTaskIsAvailableForSelection';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 import { confirmTaskIsNotAvailableForSelection } from '../../../../support/householder-planning/appeals-service/appeal-submission-tasklist/confirmTaskIsNotAvailableForSelection';
 

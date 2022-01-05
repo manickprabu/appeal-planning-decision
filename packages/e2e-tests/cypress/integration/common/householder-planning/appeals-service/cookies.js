@@ -7,7 +7,7 @@ import { confirmAcceptedCookieBannerVisible } from '../../../../support/househol
 import { confirmRejectedCookieBannerVisible } from '../../../../support/householder-planning/appeals-service/cookies/confirmRejectedCookieBannerVisible';
 import { confirmCookiePolicy } from '../../../../support/householder-planning/appeals-service/cookies/confirmCookiePolicy';
 import { confirmCookieConsentBannerDoesNotExist } from '../../../../support/householder-planning/appeals-service/cookies/confirmCookieConsentBannerDoesNotExist';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from './pageURLAppeal';
 
 When('the user neither accepts nor rejects not necessary cookies', () => {

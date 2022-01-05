@@ -2,7 +2,7 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { uploadPlanningApplicationFile } from '../../../../support/householder-planning/appeals-service/appellant-submission-upload-application/uploadPlanningApplicationFile';
 import { clickSaveAndContinue } from '../../../../support/householder-planning/appeals-service/appeal-navigation/clickSaveAndContinue';
 import { uploadDecisionLetterFile } from '../../../../support/householder-planning/appeals-service/appellant-submission-decision-letter/uploadDecisionLetterFile';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('the "Application number" is presented', () => {

@@ -57,27 +57,30 @@ Feature: Appellant submission - Supporting documents
       | "appeal-statement-invalid-wrong-type.csv" | "file type is invalid"    |
 #      | "appeal-statement-invalid-too-big.png"    | "file size exceeds limit" |
 
+  @wip
   Scenario: When multiple valid documents simultaneously uploaded, then they are successfully submitted
     Given the supporting document page is displayed
     When multiple valid documents are uploaded simultaneously
     Then all the documents are submitted
 
+  @wip
   Scenario: When multiple valid documents simultaneously uploaded, they are added to existing documents
     Given multiple documents were previously submitted
     When multiple valid documents are uploaded simultaneously
     Then the documents are added to the previous ones
 
+    @wip
   Scenario: When multiple invalid documents are uploaded, then all of them are denied submission
     Given the supporting document page is displayed
     When multiple invalid documents are uploaded simultaneously
     Then none of them is submitted
 
-
+  @wip
   Scenario: When a mix of valid and invalid documents is uploaded, then only valid files are submitted
     Given the supporting document page is displayed
     When mix of valid and invalid documents are uploaded simultaneously
     Then only valid document are submitted
-
+  @wip
   Scenario: When multiple valid documents are uploaded after some documents being denied, they are added to existing documents
     Given multiple valid and invalid documents were previously uploaded
     When multiple valid documents are uploaded simultaneously

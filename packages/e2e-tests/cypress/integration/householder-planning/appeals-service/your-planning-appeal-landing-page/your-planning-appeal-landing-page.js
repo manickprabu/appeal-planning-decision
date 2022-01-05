@@ -1,12 +1,27 @@
 import { When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { STANDARD_AGENT_APPEAL,STANDARD_APPEAL } from '../../../common/householder-planning/appeals-service/standard-appeal';
+
 import format from 'date-fns/format'
-import { provideCompleteAppeal } from '../../../../support/householder-planning/appeals-service/appellant-submission-check-your-answers/provideCompleteAppeal';
-import { clickCheckYourAnswers } from '../../../../support/householder-planning/appeals-service/appeal-navigation/clickCheckYourAnswers';
-import { clickSaveAndContinue } from '../../../../support/householder-planning/appeals-service/appeal-navigation/clickSaveAndContinue';
-import { agreeToTheDeclaration } from '../../../../support/householder-planning/appeals-service/appellant-confirms-declaration/agreeToTheDeclaration';
-import { confirmNavigationPageNotFoundPage } from '../../../../support/householder-planning/appeals-service/errors/confirmNavigationPageNotFoundPage';
-import { confirmAppealSubmitted } from '../../../../support/householder-planning/appeals-service/appellant-confirms-declaration/confirmAppealSubmitted';
+import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import {
+  provideCompleteAppeal
+} from '../../../../support/householder-planning/appeals-service/appellant-submission-check-your-answers/provideCompleteAppeal';
+import {
+  clickCheckYourAnswers
+} from '../../../../support/householder-planning/appeals-service/appeal-navigation/clickCheckYourAnswers';
+import { clickSaveAndContinue } from '../../../../support/common/clickSaveAndContinue';
+import {
+  STANDARD_AGENT_APPEAL,
+  STANDARD_APPEAL,
+} from '../../../common/householder-planning/appeals-service/standard-appeal';
+import {
+  agreeToTheDeclaration
+} from '../../../../support/householder-planning/appeals-service/appellant-confirms-declaration/agreeToTheDeclaration';
+import {
+  confirmAppealSubmitted
+} from '../../../../support/householder-planning/appeals-service/appellant-confirms-declaration/confirmAppealSubmitted';
+import {
+  confirmNavigationPageNotFoundPage
+} from '../../../../support/householder-planning/appeals-service/errors/confirmNavigationPageNotFoundPage';
 
 Given('an {string} has submitted an appeal', (appellantOrAgent) => {
   const appeal = appellantOrAgent === 'appellant' ? STANDARD_APPEAL : STANDARD_AGENT_APPEAL;
@@ -28,22 +43,12 @@ When('your planning appeal page is viewed with a valid appealId', () => {
   cy.get('[data-cy="submission-information-appeal-id"]')
     .invoke('val')
     .then((appealId) => {
-      cy.visit(`/your-planning-appeal/${appealId}`);
-      //cy.wait(Cypress.env('demoDelay'));
+      goToAppealsPage(`/your-planning-appeal/${appealId}`);
     });
-  // cy.checkPageA11y({
-  //   // known issue: https://github.com/alphagov/govuk-frontend/issues/979
-  //   exclude: ['.govuk-radios__input'],
-  // });
 });
 
 When('your planning appeal page is viewed with an incorrect appealId', () => {
-  cy.visit('/your-planning-appeal/unknown-appeal-id', { failOnStatusCode: false });
-  // cy.wait(Cypress.env('demoDelay'));
-  // cy.checkPageA11y({
-  //   // known issue: https://github.com/alphagov/govuk-frontend/issues/979
-  //   exclude: ['.govuk-radios__input'],
-  // });
+  goToAppealsPage('/your-planning-appeal/unknown-appeal-id', { failOnStatusCode: false });
 });
 
 Then('the user sees the appropriate general data for {string} along with data for step 1', (appellantOrAgent) => {
@@ -73,8 +78,4 @@ Then('the user sees the label for appellant name as {string}', (label) => {
 
 Then('the user sees the 404 page', () => {
   confirmNavigationPageNotFoundPage();
-  // cy.checkPageA11y({
-  //   // known issue: https://github.com/alphagov/govuk-frontend/issues/979
-  //   exclude: ['.govuk-radios__input'],
-  // });
 });

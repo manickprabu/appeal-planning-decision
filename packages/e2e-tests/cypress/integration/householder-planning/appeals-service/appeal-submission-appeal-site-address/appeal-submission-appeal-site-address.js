@@ -8,7 +8,7 @@ import { clickSaveAndContinue } from '../../../../support/householder-planning/a
 import { confirmSiteAddressWasAccepted } from '../../../../support/householder-planning/appeals-service/appeal-submission-appeal-site-address/confirmSiteAddressWasAccepted';
 import { confirmSiteAddressWasRejectedBecause } from '../../../../support/householder-planning/appeals-service/appeal-submission-appeal-site-address/confirmSiteAddressWasRejectedBecause';
 import { confirmSiteAddressValue } from '../../../../support/householder-planning/appeals-service/appeal-submission-appeal-site-address/confirmSiteAddressValue';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('the user is prompted for the site address', () => {

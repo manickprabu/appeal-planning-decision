@@ -3,7 +3,7 @@ import { provideEnforcementNoticeAnswer } from '../../../../support/householder-
 import { confirmThatEnforcementNoticeAnswerIsRequired } from '../../../../support/householder-planning/appeals-service/eligibility-enforcement-notice/confirmThatEnforcementNoticeAnswerIsRequired';
 import { confirmProgressHaltedAsServiceIsOnlyForHouseholderPlanningAppeals } from '../../../../support/householder-planning/appeals-service/eligibility-enforcement-notice/confirmProgressHaltedAsServiceIsOnlyForHouseholderPlanningAppeals';
 import { confirmProgressIsMadeToListingBuildingEligibilityQuestion } from '../../../../support/householder-planning/appeals-service/eligibility-enforcement-notice/confirmProgressIsMadeToListingBuildingEligibilityQuestion';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('receipt of an Enforcement Notice is requested', () => {

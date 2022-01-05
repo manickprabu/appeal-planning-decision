@@ -18,7 +18,7 @@ import { validateThePreviousPageDisplaysWithoutError } from '../../../../support
 import { validatePreviousPageDisplayedWithoutCurrentPageRefreshed } from '../../../../support/householder-planning/appeals-service/back-link/validatePreviousPageDisplayedWithoutCurrentPageRefreshed';
 import { validateUserIsOnServiceStartPage } from '../../../../support/householder-planning/appeals-service/back-link/validateUserIsOnServiceStartPage';
 import { validateBreadcrumbsAreVisible } from '../../../../support/householder-planning/appeals-service/back-link/validateBreadcrumbsAreVisible';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('an appellant or agent is checking their eligibility with JavaScript disabled', () => {

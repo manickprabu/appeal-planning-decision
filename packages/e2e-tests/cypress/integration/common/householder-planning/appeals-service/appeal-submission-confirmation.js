@@ -5,7 +5,7 @@ import { clickSaveAndContinue } from '../../../../support/householder-planning/a
 import { confirmNavigationTermsAndConditionsPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/appellant-submission/confirmNavigationTermsAndConditionsPage';
 import { agreeToTheDeclaration } from '../../../../support/householder-planning/appeals-service/appellant-confirms-declaration/agreeToTheDeclaration';
 import { confirmFeedbackLinkIsDisplayedInPageBody } from '../../../../support/householder-planning/appeals-service/appeal-submission/confirmFeedbackLinkIsDisplayedInPageBody';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from './pageURLAppeal';
 
 Given('an appeal exists', () => {

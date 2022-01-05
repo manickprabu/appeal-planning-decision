@@ -2,9 +2,10 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { guidancePageNavigation } from '../../../../support/householder-planning/appeals-service/guidance-pages/guidancePageNavigation';
 import { userIsNavigatedToPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation/userIsNavigatedToPage';
 import { viewCookiePageUsingCookieConsentBannerLink } from '../../../../support/householder-planning/appeals-service/cookies/viewCookiePageUsingCookieConsentBannerLink';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 
 Given('a user visits the site with JavaScript disabled', () => {
-  cy.visit('/', { script: false });
+  goToAppealsPage('', { script: false });
 });
 
 When('the user navigates through the service', () => {

@@ -6,8 +6,8 @@ import { provideMoreDetails } from '../../../../support/householder-planning/app
 import { confirmAccessSiteAnswered } from '../../../../support/householder-planning/appeals-service/appeal-submission-access-to-appeal-site/confirmAccessSiteAnswered';
 import { confirmAccessSiteNotSubmitted } from '../../../../support/householder-planning/appeals-service/appeal-submission-access-to-appeal-site/confirmAccessSiteNotSubmitted';
 import { confirmAccessSiteWasRejectedBecause } from '../../../../support/householder-planning/appeals-service/appeal-submission-access-to-appeal-site/confirmAccessSiteWasRejectedBecause';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
-const url = '/appellant-submission/site-access';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
+const url = 'appellant-submission/site-access';
 Given('the user is prompted to provide access to the inspector visiting the appeal site', () => {
   goToAppealsPage(url);
 });

@@ -1,6 +1,6 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { pageURLAppeal } from './pageURLAppeal';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { confirmNavigationCostsPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmNavigationCostsPage';
 import { confirmTextOnPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmTextOnPage';
 import { confirmGuidanceLinkDisplayed } from '../../../../support/householder-planning/appeals-service/eligibility-costs/confirmGuidanceLinkDisplayed';

@@ -28,7 +28,7 @@ import { confirmNavigationWhoAreYouPage } from '../../../../support/householder-
 import { confirmNavigationTaskListPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/appellant-submission/confirmNavigationTaskListPage';
 import { confirmNavigationApplicantNamePage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/appellant-submission/confirmNavigationApplicantNamePage';
 import { confirmAreYouOriginalApplicant } from '../../../../support/householder-planning/appeals-service/appellant-submission-your-details/confirmAreYouOriginalApplicant';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from './pageURLAppeal';
 
 When('the user provides the name {string}', (name) => {

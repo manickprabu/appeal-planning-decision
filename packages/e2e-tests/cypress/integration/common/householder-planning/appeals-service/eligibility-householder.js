@@ -1,5 +1,5 @@
 import {Given, When, Then} from 'cypress-cucumber-preprocessor/steps';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from './pageURLAppeal';
 import { confirmTextOnPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmTextOnPage';
 import { confirmNavigationGrantedOrRefusedPermissionPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation-confirmation/eligibility/confirmNavigationGrantedOrRefusedPermissionPage';

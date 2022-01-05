@@ -1,7 +1,7 @@
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
 import { guidancePageNavigation } from '../../../../support/householder-planning/appeals-service/guidance-pages/guidancePageNavigation';
 import { userIsNavigatedToPage } from '../../../../support/householder-planning/appeals-service/appeal-navigation/userIsNavigatedToPage';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('the appellant is on the start your appeal page', () => {

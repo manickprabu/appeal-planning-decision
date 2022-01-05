@@ -10,7 +10,7 @@ import { confirmFileContainsSensitiveInformation } from '../../../../support/hou
 import { confirmFileInvalidBecauseWrongFileType } from '../../../../support/householder-planning/appeals-service/appeal-statement-submission/confirmFileInvalidBecauseWrongFileType';
 import { confirmFileInvalidBecauseExceedsSizeLimit } from '../../../../support/householder-planning/appeals-service/appeal-statement-submission/confirmFileInvalidBecauseExceedsSizeLimit';
 import { confirmFileUploadIsRequested } from '../../../../support/householder-planning/appeals-service/appeal-statement-submission/confirmFileUploadIsRequested';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 

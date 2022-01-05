@@ -9,7 +9,7 @@ import { confirmSiteOwnershipAccepted } from '../../../../support/householder-pl
 import { confirmWholeSiteOwnerAnswered } from '../../../../support/householder-planning/appeals-service/appeal-submission-appeal-site-ownership/confirmWholeSiteOwnerAnswered';
 import { confirmOtherSiteOwnerToldAnswered } from '../../../../support/householder-planning/appeals-service/appeal-submission-appeal-site-ownership/confirmOtherSiteOwnerToldAnswered';
 import { confirmSiteOwnershipRejectedBecause } from '../../../../support/householder-planning/appeals-service/appeal-submission-appeal-site-ownership/confirmSiteOwnershipRejectedBecause';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 function givenAlreadySubmittedandWholeSiteOwner(isAlreadySubmitted, isWholeSiteOwner) {

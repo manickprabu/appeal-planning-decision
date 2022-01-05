@@ -4,7 +4,7 @@ import { clickSaveAndContinue } from '../../../../support/householder-planning/a
 import { provideDetailsName } from '../../../../support/householder-planning/appeals-service/appellant-submission-your-details/provideDetailsName';
 import { provideDetailsEmail } from '../../../../support/householder-planning/appeals-service/appellant-submission-your-details/provideDetailsEmail';
 import { provideNameOfOriginalApplicant } from '../../../../support/householder-planning/appeals-service/appellant-submission-your-details/provideNameOfOriginalApplicant';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('the "Who are you" is presented', () => {

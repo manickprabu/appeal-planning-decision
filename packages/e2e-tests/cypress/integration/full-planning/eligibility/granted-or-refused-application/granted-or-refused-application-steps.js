@@ -4,7 +4,7 @@ import { selectPlanningApplicationDecision } from '../../../../support/full-plan
 import { verifyErrorMessage } from '../../../../support/common/verify-error-message';
 import { acceptCookiesBanner } from '../../../../support/common/accept-cookies-banner';
 import { getPlanningApplicationDecisionError } from '../../../../support/full-planning/eligibility/page-objects/granted-or-refused-application-po';
-import { goToAppealsServicePage } from '../../../../support/common/go-to-page/goToAppealsServicePage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { verifyPageTitle } from '../../../../support/common/verify-page-title';
 import { verifyPageHeading } from '../../../../support/common/verify-page-heading';
 import {
@@ -21,7 +21,7 @@ const decisionDateDuePageUrl = '/before-you-start/date-decision-due';
 const previousPageUrl = '/before-you-start/any-of-following';
 
 Given('appellant is on the was your planning application granted or refused page', () => {
-    goToAppealsServicePage(url);
+    goToAppealsPage(url);
     acceptCookiesBanner();
     verifyPageTitle(pageTitle);
     verifyPageHeading(pageHeading);

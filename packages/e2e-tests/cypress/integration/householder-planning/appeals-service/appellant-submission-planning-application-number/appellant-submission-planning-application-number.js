@@ -3,7 +3,7 @@ import { providePlanningApplicationNumber } from '../../../../support/householde
 import { confirmPlanningApplicationNumberHasUpdated } from '../../../../support/householder-planning/appeals-service/appellant-submission-planning-application-number/confirmPlanningApplicationNumberHasUpdated';
 import { confirmPlanningApplicationNumberRejectedBecause } from '../../../../support/householder-planning/appeals-service/appellant-submission-planning-application-number/confirmPlanningApplicationNumberRejectedBecause';
 import { confirmPlanningApplicationNumberHasNotUpdated } from '../../../../support/householder-planning/appeals-service/appellant-submission-planning-application-number/confirmPlanningApplicationNumberHasNotUpdated';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('user has not previously provided a planning application number', () => {
@@ -11,7 +11,7 @@ Given('user has not previously provided a planning application number', () => {
 });
 
 Given('user has previously provided a planning application number {string}', (valid_number) => {
-  cy.visit('/appellant-submission/application-number');
+  goToAppealsPage('appellant-submission/application-number');
   providePlanningApplicationNumber(valid_number);
 });
 
@@ -20,7 +20,7 @@ Given('the user is prompted to provide a planning application number', () => {
 });
 
 When('the user provides a planning application number {string}', (valid_number) => {
-  cy.visit('/appellant-submission/application-number');
+  goToAppealsPage('appellant-submission/application-number');
   providePlanningApplicationNumber(valid_number);
 });
 

@@ -8,7 +8,7 @@ import { confirmHasGoogleAnalyticsCookies } from '../../../../support/householde
 import { confirmCookieConsentBannerIsNotVisible } from '../../../../support/householder-planning/appeals-service/cookies/confirmCookieConsentBannerIsNotVisible';
 import { confirmCookieFlashMessageContent } from '../../../../support/householder-planning/appeals-service/cookies/confirmCookieFlashMessageContent';
 import { confirmFlashMessageContainerDoesNotExist } from '../../../../support/householder-planning/appeals-service/flash-message/confirmFlashMessageContainerDoesNotExist';
-import { goToAppealsPage } from '../../../../support/householder-planning/appeals-service/go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../common/householder-planning/appeals-service/pageURLAppeal';
 
 Given('a user is managing their cookie preference', () => {

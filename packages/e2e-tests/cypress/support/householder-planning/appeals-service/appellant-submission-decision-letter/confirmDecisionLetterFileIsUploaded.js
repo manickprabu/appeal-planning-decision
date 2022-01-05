@@ -1,5 +1,5 @@
 import { pageURLAppeal } from '../../../../integration/common/householder-planning/appeals-service/pageURLAppeal';
-import { goToAppealsPage } from '../go-to-page/goToAppealsPage';
+import { goToAppealsPage } from '../../../common/go-to-page/goToAppealsPage';
 
 export const confirmDecisionLetterFileIsUploaded = (filename) => {
   goToAppealsPage(pageURLAppeal.goToDecisionLetterPage);
