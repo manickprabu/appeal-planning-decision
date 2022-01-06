@@ -3,14 +3,13 @@ const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const logger = require('../../../../../src/lib/logger');
 
-const { VIEW } = require('../../../../../src/lib/householder-planning/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/empty-appeal');
 jest.mock('../../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/householder-planning/listed-building-householder', () => {
+describe('controllers/householder-planning/eligibility/listed-building-householder', () => {
   let req;
   let res;
   let appeal;
@@ -28,8 +27,8 @@ describe('controllers/householder-planning/listed-building-householder', () => {
     it('should call the correct template on getListedBuildingHouseholder', async () => {
       await listedBuildingController.getListedBuildingHouseholder(req, res);
 
-      expect(res.render).toBeCalledWith(VIEW.HOUSEHOLDER_PLANNING.LISTED_BUILDING, {
-        backLink: `/before-you-start/type-of-planning-application`,
+      expect(res.render).toBeCalledWith('/before-you-start/listed-building-householder', {
+        backLink: '/before-you-start/type-of-planning-application',
       });
     });
 
@@ -60,7 +59,7 @@ describe('controllers/householder-planning/listed-building-householder', () => {
         ...appeal,
       });
 
-      expect(res.redirect).toBeCalledWith('/before-you-start/granted-or-refused-householder');
+      expect(res.redirect).toBeCalledWith('/before-you-start/enforcement-notice-householder');
     });
 
     it('should render errors on the page', async () => {
@@ -79,7 +78,7 @@ describe('controllers/householder-planning/listed-building-householder', () => {
 
       expect(createOrUpdateAppeal).not.toHaveBeenCalled();
 
-      expect(res.render).toBeCalledWith(`${VIEW.HOUSEHOLDER_PLANNING.LISTED_BUILDING}`, {
+      expect(res.render).toBeCalledWith('/before-you-start/listed-building-householder', {
         appeal,
         errors: {
           'listed-building-householder': {
@@ -106,7 +105,7 @@ describe('controllers/householder-planning/listed-building-householder', () => {
       expect(res.redirect).not.toHaveBeenCalled();
       expect(logger.error).toHaveBeenCalledWith(error);
 
-      expect(res.render).toHaveBeenCalledWith(`${VIEW.HOUSEHOLDER_PLANNING.LISTED_BUILDING}`, {
+      expect(res.render).toHaveBeenCalledWith('/before-you-start/listed-building-householder', {
         appeal,
         errors: {},
         errorSummary: [{ text: error.toString(), href: 'pageId' }],
