@@ -1,10 +1,8 @@
 const logger = require('../../../lib/logger');
 const { createOrUpdateAppeal } = require('../../../lib/appeals-api-wrapper');
 
-const { VIEW } = require('../../../lib/householder-planning/views');
-
-const listedBuilding = VIEW.HOUSEHOLDER_PLANNING.LISTED_BUILDING;
-const backLink = `/before-you-start/type-of-planning-application`;
+const listedBuilding = '/before-you-start/listed-building-householder';
+const backLink = '/before-you-start/type-of-planning-application';
 
 exports.getListedBuildingHouseholder = async (req, res) => {
   res.render(listedBuilding, { backLink });
@@ -16,7 +14,7 @@ const redirect = (selection, res) => {
     return;
   }
 
-  res.redirect('/before-you-start/granted-or-refused-householder');
+  res.redirect('/before-you-start/enforcement-notice-householder');
 };
 
 exports.postListedBuildingHouseholder = async (req, res) => {
