@@ -11,6 +11,7 @@ const {
   MIME_TYPE_JPEG,
   MIME_TYPE_TIF,
   MIME_TYPE_PNG,
+  MIME_TYPE_TXT,
 } = require('../../lib/mime-types');
 
 module.exports = {
@@ -36,10 +37,6 @@ module.exports = {
         // check file extension type
         const { mimetype } = req.files[path];
 
-        // check file for virus
-        const { name } = req.files[path];
-        await validAV(req.files['appeal-upload'], name);
-
         validMimeType(
           mimetype,
           [
@@ -49,6 +46,7 @@ module.exports = {
             MIME_TYPE_JPEG,
             MIME_TYPE_TIF,
             MIME_TYPE_PNG,
+            MIME_TYPE_TXT,
           ],
           'The selected file must be a DOC, DOCX, PDF, TIF, JPG or PNG'
         );
@@ -63,9 +61,14 @@ module.exports = {
             MIME_TYPE_TIF,
             MIME_TYPE_JPEG,
             MIME_TYPE_PNG,
+            MIME_TYPE_TXT,
           ],
           'The selected file must be a DOC, DOCX, PDF, TIF, JPG or PNG'
         );
+
+        // check file for virus
+        const { name } = req.files[path];
+        await validAV(req.files['appeal-upload'], name);
 
         // check file size
         const { size } = req.files[path];
