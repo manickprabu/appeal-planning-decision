@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved */
 const express = require('express');
 
-const listedBuildingRouter = require('./listed-building');
+const listedBuildingHouseholderRouter = require('./listed-building-householder');
 
 const router = express.Router();
 
-router.use(listedBuildingRouter);
+router.use(listedBuildingHouseholderRouter);
 
 module.exports = router;
