@@ -1,9 +1,9 @@
 import {Given} from 'cypress-cucumber-preprocessor/steps';
-import { selectPlanningApplicationType } from '../../../../support/full-planning/eligibility/planning-application-type/select-planning-application-type';
+import { selectPlanningApplicationType } from '../../../../support/eligibility/planning-application-type/select-planning-application-type';
 import {
   getHouseHolderPlanningRadio,
   getTypeOfPlanningApplicationError,
-} from '../../../../support/full-planning/eligibility/page-objects/planning-application-type-po';
+} from '../../../../support/eligibility/page-objects/planning-application-type-po';
 import { verifyErrorMessage } from '../../../../support/common/verify-error-message';
 import { acceptCookiesBanner } from '../../../../support/common/accept-cookies-banner';
 import { verifyPageTitle } from '../../../../support/common/verify-page-title';

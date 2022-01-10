@@ -5,7 +5,7 @@ import { verifyPageTitle } from '../../../../support/common/verify-page-title';
 import {
   getEnforcementNoticeErrorMessage,
   getEnforcementNoticeNo, getEnforcementNoticeYes,
-} from '../../../../support/full-planning/eligibility/page-objects/enforcement-notice-po';
+} from '../../../../support/eligibility/page-objects/enforcement-notice-po';
 import { getErrorMessageSummary } from '../../../../support/common-page-objects/common-po';
 import { verifyErrorMessage } from '../../../../support/common/verify-error-message';
 import { getBackLink } from '../../../../support/common-page-objects/common-po';
