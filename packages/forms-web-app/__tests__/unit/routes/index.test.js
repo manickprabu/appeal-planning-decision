@@ -8,6 +8,7 @@ const yourPlanningAppealRouter = require('../../../src/routes/your-planning-appe
 const fullAppealAppellantSubmissionRouter = require('../../../src/routes/full-appeal/submit-appeal');
 const fullAppealRouter = require('../../../src/routes/full-appeal/index');
 const documentRouter = require('../../../src/routes/document');
+const householderPlanningEligibilityRouter = require('../../../src/routes/householder-planning/eligibility');
 
 const checkDecisionDateDeadline = require('../../../src/middleware/check-decision-date-deadline');
 
@@ -39,7 +40,8 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/your-planning-appeal', yourPlanningAppealRouter);
     expect(use).toHaveBeenCalledWith('/before-you-start', fullAppealRouter);
     expect(use).toHaveBeenCalledWith('/document', documentRouter);
+    expect(use).toHaveBeenCalledWith('/before-you-start', householderPlanningEligibilityRouter);
 
-    expect(use.mock.calls.length).toBe(9);
+    expect(use.mock.calls.length).toBe(10);
   });
 });
