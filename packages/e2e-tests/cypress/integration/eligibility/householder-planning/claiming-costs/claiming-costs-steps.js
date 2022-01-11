@@ -33,15 +33,15 @@ When('appellant clicks on the continue button',()=>{
   getContinueButton().click();
 });
 
-When('an appellant selects the back button',()=>{
+When('appellant selects the back button',()=>{
   getBackLink().click();
 });
 
-Then('an appellant gets navigated to HAS Appeal form',()=>{
+Then('appellant gets navigated to HAS Appeal form',()=>{
   verifyPage('/results');
 });
 
-Then('an appellants gets routed to shutter page which notifies them to use a different service',()=>{
+Then('appellants gets routed to shutter page which notifies them to use a different service',()=>{
   cy.url().should('contain', '/before-you-start/use-a-different-service');
 });
 

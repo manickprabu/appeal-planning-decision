@@ -6,13 +6,13 @@ Feature: Claiming Cost
     Given appellant is on the claiming cost page
     When appellant selects 'No' from the options for cost
     And appellant clicks on the continue button
-    Then an appellant gets navigated to HAS Appeal form
+    Then appellant gets navigated to HAS Appeal form
 
   Scenario: AC02 - Appellant claiming cost
     Given appellant is on the claiming cost page
     When appellant selects 'Yes' from the options for cost
     And appellant clicks on the continue button
-    Then an appellants gets routed to shutter page which notifies them to use a different service
+    Then appellants gets routed to shutter page which notifies them to use a different service
 
   Scenario: AC03 - appellant makes no selection and is provided an error
     Given appellant is on the claiming cost page
