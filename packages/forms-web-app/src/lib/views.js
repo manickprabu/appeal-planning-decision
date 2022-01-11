@@ -68,12 +68,6 @@ const VIEW = {
     YOUR_APPEAL_DETAILS: 'your-planning-appeal/your-appeal-details',
   },
 
-  HOUSEHOLDER_PLANNING: {
-    ELIGIBILITY: {
-      GRANTED_OR_REFUSED: 'householder-planning/eligibility/granted-or-refused',
-    },
-  },
-
   MESSAGES: {
     COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
   },
