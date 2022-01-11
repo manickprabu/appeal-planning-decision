@@ -1,24 +1,26 @@
-const grantedOrRefusedPlanningApplicationController = require('../../../../src/controllers/householder-planning/eligibility/granted-or-refused');
-const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
+const grantedOrRefusedHouseholderController = require('../../../../../src/controllers/householder-planning/eligibility/granted-or-refused-householder');
+const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const {
   VIEW: {
-    HOUSEHOLDER_PLANNING: { ELIGIBILITY },
+    HOUSEHOLDER_PLANNING: {
+      ELIGIBILITY: { GRANTED_OR_REFUSED: currentPage },
+    },
   },
-} = require('../../../../src/lib/views');
+} = require('../../../../../src/lib/householder-planning/views');
 
 const forwardPage = {
   nextPageDateDecision: '/before-you-start/decision-date-householder',
   nextPageDateDecisionDue: '/before-you-start/date-decision-due-householder',
   previousPage: '/before-you-start/listed-building-householder',
 };
-const logger = require('../../../../src/lib/logger');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
-const { mockReq, mockRes } = require('../../mocks');
+const logger = require('../../../../../src/lib/logger');
+const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
+const { mockReq, mockRes } = require('../../../mocks');
 
-jest.mock('../../../../src/lib/appeals-api-wrapper');
-jest.mock('../../../../src/lib/logger');
+jest.mock('../../../../../src/lib/appeals-api-wrapper');
+jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/householder-planning/eligibility/granted-or-refused', () => {
+describe('controllers/householder-planning/eligibility/granted-or-refused-householder', () => {
   let req;
   let res;
   let appeal;
@@ -32,11 +34,11 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
     jest.resetAllMocks();
   });
 
-  describe('getGrantedOrRefusedPlanningApplication', () => {
+  describe('getGrantedOrRefusedHouseholder', () => {
     it('should call the correct template', () => {
-      grantedOrRefusedPlanningApplicationController.getGrantedOrRefused(req, res);
+      grantedOrRefusedHouseholderController.getGrantedOrRefusedHouseholder(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(ELIGIBILITY.GRANTED_OR_REFUSED, {
+      expect(res.render).toHaveBeenCalledWith(currentPage, {
         appeal: req.session.appeal,
         previousPage: forwardPage.previousPage,
       });
@@ -44,46 +46,44 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
   });
 
   describe('forwardPage', () => {
-    it(`should return '/${ELIGIBILITY.DECISION_DATE}' if passed 'permissionStatus' is 'granted'`, async () => {
-      const pageRedirect = grantedOrRefusedPlanningApplicationController.forwardPage('granted');
+    it(`should return '/${forwardPage.nextPageDateDecision}' if passed 'permissionStatus' is 'granted'`, async () => {
+      const pageRedirect = grantedOrRefusedHouseholderController.forwardPage('granted');
 
       expect(pageRedirect).toEqual(forwardPage.nextPageDateDecision);
     });
 
-    it(`should return '/${ELIGIBILITY.DECISION_DATE}' if passed 'permissionStatus' is 'refused'`, async () => {
-      const pageRedirect = grantedOrRefusedPlanningApplicationController.forwardPage('refused');
+    it(`should return '/${forwardPage.nextPageDateDecision}' if passed 'permissionStatus' is 'refused'`, async () => {
+      const pageRedirect = grantedOrRefusedHouseholderController.forwardPage('refused');
 
       expect(pageRedirect).toEqual(forwardPage.nextPageDateDecision);
     });
 
-    it(`should return '/${ELIGIBILITY.DATE_DECISION_DUE}' if passed 'permissionStatus' is 'nodecisionreceived'`, async () => {
-      const pageRedirect =
-        grantedOrRefusedPlanningApplicationController.forwardPage('nodecisionreceived');
+    it(`should return '/${forwardPage.nextPageDateDecisionDue}' if passed 'permissionStatus' is 'nodecisionreceived'`, async () => {
+      const pageRedirect = grantedOrRefusedHouseholderController.forwardPage('nodecisionreceived');
 
       expect(pageRedirect).toEqual(forwardPage.nextPageDateDecisionDue);
     });
 
-    it(`should return '/${ELIGIBILITY.ANY_OF_FOLLOWING}' if passed 'permissionStatus' is 'previousPage'`, async () => {
-      const pageRedirect =
-        grantedOrRefusedPlanningApplicationController.forwardPage('previousPage');
+    it(`should return '/${forwardPage.previousPage}' if passed 'permissionStatus' is 'previousPage'`, async () => {
+      const pageRedirect = grantedOrRefusedHouseholderController.forwardPage('previousPage');
 
       expect(pageRedirect).toEqual(forwardPage.previousPage);
     });
 
-    it(`should return '/${ELIGIBILITY.GRANTED_OR_REFUSED}' if passed 'permissionStatus' is 'default'`, async () => {
-      const pageRedirect = grantedOrRefusedPlanningApplicationController.forwardPage('default');
+    it(`should return '/${currentPage}' if passed 'permissionStatus' is 'default'`, async () => {
+      const pageRedirect = grantedOrRefusedHouseholderController.forwardPage('default');
 
-      expect(pageRedirect).toEqual(ELIGIBILITY.GRANTED_OR_REFUSED);
+      expect(pageRedirect).toEqual(currentPage);
     });
 
-    it(`should return '/${ELIGIBILITY.GRANTED_OR_REFUSED}' if 'permissionStatus' is not passed`, async () => {
-      const pageRedirect = grantedOrRefusedPlanningApplicationController.forwardPage();
+    it(`should return '/${currentPage}' if 'permissionStatus' is not passed`, async () => {
+      const pageRedirect = grantedOrRefusedHouseholderController.forwardPage();
 
-      expect(pageRedirect).toEqual(ELIGIBILITY.GRANTED_OR_REFUSED);
+      expect(pageRedirect).toEqual(currentPage);
     });
   });
 
-  describe('postGrantedOrRefusedPlanning', () => {
+  describe('postGrantedOrRefusedHouseholder', () => {
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
         ...req,
@@ -93,13 +93,13 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
           errorSummary: [{ text: 'There were errors here', href: '#' }],
         },
       };
-      await grantedOrRefusedPlanningApplicationController.postGrantedOrRefused(mockRequest, res);
+      await grantedOrRefusedHouseholderController.postGrantedOrRefusedHouseholder(mockRequest, res);
 
       expect(createOrUpdateAppeal).not.toHaveBeenCalled();
 
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(ELIGIBILITY.GRANTED_OR_REFUSED, {
+      expect(res.render).toHaveBeenCalledWith(currentPage, {
         appeal: {
           ...req.session.appeal,
           eligibility: {
@@ -122,13 +122,13 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
       const error = new Error('Api call error');
       createOrUpdateAppeal.mockImplementation(() => Promise.reject(error));
 
-      await grantedOrRefusedPlanningApplicationController.postGrantedOrRefused(mockRequest, res);
+      await grantedOrRefusedHouseholderController.postGrantedOrRefusedHouseholder(mockRequest, res);
 
       expect(res.redirect).not.toHaveBeenCalled();
 
       expect(logger.error).toHaveBeenCalledWith(error);
 
-      expect(res.render).toHaveBeenCalledWith(ELIGIBILITY.GRANTED_OR_REFUSED, {
+      expect(res.render).toHaveBeenCalledWith(currentPage, {
         appeal: req.session.appeal,
         errors: {},
         errorSummary: [{ text: error.toString(), href: '#' }],
@@ -136,7 +136,7 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
       });
     });
 
-    it(`'should redirect to '/${ELIGIBILITY.DECISION_DATE}' if 'applicationDecision' is 'refused'`, async () => {
+    it(`'should redirect to '/${forwardPage.nextPageDateDecision}' if 'applicationDecision' is 'refused'`, async () => {
       const applicationDecision = 'refused';
       const mockRequest = {
         ...req,
@@ -144,7 +144,7 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
           'granted-or-refused': applicationDecision,
         },
       };
-      await grantedOrRefusedPlanningApplicationController.postGrantedOrRefused(mockRequest, res);
+      await grantedOrRefusedHouseholderController.postGrantedOrRefusedHouseholder(mockRequest, res);
 
       expect(createOrUpdateAppeal).toHaveBeenCalledWith({
         ...appeal,
@@ -158,13 +158,13 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
       expect(res.redirect).toHaveBeenCalledWith(forwardPage.nextPageDateDecision);
     });
 
-    it(`should redirect to '/${ELIGIBILITY.DECISION_DATE}' if 'applicationDecision' is 'granted'`, async () => {
+    it(`should redirect to '/${forwardPage.nextPageDateDecision}' if 'applicationDecision' is 'granted'`, async () => {
       const applicationDecision = 'granted';
       const mockRequest = {
         ...req,
         body: { 'granted-or-refused': applicationDecision },
       };
-      await grantedOrRefusedPlanningApplicationController.postGrantedOrRefused(mockRequest, res);
+      await grantedOrRefusedHouseholderController.postGrantedOrRefusedHouseholder(mockRequest, res);
 
       expect(createOrUpdateAppeal).toHaveBeenCalledWith({
         ...appeal,
@@ -178,13 +178,13 @@ describe('controllers/householder-planning/eligibility/granted-or-refused', () =
       expect(res.redirect).toHaveBeenCalledWith(forwardPage.nextPageDateDecision);
     });
 
-    it(`should redirect to '/${ELIGIBILITY.DATE_DECISION_DUE}' if 'applicationDecision' is 'nodecisionreceived'`, async () => {
+    it(`should redirect to '/${forwardPage.nextPageDateDecisionDue}' if 'applicationDecision' is 'nodecisionreceived'`, async () => {
       const applicationDecision = 'nodecisionreceived';
       const mockRequest = {
         ...req,
         body: { 'granted-or-refused': applicationDecision },
       };
-      await grantedOrRefusedPlanningApplicationController.postGrantedOrRefused(mockRequest, res);
+      await grantedOrRefusedHouseholderController.postGrantedOrRefusedHouseholder(mockRequest, res);
 
       expect(createOrUpdateAppeal).toHaveBeenCalledWith({
         ...appeal,
