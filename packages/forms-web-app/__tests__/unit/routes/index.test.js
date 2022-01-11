@@ -39,7 +39,8 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/your-planning-appeal', yourPlanningAppealRouter);
     expect(use).toHaveBeenCalledWith('/before-you-start', fullAppealRouter);
     expect(use).toHaveBeenCalledWith('/document', documentRouter);
+    expect(use).toHaveBeenCalledWith('/before-you-start', householderPlanningRouter);
 
-    expect(use.mock.calls.length).toBe(9);
+    expect(use.mock.calls.length).toBe(10);
   });
 });
