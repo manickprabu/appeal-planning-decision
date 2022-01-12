@@ -1,4 +1,4 @@
-const listedBuildingController = require('../../../../../src/controllers/householder-planning/eligibility/listed-building-householder');
+const claimingCostsController = require('../../../../../src/controllers/householder-planning/eligibility/claiming-costs-householder');
 const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const logger = require('../../../../../src/lib/logger');
@@ -10,7 +10,7 @@ jest.mock('../../../../../src/lib/empty-appeal');
 jest.mock('../../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/householder-planning/listed-building-householder', () => {
+describe('controllers/householder-planning/claiming-costs-householder', () => {
   let req;
   let res;
   let appeal;
@@ -24,38 +24,38 @@ describe('controllers/householder-planning/listed-building-householder', () => {
     jest.resetAllMocks();
   });
 
-  describe('Listed Building Tests', () => {
-    it('should call the correct template on getListedBuildingHouseholder', async () => {
-      await listedBuildingController.getListedBuildingHouseholder(req, res);
+  describe('Claiming Costs Tests', () => {
+    it('should call the correct template on getClaimingCostsHouseholder', async () => {
+      await claimingCostsController.getClaimingCostsHouseholder(req, res);
 
-      expect(res.render).toBeCalledWith(VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.LISTED_BUILDING, {
-        backLink: `/before-you-start/type-of-planning-application`,
+      expect(res.render).toBeCalledWith(VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.CLAIMING_COSTS, {
+        backLink: `/${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.HAS_APPEAL_FORM}`,
       });
     });
 
     it('should redirect to the use-a-different-service page', async () => {
       const mockRequest = {
         ...req,
-        body: { 'listed-building-householder': 'yes' },
+        body: { 'claiming-costs-householder': 'yes' },
       };
 
-      await listedBuildingController.postListedBuildingHouseholder(mockRequest, res);
+      await claimingCostsController.postClaimingCostsHouseholder(mockRequest, res);
 
-      expect(appeal.eligibility.isListedBuilding).toEqual(true);
+      expect(appeal.eligibility.isClaimingCosts).toEqual(true);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith({ ...appeal });
 
       expect(res.redirect).toBeCalledWith(`/before-you-start/use-a-different-service`);
     });
 
-    it('should redirect to the enforecment-notice page', async () => {
+    it('should redirect to the results-householder page', async () => {
       const mockRequest = {
         ...req,
-        body: { 'listed-building-householder': 'no' },
+        body: { 'claiming-costs-householder': 'no' },
       };
 
-      await listedBuildingController.postListedBuildingHouseholder(mockRequest, res);
+      await claimingCostsController.postClaimingCostsHouseholder(mockRequest, res);
 
-      expect(appeal.eligibility.isListedBuilding).toEqual(false);
+      expect(appeal.eligibility.isClaimingCosts).toEqual(false);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith({
         ...appeal,
       });
@@ -70,30 +70,27 @@ describe('controllers/householder-planning/listed-building-householder', () => {
         ...req,
         body: {
           errors: {
-            'listed-building-householder': {
-              msg: 'Select yes if your appeal about a listed building',
+            'claiming-costs-householder': {
+              msg: 'Select yes if you are claiming costs as part of your appeal',
             },
           },
         },
       };
 
-      await listedBuildingController.postListedBuildingHouseholder(mockRequest, res);
+      await claimingCostsController.postClaimingCostsHouseholder(mockRequest, res);
 
       expect(createOrUpdateAppeal).not.toHaveBeenCalled();
 
-      expect(res.render).toBeCalledWith(
-        `${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.LISTED_BUILDING}`,
-        {
-          appeal,
-          errors: {
-            'listed-building-householder': {
-              msg: 'Select yes if your appeal about a listed building',
-            },
+      expect(res.render).toBeCalledWith(`${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.CLAIMING_COSTS}`, {
+        appeal,
+        errors: {
+          'claiming-costs-householder': {
+            msg: 'Select yes if you are claiming costs as part of your appeal',
           },
-          errorSummary: [],
-          backLink: `/before-you-start/type-of-planning-application`,
-        }
-      );
+        },
+        errorSummary: [],
+        backLink: `/${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.HAS_APPEAL_FORM}`,
+      });
     });
 
     it('should render page with failed appeal update message', async () => {
@@ -101,23 +98,23 @@ describe('controllers/householder-planning/listed-building-householder', () => {
 
       const mockRequest = {
         ...req,
-        body: { 'listed-building-householder': 'outline-planning' },
+        body: { 'claiming-costs-householder': 'outline-planning' },
       };
 
       createOrUpdateAppeal.mockImplementation(() => Promise.reject(error));
 
-      await listedBuildingController.postListedBuildingHouseholder(mockRequest, res);
+      await claimingCostsController.postClaimingCostsHouseholder(mockRequest, res);
 
       expect(res.redirect).not.toHaveBeenCalled();
       expect(logger.error).toHaveBeenCalledWith(error);
 
       expect(res.render).toHaveBeenCalledWith(
-        `${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.LISTED_BUILDING}`,
+        `${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.CLAIMING_COSTS}`,
         {
           appeal,
           errors: {},
           errorSummary: [{ text: error.toString(), href: 'pageId' }],
-          backLink: `/before-you-start/type-of-planning-application`,
+          backLink: `/${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.HAS_APPEAL_FORM}`,
         }
       );
     });
