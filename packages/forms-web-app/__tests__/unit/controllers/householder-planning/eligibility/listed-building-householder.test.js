@@ -47,7 +47,7 @@ describe('controllers/householder-planning/listed-building-householder', () => {
       expect(res.redirect).toBeCalledWith(`/before-you-start/use-a-different-service`);
     });
 
-    it('should redirect to the enforecment-notice page', async () => {
+    it('should redirect to the granted-or-refused-householder page', async () => {
       const mockRequest = {
         ...req,
         body: { 'listed-building-householder': 'no' },
@@ -60,7 +60,7 @@ describe('controllers/householder-planning/listed-building-householder', () => {
         ...appeal,
       });
 
-      expect(res.redirect).toBeCalledWith(`/${VIEW.HOUSEHOLDER_PLANNING.ENFORCEMENT_NOTICE}`); // Future Planning Application Decision Page
+      expect(res.redirect).toBeCalledWith('/before-you-start/granted-or-refused-householder');
     });
 
     it('should render errors on the page', async () => {
