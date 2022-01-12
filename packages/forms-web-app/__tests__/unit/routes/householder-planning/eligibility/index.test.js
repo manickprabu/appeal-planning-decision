@@ -1,8 +1,9 @@
 const { use } = require('../../router-mock');
 
 const listedBuildingHouseholderRouter = require('../../../../../src/routes/householder-planning/eligibility/listed-building-householder');
+const grantedOrRefusedHouseholderRouter = require('../../../../../src/routes/householder-planning/eligibility/granted-or-refused-householder');
 
-describe('routes/full-appeal/index', () => {
+describe('routes/householder-planning/index', () => {
   beforeEach(() => {
     jest.resetModules();
 
@@ -12,7 +13,8 @@ describe('routes/full-appeal/index', () => {
 
   it('should define the expected routes', () => {
     expect(use).toHaveBeenCalledWith(listedBuildingHouseholderRouter);
+    expect(use).toHaveBeenCalledWith(grantedOrRefusedHouseholderRouter);
 
-    expect(use.mock.calls.length).toBe(1);
+    expect(use.mock.calls.length).toBe(2);
   });
 });
