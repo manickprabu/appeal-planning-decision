@@ -6,7 +6,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set labelText = "Drag and drop or choose a file" %}
-{% set title = "Planning application form - Appeal a planning decision - GOV.UK" %}
+{% set title = "Decision letter - Appeal a planning decision - GOV.UK" %}
 {% block pageTitle %}{{ "Error: " + title if errors else title }}{% endblock %}
 
 {% block backButton %}
@@ -30,12 +30,12 @@
         }) }}
       {% endif %}
       <span class="govuk-caption-l">Upload documents from your planning application</span>
-      <h1 data-cy="heading" class="govuk-heading-l">Planning application form</h1>
+      <h1 class="govuk-heading-l">Decision letter</h1>
       <p class="govuk-body">
-        If you do not have your planning application form, you can find it by searching for your planning application on your local planning department's website.
+        This is the letter from the local planning department telling you about the decision on your planning application.
       </p>
       {% if uploadedFile.id %}
-        <h2 class="govuk-heading-m  govuk-!-margin-top-6">Uploaded file</h2>
+        <h2 class="govuk-heading-m govuk-!-margin-top-6">Uploaded file</h2>
         <p class="govuk-body govuk-!-margin-bottom-8"><a href="/document/{{appealId}}/{{uploadedFile.id}}" class="govuk-link">{{ uploadedFile.name }}</a>
         {% set labelText = "Replace the file" %}
       {% endif %}
@@ -43,12 +43,13 @@
         {{ govukFileUpload({
           id: "file-upload",
           name: "file-upload",
+          classes: "pins-file-upload",
           label: {
             text: labelText,
             classes: "govuk-label--m"
           },
-          classes: "pins-file-upload",
-          errorMessage: errors['file-upload'] and { text: errors['file-upload'].msg }
+          errorMessage: errors['file-upload'] and { text: errors['file-upload'].msg },
+          value: uploadedFile.name
         }) }}
 
         {{ govukDetails({
