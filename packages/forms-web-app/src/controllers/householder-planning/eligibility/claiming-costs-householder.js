@@ -3,11 +3,12 @@ const { createOrUpdateAppeal } = require('../../../lib/appeals-api-wrapper');
 
 const { VIEW } = require('../../../lib/householder-planning/views');
 
-const listedBuilding = VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.LISTED_BUILDING;
-const backLink = `/before-you-start/type-of-planning-application`;
+const claimingCosts = VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.CLAIMING_COSTS;
+const backLink = `/${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.ENFORCEMENT_NOTICE}`;
+const nextPage = `/${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.HAS_APPEAL_FORM}`;
 
-exports.getListedBuildingHouseholder = async (req, res) => {
-  res.render(listedBuilding, { backLink });
+exports.getClaimingCostsHouseholder = async (req, res) => {
+  res.render(claimingCosts, { backLink });
 };
 
 const redirect = (selection, res) => {
@@ -16,18 +17,18 @@ const redirect = (selection, res) => {
     return;
   }
 
-  res.redirect(`/${VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.ENFORCEMENT_NOTICE}`);
+  res.redirect(nextPage);
 };
 
-exports.postListedBuildingHouseholder = async (req, res) => {
+exports.postClaimingCostsHouseholder = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
   const { appeal } = req.session;
 
-  const selection = body['listed-building-householder'];
+  const selection = body['claiming-costs-householder'];
 
-  if (errors['listed-building-householder']) {
-    return res.render(listedBuilding, {
+  if (errors['claiming-costs-householder']) {
+    return res.render(claimingCosts, {
       appeal,
       errors,
       errorSummary,
@@ -37,7 +38,7 @@ exports.postListedBuildingHouseholder = async (req, res) => {
 
   appeal.eligibility = {
     ...appeal.eligibility,
-    isListedBuilding: selection === 'yes',
+    isClaimingCosts: selection === 'yes',
   };
 
   try {
@@ -46,7 +47,7 @@ exports.postListedBuildingHouseholder = async (req, res) => {
   } catch (e) {
     logger.error(e);
 
-    return res.render(listedBuilding, {
+    return res.render(claimingCosts, {
       appeal,
       errors,
       errorSummary: [{ text: e.toString(), href: 'pageId' }],
