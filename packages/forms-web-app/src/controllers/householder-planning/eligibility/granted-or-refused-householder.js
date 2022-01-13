@@ -1,24 +1,26 @@
-const logger = require('../../lib/logger');
+const logger = require('../../../lib/logger');
 const {
   VIEW: {
-    FULL_APPEAL: { GRANTED_OR_REFUSED: currentPage },
+    HOUSEHOLDER_PLANNING: {
+      ELIGIBILITY: { GRANTED_OR_REFUSED_HOUSEHOLDER: currentPage },
+    },
   },
-} = require('../../lib/views');
-const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
+} = require('../../../lib/householder-planning/views');
+const { createOrUpdateAppeal } = require('../../../lib/appeals-api-wrapper');
 const {
   validApplicationDecisionOptions,
-} = require('../../validators/full-appeal/granted-or-refused');
+} = require('../../../validators/householder-planning/eligibility/granted-or-refused-householder');
 
 const {
-  FULL_APPEAL: { PLANNING_APPLICATION_STATUS },
-} = require('../../constants');
+  HOUSEHOLDER_PLANNING: { PLANNING_APPLICATION_STATUS: applicationStatus },
+} = require('../../../constants');
 
 exports.forwardPage = (status) => {
   const statuses = {
-    [PLANNING_APPLICATION_STATUS.GRANTED]: '/before-you-start/decision-date',
-    [PLANNING_APPLICATION_STATUS.NODECISION]: '/before-you-start/date-decision-due',
-    [PLANNING_APPLICATION_STATUS.REFUSED]: '/before-you-start/decision-date',
-    previousPage: '/before-you-start/any-of-following',
+    [applicationStatus.GRANTED]: '/before-you-start/decision-date-householder',
+    [applicationStatus.NODECISION]: '/before-you-start/date-decision-due-householder',
+    [applicationStatus.REFUSED]: '/before-you-start/decision-date-householder',
+    previousPage: '/before-you-start/listed-building-householder',
 
     default: currentPage,
   };
@@ -26,14 +28,14 @@ exports.forwardPage = (status) => {
   return statuses[status] || statuses.default;
 };
 
-exports.getGrantedOrRefused = async (req, res) => {
+exports.getGrantedOrRefusedHouseholder = async (req, res) => {
   res.render(currentPage, {
     appeal: req.session.appeal,
     previousPage: this.forwardPage('previousPage'),
   });
 };
 
-exports.postGrantedOrRefused = async (req, res) => {
+exports.postGrantedOrRefusedHouseholder = async (req, res) => {
   const { body } = req;
   const { appeal } = req.session;
   const { errors = {}, errorSummary = [] } = body;
@@ -71,5 +73,5 @@ exports.postGrantedOrRefused = async (req, res) => {
     return;
   }
 
-  res.redirect(`${this.forwardPage(selectedApplicationStatus)}`);
+  res.redirect(this.forwardPage(selectedApplicationStatus));
 };
