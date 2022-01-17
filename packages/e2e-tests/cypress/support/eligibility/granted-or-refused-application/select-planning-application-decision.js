@@ -1,4 +1,5 @@
-import {getGrantedRadio, getRefusedRadio, getNoDecisionReceivedRadio, getPlanningApplicationDecisionError} from '../page-objects/granted-or-refused-application-po'
+import {getGrantedRadio, getRefusedRadio, getNoDecisionReceivedRadio
+} from '../page-objects/granted-or-refused-application-po'
 
 export const selectPlanningApplicationDecision = (decision)=>{
     switch(decision){
@@ -8,7 +9,7 @@ export const selectPlanningApplicationDecision = (decision)=>{
         case 'Refused':
             getRefusedRadio().check();
             break;
-        case 'I have not received a decision':
+        case 'I have Not Received a Decision':
             getNoDecisionReceivedRadio().check();
             break;
     }
