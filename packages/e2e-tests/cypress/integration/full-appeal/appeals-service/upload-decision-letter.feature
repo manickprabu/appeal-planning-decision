@@ -2,9 +2,9 @@ Feature: As an appellant/agent
   I want to add a copy of the LPA Decision Letter
   So that the planning Inspectorate can have the necessary evidence to support my appeal
 
-  Scenario: 1. Navigate from 'Design and Access Statement page' to 'Decision Letter' page
-    Given an appellant is on the 'Design and access statement' page
-    When they have uploaded a file and select 'continue'
+  Scenario: 1. Navigate from 'Design and Access Statement Submitted page' to 'Decision Letter' page
+    Given an appellant is on the 'Design and access statement submitted' page
+    When they select 'No' and click continue
     Then the 'Decision Letter' page is displayed
 
   Scenario Outline: 2. Appellant/agent uploads valid file using File Upload
@@ -13,16 +13,16 @@ Feature: As an appellant/agent
     Then 'Task list' page is displayed
     # When an appellant is on the 'Decision Letter' page
     # Then the uploaded file '<filename>' is displayed
-    # Examples:
-    #   | filename               |
-    #   | upload-file-valid.doc  |
-    #   | upload-file-valid.docx |
-    #   | upload-file-valid.jpeg |
-    #   | upload-file-valid.jpg  |
-    #   | upload-file-valid.png  |
-    #   | upload-file-valid.tif  |
-    #   | upload-file-valid.tiff |
-    #   | upload-file-valid.pdf  |
+     Examples:
+       | filename               |
+       | upload-file-valid.doc  |
+       | upload-file-valid.docx |
+       | upload-file-valid.jpeg |
+       | upload-file-valid.jpg  |
+       | upload-file-valid.png  |
+       | upload-file-valid.tif  |
+       | upload-file-valid.tiff |
+       | upload-file-valid.pdf  |
 
   Scenario: 3. Appellant/agent uploads valid file using Drag and Drop
     Given an appellant is on the 'Decision Letter' page
@@ -47,5 +47,11 @@ Feature: As an appellant/agent
   Scenario: 6. Navigate from 'Decision Letter' page back to Task List
     Given an appellant is on the 'Decision Letter' page
     When they click on the 'Back' link
-    Then they are presented with the 'Design and access statement' page
+    Then they are presented with the 'Design and access statement submitted' page
+    When they click on the 'Back' link
+    Then they are presented with the 'What is your planning application number?' page
+    When they click on the 'Back' link
+    Then they are presented with the 'Planning application form' page
+    When they click on the 'Back' link
+    Then they are presented with the 'Appeal a planning decision' task list page
     #And the last task they are working on will show ‘In progress’
