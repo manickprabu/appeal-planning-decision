@@ -12,6 +12,7 @@ import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppea
 import { selectPlanningApplicationType } from '../../../../support/eligibility/planning-application-type/select-planning-application-type';
 import { selectSiteOption } from '../../../../support/eligibility/appellant-selects-the-site/select-site-option';
 import { selectPlanningApplicationDecision } from '../../../../support/eligibility/granted-or-refused-application/select-planning-application-decision';
+import {clickContinueButton} from "../../../../support/common/clickContinueButton";
 import {
   getDateDecisionDueDay,
   getPlanningApplicationDecisionError,
@@ -42,10 +43,11 @@ let pastDate;
 Given('appellant navigates to decision date page for householder appeal', () => {
   goToAppealsPage(typeOfPlanningPageUrl);
   selectPlanningApplicationType('Householder');
+  clickContinueButton()
   selectListedBuildingDecision('No');
-  getContinueButton().click();
+  clickContinueButton()
   selectPlanningApplicationDecision('I have Not Received a Decision');
-  getContinueButton().click();
+  clickContinueButton()
 });
 
 Given('appellant navigates to date decision due page', () => {
