@@ -117,9 +117,9 @@ Then(
 
 Then('appellant are navigated to the page which notifies them that they cannot appeal', () => {
   cy.url().should('contain', shutterPageUrl);
-  // pastDate = format(addMonths(pastDate, 6), 'dd MMMM yyyy');
+  pastDate = format(addMonths(pastDate, 6), 'dd MMMM yyyy');
   getAppealDeadline().should('contain', '6 months');
-  // getAppealDeadline().should('contain', pastDate);
+  getAppealDeadline().should('contain', pastDate);
 });
 
 Then('progress is halted with an error: {string}', (errorMessage) => {
