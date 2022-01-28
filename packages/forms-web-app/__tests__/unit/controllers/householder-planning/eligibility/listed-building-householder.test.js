@@ -28,12 +28,9 @@ describe('controllers/householder-planning/eligibility/listed-building-household
     it('should call the correct template on getListedBuildingHouseholder', async () => {
       await listedBuildingController.getListedBuildingHouseholder(req, res);
 
-      expect(res.render).toBeCalledWith(
-        VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.LISTED_BUILDING_HOUSEHOLDER,
-        {
-          backLink: '/before-you-start/type-of-planning-application',
-        }
-      );
+      expect(res.render).toBeCalledWith(VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.LISTED_BUILDING_HOUSEHOLDER, {
+        backLink: `/before-you-start/type-of-planning-application`,
+      });
     });
 
     it('should redirect to the use-a-different-service page', async () => {
