@@ -1,5 +1,8 @@
-const { add, isBefore } = require('date-fns');
+const { isBefore } = require('date-fns');
+const { rules } = require('@pins/business-rules');
+const { APPEAL_ID } = require('@pins/business-rules/src/constants');
 const logger = require('../../lib/logger');
+
 const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
 const { VIEW } = require('../../lib/views');
 
@@ -27,14 +30,19 @@ exports.postDecisionDate = async (req, res) => {
     });
   }
 
-  const todaysDate = Date.now();
   const enteredDate = new Date(
     body['decision-date-year'],
     (parseInt(body['decision-date-month'], 10) - 1).toString(),
     body['decision-date-day']
   );
 
-  if (isBefore(enteredDate, add(new Date(todaysDate), { months: -6 }))) {
+  const deadlineDate = rules.appeal.deadlineDate(enteredDate, APPEAL_ID.PLANNING_SECTION_78);
+  const { time, duration } = rules.appeal.deadlinePeriod(APPEAL_ID.PLANNING_SECTION_78);
+
+  if (isBefore(enteredDate, deadlineDate)) {
+    req.session.appeal.eligibility.appealDeadline = deadlineDate;
+    req.session.appeal.eligibility.appealPeriod = `${time} ${duration}`;
+
     return res.redirect(`/before-you-start/you-cannot-appeal`);
   }
 
