@@ -12,6 +12,7 @@ import { goToAppealsPage } from '../../../../support/common/go-to-page/goToAppea
 import { selectPlanningApplicationType } from '../../../../support/eligibility/planning-application-type/select-planning-application-type';
 import { selectSiteOption } from '../../../../support/eligibility/appellant-selects-the-site/select-site-option';
 import { selectPlanningApplicationDecision } from '../../../../support/eligibility/granted-or-refused-application/select-planning-application-decision';
+import {clickContinueButton} from "../../../../support/common/clickContinueButton";
 import {
   getDateDecisionDueDay,
   getPlanningApplicationDecisionError,
@@ -29,7 +30,6 @@ import format from 'date-fns/format';
 import {
   selectListedBuildingDecision
 } from '../../../../support/eligibility/listed-building/select-listed-building-decision';
-import { clickContinueButton } from '../../../../support/common/clickContinueButton';
 
 const pageHeading = 'What date was your decision due?';
 const pageTitle =
