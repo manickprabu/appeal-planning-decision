@@ -3,6 +3,7 @@ const logger = require('../../lib/logger');
 
 const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
 const { VIEW } = require('../../lib/views');
+const { APPEAL_TYPE } = require('../../constants');
 
 exports.getDecisionDate = async (req, res) => {
   res.render(VIEW.FULL_APPEAL.DECISION_DATE, {
@@ -34,11 +35,8 @@ exports.postDecisionDate = async (req, res) => {
     body['decision-date-day']
   );
 
-  const deadlineDate = rules.appeal.deadlineDate(
-    enteredDate,
-    constants.APPEAL_TYPE.PLANNING_SECTION_78
-  );
-  const { time, duration } = rules.appeal.deadlinePeriod(constants.APPEAL_TYPE.PLANNING_SECTION_78);
+  const deadlineDate = rules.appeal.deadlineDate(enteredDate, APPEAL_TYPE.PLANNING_SECTION_78);
+  const { time, duration } = rules.appeal.deadlinePeriod(APPEAL_TYPE.PLANNING_SECTION_78);
 
   const isWithinExpiryPeriod = validation.appeal.decisionDate.isWithinDecisionDateExpiryPeriod(
     enteredDate,
