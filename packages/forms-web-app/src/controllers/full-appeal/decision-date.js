@@ -1,6 +1,7 @@
 const { rules, constants, validation } = require('@pins/business-rules');
 const logger = require('../../lib/logger');
 
+
 const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
 const { VIEW } = require('../../lib/views');
 const { APPEAL_TYPE } = require('../../constants');
@@ -40,7 +41,7 @@ exports.postDecisionDate = async (req, res) => {
 
   const isWithinExpiryPeriod = validation.appeal.decisionDate.isWithinDecisionDateExpiryPeriod(
     enteredDate,
-    new Date(),
+    Date.now(),
     constants.APPEAL_ID.PLANNING_SECTION_78
   );
 
