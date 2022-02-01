@@ -1,5 +1,5 @@
 const { add, isBefore } = require('date-fns');
-const { rules, constants } = require('@pins/business-rules');
+const { rules, constants, validation } = require('@pins/business-rules');
 
 const logger = require('../../../lib/logger');
 const { createOrUpdateAppeal } = require('../../../lib/appeals-api-wrapper');
@@ -58,9 +58,15 @@ exports.postDecisionDateHouseholder = async (req, res) => {
     constants.APPEAL_ID.HOUSEHOLDER
   );
 
+  const isWithinExpiryPeriod = validation.appeal.decisionDate.isWithinDecisionDateExpiryPeriod(
+    enteredDate,
+    Date.now(),
+    constants.APPEAL_ID.HOUSEHOLDER
+  );
+
   if (
     appeal.eligibility.applicationDecision === 'refused' &&
-    isBefore(enteredDate, refusedDeadlineDate)
+    !isWithinExpiryPeriod
   ) {
     const { duration, time } = rules.appeal.deadlinePeriod(constants.APPEAL_ID.HOUSEHOLDER);
     req.session.appeal.eligibility.appealDeadline = refusedDeadlineDate;
