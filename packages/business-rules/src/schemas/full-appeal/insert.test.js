@@ -1501,5 +1501,30 @@ describe('schemas/full-appeal/insert', () => {
         });
       });
     });
+
+    describe('appealSubmission', () => {
+      it('should throw an error when given a null value', async () => {
+        appeal.appealSubmission = null;
+
+        await expect(() => insert.validate(appeal, config)).rejects.toThrow(
+          'appealSubmission must be a `object` type, but the final value was: `null`',
+        );
+      });
+
+      describe('appealSubmission.appealPDFStatement', () => {
+        it('should not throw an error when not given a value', async () => {
+          delete appeal2.appealSubmission.appealPDFStatement;
+
+          appeal.appealSubmission.appealPDFStatement.uploadedFile = {
+            id: null,
+            name: '',
+            originalFileName: '',
+          };
+
+          const result = await insert.validate(appeal2, config);
+          expect(result).toEqual(appeal);
+        });
+      });
+    });
   });
 });
