@@ -7,6 +7,7 @@ const {
   KNOW_THE_OWNERS,
   TYPE_OF_PLANNING_APPLICATION,
 } = require('../../constants');
+const document = require('../components/insert/document');
 
 const insert = pinsYup
   .object()
@@ -66,6 +67,9 @@ const insert = pinsYup
         }),
       })
       .noUnknown(true),
+    appealSubmission: pinsYup.object().shape({
+      appealPDFStatement: pinsYup.object().shape({ uploadedFile: document() }).noUnknown(true),
+    }),
     yourAppealSection: pinsYup
       .object()
       .shape({
