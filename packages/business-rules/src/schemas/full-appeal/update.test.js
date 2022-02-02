@@ -1452,5 +1452,33 @@ describe('schemas/full-appeal/update', () => {
         });
       });
     });
+
+    describe('appealSubmission', () => {
+      it('should throw an error when given a null value', async () => {
+        appeal.appealSubmission = null;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'appealSubmission must be a `object` type, but the final value was: `null`',
+        );
+      });
+
+      it('should throw an error when not given a value', async () => {
+        delete appeal.appealSubmission;
+
+        await expect(() => update.validate(appeal, config)).rejects.toThrow(
+          'appealSubmission.appealPDFStatement.uploadedFile.id is a required field',
+        );
+      });
+
+      describe('appealSubmission.appealPDFStatement', () => {
+        it('should throw an error when given a null value', async () => {
+          appeal.appealSubmission.appealPDFStatement = null;
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            'appealSubmission.appealPDFStatement must be a `object` type, but the final value was: `null`',
+          );
+        });
+      });
+    });
   });
 });
