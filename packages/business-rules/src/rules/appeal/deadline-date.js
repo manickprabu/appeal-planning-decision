@@ -17,7 +17,10 @@ const householderDecisionDate = (decisionDate, decision) => {
       });
 
     default:
-      throw new BusinessRulesError('decision must be valid');
+      return add(endOfDay(decisionDate), {
+        [appeal.type[appealType].appealDue.nodecisionreceived.duration]:
+          appeal.type[appealType].appealDue.nodecisionreceived.time,
+      });
   }
 };
 

@@ -32,7 +32,7 @@ const config = {
             time: 12,
             duration: 'weeks',
           },
-          nodecision: {
+          nodecisionreceived: {
             time: 6,
             duration: 'months',
           },
