@@ -16,7 +16,10 @@ const householderDecisionPeriod = (decision) => {
       };
 
     default:
-      throw new BusinessRulesError('decision must be valid');
+      return {
+        duration: appeal.type[appealType].appealDue.nodecisionreceived.duration,
+        time: appeal.type[appealType].appealDue.nodecisionreceived.time,
+      };
   }
 };
 

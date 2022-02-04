@@ -25,7 +25,9 @@ describe('validation/appeal/decision-date/is-within-decision-date-expiry-period'
   });
 
   it('should return false if the current date is after the deadline date', () => {
-    expect(isWithinDecisionDateExpiryPeriod(subWeeks(currentDate, 15), currentDate)).toBeFalsy();
+    const deadlineDate = subWeeks(currentDate, 15);
+
+    expect(isWithinDecisionDateExpiryPeriod(deadlineDate, currentDate)).toBeFalsy();
   });
 
   describe('if decision date is 12 weeks ago from today then it...', () => {
