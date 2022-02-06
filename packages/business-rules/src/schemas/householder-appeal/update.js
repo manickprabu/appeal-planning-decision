@@ -4,6 +4,8 @@ const singleDocumentUpdate = require('../components/update/single-document');
 const multiDocumentUpdate = require('../components/update/multi-document');
 const sectionState = require('../components/section-state');
 const { APPLICATION_DECISION, APPEAL_ID, APPEAL_STATE } = require('../../constants');
+const { appeal } = require('../../validation');
+const createYupError = require('../../utils/create-yup-error');
 
 const update = pinsYup
   .object()
@@ -12,22 +14,30 @@ const update = pinsYup
     id: pinsYup.string().uuid().required(),
     horizonId: pinsYup.string().trim().max(20).nullable(),
     lpaCode: pinsYup.string().trim().max(20).required(),
-    decisionDate: pinsYup.lazy((decisionDate) => {
-      return pinsYup
-        .date()
-        .isInThePast(decisionDate)
-        .isWithinDeadlinePeriod(decisionDate)
-        .transform(parseDateString)
-        .required();
-    }),
-    submissionDate: pinsYup.date().transform(parseDateString).nullable(),
-    state: pinsYup.string().oneOf(Object.values(APPEAL_STATE)).required(),
     appealType: pinsYup.lazy((appealType) => {
       if (appealType) {
         return pinsYup.string().oneOf(Object.values(APPEAL_ID));
       }
       return pinsYup.string().nullable();
     }),
+    decisionDate: pinsYup.lazy((decisionDate) => {
+      return pinsYup
+        .date()
+        .isInThePast(decisionDate)
+        .test('decisionDate', 'decisionDate is not within dealine period', function test() {
+          return (
+            appeal.decisionDate.isWithinDecisionDateExpiryPeriod(
+              decisionDate,
+              this.options.parent.appealType,
+              this.options.parent.eligibility.applicationDecision,
+            ) || createYupError.call(this, 'must be before the deadline date')
+          );
+        })
+        .transform(parseDateString)
+        .required();
+    }),
+    submissionDate: pinsYup.date().transform(parseDateString).nullable(),
+    state: pinsYup.string().oneOf(Object.values(APPEAL_STATE)).required(),
     eligibility: pinsYup
       .object()
       .shape({
@@ -38,7 +48,7 @@ const update = pinsYup
             `eligibility.applicationDecision must be one of the following values: ${Object.values(
               APPLICATION_DECISION,
             ).join(', ')}`,
-            function (applicationDecision) {
+            function test(applicationDecision) {
               if (applicationDecision) {
                 return pinsYup
                   .string()
