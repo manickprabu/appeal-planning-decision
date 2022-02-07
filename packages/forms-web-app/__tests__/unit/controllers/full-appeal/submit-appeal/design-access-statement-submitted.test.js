@@ -1,10 +1,13 @@
 const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
+const {
   getDesignAccessStatementSubmitted,
   postDesignAccessStatementSubmitted,
 } = require('../../../../../src/controllers/full-appeal/submit-appeal/design-access-statement-submitted');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../../mocks');
 const {
   VIEW: {
@@ -21,25 +24,25 @@ describe('controllers/full-appeal/submit-appeal/design-access-statement-submitte
   let appeal;
 
   const sectionName = 'planningApplicationDocumentsSection';
-  const taskName = 'isDesignAccessStatementSubmitted';
+  const taskName = 'designAccessStatement';
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const errors = { 'design-access-statement-submitted': 'Select an option' };
   const errorSummary = [{ text: 'There was an error', href: '#' }];
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       planningApplicationDocumentsSection: {
-        isDesignAccessStatementSubmitted: false,
+        designAccessStatement: {
+          isSubmitted: false,
+        },
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
     };
     res = mockRes();
 
@@ -52,7 +55,7 @@ describe('controllers/full-appeal/submit-appeal/design-access-statement-submitte
 
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(DESIGN_ACCESS_STATEMENT_SUBMITTED, {
-        isDesignAccessStatementSubmitted: false,
+        isSubmitted: false,
       });
     });
 
@@ -63,7 +66,7 @@ describe('controllers/full-appeal/submit-appeal/design-access-statement-submitte
 
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(DESIGN_ACCESS_STATEMENT_SUBMITTED, {
-        isDesignAccessStatementSubmitted: undefined,
+        isSubmitted: undefined,
       });
     });
   });
@@ -84,7 +87,7 @@ describe('controllers/full-appeal/submit-appeal/design-access-statement-submitte
       expect(res.redirect).not.toHaveBeenCalled();
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(DESIGN_ACCESS_STATEMENT_SUBMITTED, {
-        isDesignAccessStatementSubmitted: undefined,
+        isSubmitted: undefined,
         errors,
         errorSummary,
       });
@@ -102,7 +105,7 @@ describe('controllers/full-appeal/submit-appeal/design-access-statement-submitte
       expect(res.redirect).not.toHaveBeenCalled();
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(DESIGN_ACCESS_STATEMENT_SUBMITTED, {
-        isDesignAccessStatementSubmitted: false,
+        isSubmitted: false,
         errors: {},
         errorSummary: [{ text: error.toString(), href: '#' }],
       });

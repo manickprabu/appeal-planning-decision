@@ -1,9 +1,9 @@
 const {
   constants: {
     KNOW_THE_OWNERS: {
-      YES: KNOW_THE_OWNERS_YES,
       NO: KNOW_THE_OWNERS_NO,
       SOME: KNOW_THE_OWNERS_SOME,
+      YES: KNOW_THE_OWNERS_YES,
     },
   },
 } = require('@pins/business-rules');
@@ -17,11 +17,11 @@ const {
 const { getTaskStatus } = require('../../../services/task.service');
 
 const sectionName = 'appealSiteSection';
-const taskName = 'knowsTheOwners';
+const taskName = 'siteOwnership';
 
 const getKnowTheOwners = (req, res) => {
   const {
-    appeal: { [sectionName]: { ownsSomeOfTheLand, [taskName]: knowsTheOwners } = {} },
+    appeal: { [sectionName]: { [taskName]: { ownsSomeOfTheLand, knowsTheOwners } = {} } = {} },
   } = req.session;
   res.render(KNOW_THE_OWNERS, {
     ownsSomeOfTheLand,
@@ -35,7 +35,7 @@ const postKnowTheOwners = async (req, res) => {
     body: { errors = {}, errorSummary = [] },
     session: {
       appeal,
-      appeal: { [sectionName]: { ownsSomeOfTheLand } = {} },
+      appeal: { [sectionName]: { [taskName]: { ownsSomeOfTheLand } = {} } = {} },
     },
   } = req;
 
@@ -56,10 +56,10 @@ const postKnowTheOwners = async (req, res) => {
       knowTheOwnersSomeNo.includes(appeal[sectionName]?.knowsTheOwners) &&
       knowsTheOwners !== appeal[sectionName]?.knowsTheOwners
     ) {
-      appeal[sectionName].identifyingTheOwners = null;
+      appeal[sectionName].hasIdentifiedTheOwners = null;
     }
-    appeal[sectionName] = appeal[sectionName] || {};
-    appeal[sectionName][taskName] = knowsTheOwners;
+    appeal[sectionName] = appeal[sectionName] || { [taskName]: {} };
+    appeal[sectionName][taskName].knowsTheOwners = knowsTheOwners;
     appeal.sectionStates[sectionName] = appeal.sectionStates[sectionName] || {};
     appeal.sectionStates[sectionName][taskName] = getTaskStatus(appeal, sectionName, taskName);
     req.session.appeal = await createOrUpdateAppeal(appeal);

@@ -1,10 +1,13 @@
 const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
+const {
   getVisibleFromRoad,
   postVisibleFromRoad,
 } = require('../../../../../src/controllers/full-appeal/submit-appeal/visible-from-road');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../../mocks');
 const {
   VIEW: {
@@ -21,26 +24,26 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
   let appeal;
 
   const sectionName = 'appealSiteSection';
-  const taskName = 'isVisibleFromRoad';
+  const taskName = 'visibleFromRoad';
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const errors = { 'visible-from-road': 'Select an option' };
   const errorSummary = [{ text: 'There was an error', href: '#' }];
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       appealSiteSection: {
-        isVisibleFromRoad: true,
-        visibleFromRoadDetails: null,
+        visibleFromRoad: {
+          isVisible: true,
+          details: null,
+        },
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
     };
     res = mockRes();
 
@@ -53,8 +56,10 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
 
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(VISIBLE_FROM_ROAD, {
-        isVisibleFromRoad: true,
-        visibleFromRoadDetails: null,
+        visibleFromRoad: {
+          isVisible: true,
+          details: null,
+        },
       });
     });
 
@@ -65,8 +70,7 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
 
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(VISIBLE_FROM_ROAD, {
-        isVisibleFromRoad: undefined,
-        visibleFromRoadDetails: undefined,
+        visibleFromRoad: undefined,
       });
     });
   });
@@ -88,8 +92,10 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
       expect(res.redirect).not.toHaveBeenCalled();
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(VISIBLE_FROM_ROAD, {
-        isVisibleFromRoad: false,
-        visibleFromRoadDetails: null,
+        visibleFromRoad: {
+          isVisible: false,
+          details: null,
+        },
         errors,
         errorSummary,
       });
@@ -115,8 +121,10 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
       expect(res.redirect).not.toHaveBeenCalled();
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(VISIBLE_FROM_ROAD, {
-        isVisibleFromRoad: true,
-        visibleFromRoadDetails: null,
+        visibleFromRoad: {
+          isVisible: true,
+          details: null,
+        },
         errors: {},
         errorSummary: [{ text: error.toString(), href: '#' }],
       });
@@ -147,9 +155,9 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
     });
 
     it('should redirect to the correct page if `no` has been selected', async () => {
-      appeal.appealSiteSection = {
-        isVisibleFromRoad: true,
-        visibleFromRoadDetails: null,
+      appeal.appealSiteSection.visibleFromRoad = {
+        isVisible: true,
+        details: null,
       };
 
       const submittedAppeal = {
@@ -202,9 +210,9 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
     });
 
     it('should redirect to the correct page if `no` has been selected and appeal.appealSiteSection is not defined', async () => {
-      appeal.appealSiteSection = {
-        isVisibleFromRoad: true,
-        visibleFromRoadDetails: null,
+      appeal.appealSiteSection.visibleFromRoad = {
+        isVisible: true,
+        details: null,
       };
 
       const submittedAppeal = {
@@ -259,7 +267,7 @@ describe('controllers/full-appeal/submit-appeal/visible-from-road', () => {
     });
 
     it('should redirect to the correct page if `no` has been selected and appeal.sectionStates.appealSiteSection is not defined', async () => {
-      appeal.appealSiteSection = {
+      appeal.appealSiteSection.visibleFromRoad = {
         isVisibleFromRoad: true,
         visibleFromRoadDetails: null,
       };

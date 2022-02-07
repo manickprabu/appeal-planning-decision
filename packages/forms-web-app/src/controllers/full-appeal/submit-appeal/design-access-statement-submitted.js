@@ -8,14 +8,14 @@ const {
 const { getTaskStatus } = require('../../../services/task.service');
 
 const sectionName = 'planningApplicationDocumentsSection';
-const taskName = 'isDesignAccessStatementSubmitted';
+const taskName = 'designAccessStatement';
 
 const getDesignAccessStatementSubmitted = (req, res) => {
   const {
-    appeal: { [sectionName]: { [taskName]: isDesignAccessStatementSubmitted } = {} },
+    appeal: { [sectionName]: { [taskName]: { isSubmitted } = {} } = {} },
   } = req.session;
   res.render(DESIGN_ACCESS_STATEMENT_SUBMITTED, {
-    isDesignAccessStatementSubmitted,
+    isSubmitted,
   });
 };
 
@@ -33,11 +33,11 @@ const postDesignAccessStatementSubmitted = async (req, res) => {
     });
   }
 
-  const isDesignAccessStatementSubmitted = body['design-access-statement-submitted'] === 'yes';
+  const isSubmitted = body['design-access-statement-submitted'] === 'yes';
 
   try {
-    appeal[sectionName] = appeal[sectionName] || {};
-    appeal[sectionName][taskName] = isDesignAccessStatementSubmitted;
+    appeal[sectionName] = appeal[sectionName] || { [taskName]: {} };
+    appeal[sectionName][taskName].isSubmitted = isSubmitted;
     appeal.sectionStates[sectionName] = appeal.sectionStates[sectionName] || {};
     appeal.sectionStates[sectionName][taskName] = getTaskStatus(appeal, sectionName, taskName);
     req.session.appeal = await createOrUpdateAppeal(appeal);
@@ -45,13 +45,13 @@ const postDesignAccessStatementSubmitted = async (req, res) => {
     logger.error(err);
 
     return res.render(DESIGN_ACCESS_STATEMENT_SUBMITTED, {
-      isDesignAccessStatementSubmitted,
+      isSubmitted,
       errors,
       errorSummary: [{ text: err.toString(), href: '#' }],
     });
   }
 
-  return isDesignAccessStatementSubmitted
+  return isSubmitted
     ? res.redirect(`/${DESIGN_ACCESS_STATEMENT}`)
     : res.redirect(`/${DECISION_LETTER}`);
 };

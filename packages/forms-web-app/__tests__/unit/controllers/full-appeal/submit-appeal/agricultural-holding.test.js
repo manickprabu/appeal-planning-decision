@@ -1,10 +1,13 @@
 const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
+const {
   getAgriculturalHolding,
   postAgriculturalHolding,
 } = require('../../../../../src/controllers/full-appeal/submit-appeal/agricultural-holding');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../../mocks');
 const {
   VIEW: {
@@ -21,25 +24,25 @@ describe('controllers/full-appeal/submit-appeal/agricultural-holding', () => {
   let appeal;
 
   const sectionName = 'appealSiteSection';
-  const taskName = 'isAgriculturalHolding';
+  const taskName = 'agriculturalHolding';
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const errors = { 'agricultural-holding': 'Select an option' };
   const errorSummary = [{ text: 'There was an error', href: '#' }];
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       appealSiteSection: {
-        isAgriculturalHolding: false,
+        agriculturalHolding: {
+          isAgriculturalHolding: false,
+        },
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
     };
     res = mockRes();
 

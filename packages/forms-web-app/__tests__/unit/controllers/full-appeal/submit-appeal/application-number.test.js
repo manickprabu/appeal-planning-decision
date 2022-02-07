@@ -1,8 +1,11 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const applicationNumberController = require('../../../../../src/controllers/full-appeal/submit-appeal/application-number');
 const { mockReq, mockRes } = require('../../../mocks');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const logger = require('../../../../../src/lib/logger');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const {
   VIEW: {
     FULL_APPEAL: { APPLICATION_NUMBER, DESIGN_ACCESS_STATEMENT_SUBMITTED },
@@ -17,17 +20,15 @@ jest.mock('../../../../../src/lib/logger');
 const sectionName = 'planningApplicationDocumentsSection';
 const taskName = 'applicationNumber';
 const applicationNumber = 'ABCDE12345';
+const appeal = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
 describe('controllers/full-appeal/submit-appeal/application-number', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     appeal.planningApplicationDocumentsSection.applicationNumber = applicationNumber;
 

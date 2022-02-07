@@ -1,3 +1,7 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const { documentTypes } = require('@pins/common');
 const supportingDocumentsController = require('../../../../src/controllers/appellant-submission/supporting-documents');
 const { mockReq, mockRes } = require('../../mocks');
@@ -6,7 +10,6 @@ const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrappe
 const { createDocument } = require('../../../../src/lib/documents-api-wrapper');
 const { getNextTask, getTaskStatus } = require('../../../../src/services/task.service');
 const { VIEW } = require('../../../../src/lib/views');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 
 jest.mock('../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../src/lib/documents-api-wrapper');
@@ -22,7 +25,7 @@ describe('controllers/appellant-submission/supporting-documents', () => {
   let appeal;
 
   beforeEach(() => {
-    appeal = JSON.parse(JSON.stringify(APPEAL_DOCUMENT.empty));
+    appeal = JSON.parse(JSON.stringify(models.getModel(APPEAL_ID.HOUSEHOLDER)));
 
     req = mockReq(appeal);
     res = mockRes();

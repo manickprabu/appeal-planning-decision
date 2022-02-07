@@ -1,10 +1,13 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const siteAccessSafetyController = require('../../../../src/controllers/appellant-submission/site-access-safety');
 const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
 const { VIEW } = require('../../../../src/lib/views');
 const logger = require('../../../../src/lib/logger');
 const { getNextTask } = require('../../../../src/services/task.service');
 const { mockReq, mockRes } = require('../../mocks');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 const { getTaskStatus } = require('../../../../src/services/task.service');
 
 jest.mock('../../../../src/lib/appeals-api-wrapper');
@@ -13,17 +16,15 @@ jest.mock('../../../../src/lib/logger');
 
 const sectionName = 'appealSiteSection';
 const taskName = 'healthAndSafety';
+const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
 describe('controllers/appellant-submission/site-access-safety', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });

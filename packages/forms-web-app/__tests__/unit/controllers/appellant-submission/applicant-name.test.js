@@ -1,9 +1,12 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const applicantNameController = require('../../../../src/controllers/appellant-submission/applicant-name');
 const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
 const { VIEW } = require('../../../../src/lib/views');
 const logger = require('../../../../src/lib/logger');
 const { getTaskStatus, getNextTask } = require('../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/appeals-api-wrapper');
@@ -12,17 +15,15 @@ jest.mock('../../../../src/lib/logger');
 
 const sectionName = 'aboutYouSection';
 const taskName = 'yourDetails';
+const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
 describe('controllers/appellant-submission/applicant-name', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });

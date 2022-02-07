@@ -1,13 +1,17 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const { VIEW } = require('../../../src/lib/views');
-const { APPEAL_DOCUMENT } = require('../../../src/lib/empty-appeal');
 const {
   CANNOT_START_YET,
   COMPLETED,
   IN_PROGRESS,
   NOT_STARTED,
 } = require('../../../src/services/task-status/task-statuses');
-
 const { SECTIONS, getNextTask, getTaskStatus } = require('../../../src/services/task.service');
+
+const model = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -155,7 +159,7 @@ describe('services/task.service', () => {
 
     it('should allow `sections` to be an optional parameter', () => {
       const appeal = {
-        ...APPEAL_DOCUMENT.empty,
+        ...model,
         sectionStates: {
           aboutYouSection: {
             yourDetails: IN_PROGRESS,

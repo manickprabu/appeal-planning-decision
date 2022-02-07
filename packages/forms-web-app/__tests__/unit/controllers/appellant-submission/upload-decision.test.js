@@ -1,3 +1,7 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const { documentTypes } = require('@pins/common');
 const uploadDecisionController = require('../../../../src/controllers/appellant-submission/upload-decision');
 const { mockReq, mockRes } = require('../../mocks');
@@ -6,7 +10,6 @@ const logger = require('../../../../src/lib/logger');
 const { createDocument } = require('../../../../src/lib/documents-api-wrapper');
 const { getNextTask, getTaskStatus } = require('../../../../src/services/task.service');
 const { VIEW } = require('../../../../src/lib/views');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 
 jest.mock('../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../src/lib/documents-api-wrapper');
@@ -15,17 +18,15 @@ jest.mock('../../../../src/lib/logger');
 
 const sectionName = 'requiredDocumentsSection';
 const taskName = 'decisionLetter';
+const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
 describe('controllers/appellant-submission/upload-decision', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });
