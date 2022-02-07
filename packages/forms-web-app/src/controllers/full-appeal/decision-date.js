@@ -1,7 +1,6 @@
 const { rules, constants, validation } = require('@pins/business-rules');
 const logger = require('../../lib/logger');
 
-
 const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
 const { VIEW } = require('../../lib/views');
 const { APPEAL_TYPE } = require('../../constants');

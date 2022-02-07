@@ -8,6 +8,7 @@ const {
   APPLICATION_DECISION,
   KNOW_THE_OWNERS,
   TYPE_OF_PLANNING_APPLICATION,
+  I_AGREE,
 } = require('../../constants');
 
 describe('schemas/full-appeal/update', () => {
@@ -762,6 +763,24 @@ describe('schemas/full-appeal/update', () => {
 
           await expect(() => update.validate(appeal, config)).rejects.toThrow(
             'appealSiteSection.knowsTheOwners is a required field',
+          );
+        });
+      });
+
+      describe('appealSiteSection.identifyingTheOwners', () => {
+        it('should throw an error when given an invalid value', async () => {
+          appeal.appealSiteSection.identifyingTheOwners = 'not valid';
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            `appealSiteSection.identifyingTheOwners must be one of the following values: ${I_AGREE}`,
+          );
+        });
+
+        it('should throw an error when not given a value', async () => {
+          delete appeal.appealSiteSection.identifyingTheOwners;
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            'appealSiteSection.identifyingTheOwners is a required field',
           );
         });
       });
@@ -1554,9 +1573,7 @@ describe('schemas/full-appeal/update', () => {
 
         describe('appealSubmission.appealPDFStatement.uploadedFile.fileName', () => {
           it('should throw an error when given a value with more than 255 characters', async () => {
-            appeal.appealSubmission.appealPDFStatement.uploadedFile.fileName = 'a'.repeat(
-              256,
-            );
+            appeal.appealSubmission.appealPDFStatement.uploadedFile.fileName = 'a'.repeat(256);
 
             await expect(() => update.validate(appeal, config)).rejects.toThrow(
               'appealSubmission.appealPDFStatement.uploadedFile.fileName must be at most 255 characters',
@@ -1564,10 +1581,8 @@ describe('schemas/full-appeal/update', () => {
           });
 
           it('should strip leading/trailing spaces', async () => {
-            appeal2.appealSubmission.appealPDFStatement.uploadedFile.fileName =
-              '  test-pdf.pdf  ';
-            appeal.appealSubmission.appealPDFStatement.uploadedFile.fileName =
-              'test-pdf.pdf';
+            appeal2.appealSubmission.appealPDFStatement.uploadedFile.fileName = '  test-pdf.pdf  ';
+            appeal.appealSubmission.appealPDFStatement.uploadedFile.fileName = 'test-pdf.pdf';
 
             const result = await update.validate(appeal2, config);
             expect(result).toEqual(appeal);
@@ -1584,10 +1599,8 @@ describe('schemas/full-appeal/update', () => {
 
         describe('appealSubmission.appealPDFStatement.uploadedFile.location', () => {
           it('should strip leading/trailing spaces', async () => {
-            appeal2.appealSubmission.appealPDFStatement.uploadedFile.location =
-              '  test-pdf.pdf  ';
-            appeal.appealSubmission.appealPDFStatement.uploadedFile.location =
-              'test-pdf.pdf';
+            appeal2.appealSubmission.appealPDFStatement.uploadedFile.location = '  test-pdf.pdf  ';
+            appeal.appealSubmission.appealPDFStatement.uploadedFile.location = 'test-pdf.pdf';
 
             const result = await update.validate(appeal2, config);
             expect(result).toEqual(appeal);
