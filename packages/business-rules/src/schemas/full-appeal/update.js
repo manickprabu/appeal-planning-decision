@@ -6,6 +6,7 @@ const {
   APPEAL_STATE,
   KNOW_THE_OWNERS,
   TYPE_OF_PLANNING_APPLICATION,
+  I_AGREE,
 } = require('../../constants');
 
 const update = pinsYup
@@ -122,6 +123,7 @@ const update = pinsYup
         ownsSomeOfTheLand: pinsYup.bool().required(),
         ownsAllTheLand: pinsYup.bool().required(),
         knowsTheOwners: pinsYup.string().oneOf(Object.values(KNOW_THE_OWNERS)).required(),
+        identifyingTheOwners: pinsYup.string().oneOf([I_AGREE]).required(),
         isAgriculturalHolding: pinsYup.bool().required(),
         isAgriculturalHoldingTenant: pinsYup.bool().required(),
         areOtherTenants: pinsYup.bool().required(),

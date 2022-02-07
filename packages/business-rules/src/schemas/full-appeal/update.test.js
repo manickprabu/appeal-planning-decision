@@ -2,7 +2,12 @@ const v8 = require('v8');
 const { addYears, subYears, subMonths } = require('date-fns');
 const appealData = require('../../../test/data/full-appeal');
 const update = require('./update');
-const { APPEAL_STATE, KNOW_THE_OWNERS, TYPE_OF_PLANNING_APPLICATION } = require('../../constants');
+const {
+  APPEAL_STATE,
+  KNOW_THE_OWNERS,
+  TYPE_OF_PLANNING_APPLICATION,
+  I_AGREE,
+} = require('../../constants');
 
 describe('schemas/full-appeal/update', () => {
   const config = {};
@@ -772,6 +777,24 @@ describe('schemas/full-appeal/update', () => {
 
           await expect(() => update.validate(appeal, config)).rejects.toThrow(
             'appealSiteSection.knowsTheOwners is a required field',
+          );
+        });
+      });
+
+      describe('appealSiteSection.identifyingTheOwners', () => {
+        it('should throw an error when given an invalid value', async () => {
+          appeal.appealSiteSection.identifyingTheOwners = 'not valid';
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            `appealSiteSection.identifyingTheOwners must be one of the following values: ${I_AGREE}`,
+          );
+        });
+
+        it('should throw an error when not given a value', async () => {
+          delete appeal.appealSiteSection.identifyingTheOwners;
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            'appealSiteSection.identifyingTheOwners is a required field',
           );
         });
       });
