@@ -1,5 +1,8 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const checkAnswersController = require('../../../../../src/controllers/full-appeal/submit-appeal/check-answers');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { getDepartmentFromId } = require('../../../../../src/services/department.service');
 const { mockReq, mockRes } = require('../../../mocks');
 const { VIEW } = require('../../../../../src/lib/full-appeal/views');
@@ -9,13 +12,12 @@ jest.mock('../../../../../src/services/department.service');
 describe('controllers/full-appeal/submit-appeal/check-answers', () => {
   let req;
   let res;
-  let appeal;
+
+  const appeal = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });

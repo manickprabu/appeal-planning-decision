@@ -1,11 +1,14 @@
 jest.mock('../../src/lib/logger');
 
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const logger = require('../../src/lib/logger');
-const { APPEAL_DOCUMENT } = require('../../src/lib/empty-appeal');
 
-const { empty: emptyAppeal } = APPEAL_DOCUMENT;
+const model = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
-const mockReq = (appeal = emptyAppeal) => ({
+const mockReq = (appeal = model) => ({
   cookies: {},
   log: logger,
   params: {},

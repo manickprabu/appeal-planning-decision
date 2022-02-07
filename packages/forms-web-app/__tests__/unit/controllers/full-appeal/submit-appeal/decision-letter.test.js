@@ -1,3 +1,7 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const { documentTypes } = require('@pins/common');
 const {
   getDecisionLetter,
@@ -6,7 +10,6 @@ const {
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { createDocument } = require('../../../../../src/lib/documents-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const TASK_STATUS = require('../../../../../src/services/task-status/task-statuses');
 const file = require('../../../../fixtures/file-upload');
 const { mockReq, mockRes } = require('../../../mocks');
@@ -30,27 +33,26 @@ describe('controllers/full-appeal/submit-appeal/decision-letter', () => {
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const errors = { 'file-upload': 'Select a file upload' };
   const errorSummary = [{ text: 'There was an error', href: '#' }];
-  const isDesignAccessStatementSubmitted = true;
+  const isSubmitted = true;
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       [sectionName]: {
-        isDesignAccessStatementSubmitted,
         [taskName]: {
+          isSubmitted: true,
           uploadedFile: file,
+        },
+        designAccessStatement: {
+          isSubmitted: true,
         },
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
-      sectionName,
-      taskName,
     };
     res = mockRes();
 
@@ -65,7 +67,7 @@ describe('controllers/full-appeal/submit-appeal/decision-letter', () => {
       expect(res.render).toHaveBeenCalledWith(DECISION_LETTER, {
         appealId,
         uploadedFile: file,
-        isDesignAccessStatementSubmitted,
+        isDesignAccessStatementSubmitted: isSubmitted,
       });
     });
   });
@@ -90,7 +92,7 @@ describe('controllers/full-appeal/submit-appeal/decision-letter', () => {
       expect(res.render).toHaveBeenCalledWith(DECISION_LETTER, {
         appealId,
         uploadedFile: file,
-        isDesignAccessStatementSubmitted,
+        isDesignAccessStatementSubmitted: isSubmitted,
         errors,
         errorSummary,
       });
@@ -108,7 +110,7 @@ describe('controllers/full-appeal/submit-appeal/decision-letter', () => {
       expect(res.render).toHaveBeenCalledWith(DECISION_LETTER, {
         appealId,
         uploadedFile: file,
-        isDesignAccessStatementSubmitted,
+        isDesignAccessStatementSubmitted: isSubmitted,
         errorSummary: [{ text: error.toString(), href: '#' }],
       });
     });
@@ -168,7 +170,7 @@ describe('controllers/full-appeal/submit-appeal/decision-letter', () => {
 
       const submittedAppeal = {
         ...appeal,
-        requiredDocumentsSection: {
+        planningApplicationDocumentsSection: {
           decisionLetter: {
             uploadedFile: file,
           },

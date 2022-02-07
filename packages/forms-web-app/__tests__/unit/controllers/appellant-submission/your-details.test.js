@@ -1,29 +1,29 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
 const yourDetailsController = require('../../../../src/controllers/appellant-submission/your-details');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 const logger = require('../../../../src/lib/logger');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 const { getTaskStatus, getNextTask } = require('../../../../src/services/task.service');
 
 jest.mock('../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../src/services/task.service');
-jest.mock('../../../../src/lib/empty-appeal');
 jest.mock('../../../../src/lib/logger');
 
 const sectionName = 'aboutYouSection';
 const taskName = 'yourDetails';
+const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
 describe('controllers/appellant-submission/your-details', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });

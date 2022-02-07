@@ -1,10 +1,13 @@
 const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
+const {
   getKnowTheOwners,
   postKnowTheOwners,
 } = require('../../../../../src/controllers/full-appeal/submit-appeal/know-the-owners');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../../mocks');
 const {
   VIEW: {
@@ -21,26 +24,26 @@ describe('controllers/full-appeal/submit-appeal/know-the-owners', () => {
   let appeal;
 
   const sectionName = 'appealSiteSection';
-  const taskName = 'knowsTheOwners';
+  const taskName = 'siteOwnership';
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const errors = { 'know-the-owners': 'Select an option' };
   const errorSummary = [{ text: 'There was an error', href: '#' }];
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       appealSiteSection: {
-        ownsSomeOfTheLand: true,
-        knowsTheOwners: 'yes',
+        siteOwnership: {
+          ownsSomeOfTheLand: true,
+          knowsTheOwners: 'yes',
+        },
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
     };
     res = mockRes();
 

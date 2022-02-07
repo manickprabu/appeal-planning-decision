@@ -1,9 +1,12 @@
 jest.mock('../../../../src/lib/notify-validation');
 jest.mock('../../../../src/services/lpa.service');
 
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const config = require('../../../../src/lib/config');
 
-const { APPEAL_DOCUMENT } = require('../../../data/empty-appeal');
 const {
   isValidAppealForSubmissionReceivedNotificationEmail,
 } = require('../../../../src/lib/notify-validation');
@@ -21,6 +24,7 @@ const mockSetEmailReplyToId = jest.fn().mockReturnThis();
 const mockSetTemplateVariablesFromObject = jest.fn().mockReturnThis();
 const mockSetReference = jest.fn().mockReturnThis();
 const mockSend = jest.fn();
+const model = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
 jest.doMock('@pins/common/src/lib/notify/notify-builder', () => ({
   reset: mockReset,
@@ -64,17 +68,17 @@ describe('lib/full-appeal/notify', () => {
 
       beforeEach(() => {
         appeal = {
-          ...APPEAL_DOCUMENT.empty,
+          ...model,
           appealType: APPEAL_TYPE.PLANNING_SECTION_78,
           id: 'some-fake-id',
           lpaCode: 'some-lpa-code',
           submissionDate: new Date('19 April 2021'),
           requiredDocumentsSection: {
-            ...APPEAL_DOCUMENT.empty.requiredDocumentsSection,
+            ...model.requiredDocumentsSection,
             applicationNumber: '123/abc/xyz',
           },
           appealSiteSection: {
-            ...APPEAL_DOCUMENT.empty.appealSiteSection,
+            ...model.appealSiteSection,
             siteAddress: {
               addressLine1: '999 some street',
               town: 'a town',
@@ -178,7 +182,7 @@ describe('lib/full-appeal/notify', () => {
 
       beforeEach(() => {
         appeal = {
-          ...APPEAL_DOCUMENT.empty,
+          ...model,
           appealType: APPEAL_TYPE.PLANNING_SECTION_78,
           id: 'some-fake-id',
           lpaCode: 'some-lpa-code',
@@ -190,11 +194,11 @@ describe('lib/full-appeal/notify', () => {
             },
           },
           requiredDocumentsSection: {
-            ...APPEAL_DOCUMENT.empty.requiredDocumentsSection,
+            ...model.requiredDocumentsSection,
             applicationNumber: '123/abc/xyz',
           },
           appealSiteSection: {
-            ...APPEAL_DOCUMENT.empty.appealSiteSection,
+            ...model.appealSiteSection,
             siteAddress: {
               addressLine1: '999 some street',
               town: 'a town',

@@ -1,26 +1,26 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const typeOfPlanningApplicationController = require('../../../../src/controllers/full-appeal/type-of-planning-application');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
 const logger = require('../../../../src/lib/logger');
-
 const { VIEW } = require('../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../mocks');
 const mapPlanningApplication = require('../../../../src/lib/full-appeal/map-planning-application');
 
-jest.mock('../../../../src/lib/empty-appeal');
 jest.mock('../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../src/lib/logger');
 
 describe('controllers/full-appeal/type-of-planning-application', () => {
   let req;
   let res;
-  let appeal;
+
+  const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });

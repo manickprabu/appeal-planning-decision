@@ -8,14 +8,14 @@ const {
 const { getTaskStatus } = require('../../../services/task.service');
 
 const sectionName = 'appealSiteSection';
-const taskName = 'areOtherTenants';
+const taskName = 'agriculturalHolding';
 
 const getOtherTenants = (req, res) => {
   const {
-    appeal: { [sectionName]: { [taskName]: areOtherTenants } = {} },
+    appeal: { [sectionName]: { [taskName]: { hasOtherTenants } = {} } = {} },
   } = req.session;
   res.render(OTHER_TENANTS, {
-    areOtherTenants,
+    hasOtherTenants,
   });
 };
 
@@ -33,11 +33,11 @@ const postOtherTenants = async (req, res) => {
     });
   }
 
-  const areOtherTenants = body['other-tenants'] === 'yes';
+  const hasOtherTenants = body['other-tenants'] === 'yes';
 
   try {
-    appeal[sectionName] = appeal[sectionName] || {};
-    appeal[sectionName][taskName] = areOtherTenants;
+    appeal[sectionName] = appeal[sectionName] || { [taskName]: {} };
+    appeal[sectionName][taskName].hasOtherTenants = hasOtherTenants;
     appeal.sectionStates[sectionName] = appeal.sectionStates[sectionName] || {};
     appeal.sectionStates[sectionName][taskName] = getTaskStatus(appeal, sectionName, taskName);
 
@@ -46,13 +46,13 @@ const postOtherTenants = async (req, res) => {
     logger.error(err);
 
     return res.render(OTHER_TENANTS, {
-      areOtherTenants,
+      hasOtherTenants,
       errors,
       errorSummary: [{ text: err.toString(), href: '#' }],
     });
   }
 
-  return areOtherTenants
+  return hasOtherTenants
     ? res.redirect(`/${TELLING_THE_TENANTS}`)
     : res.redirect(`/${VISIBLE_FROM_ROAD}`);
 };

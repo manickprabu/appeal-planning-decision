@@ -1,10 +1,12 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const declarationController = require('../../../../../src/controllers/full-appeal/submit-appeal/declaration');
 const { submitAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { storePdfAppeal } = require('../../../../../src/services/pdf.service');
-
 const { mockReq, mockRes } = require('../../../mocks');
 const { VIEW } = require('../../../../../src/lib/full-appeal/views');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 
 jest.mock('../../../../../src/services/pdf.service');
 jest.mock('../../../../../src/lib/appeals-api-wrapper');
@@ -12,8 +14,8 @@ jest.mock('../../../../../src/lib/appeals-api-wrapper');
 describe('controllers/full-appeal/submit-appeal/declaration', () => {
   let req;
   let res;
-  let appeal;
 
+  const appeal = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
   const appealPdf = {
     id: 'id',
     name: 'appeal.pdf',
@@ -22,10 +24,8 @@ describe('controllers/full-appeal/submit-appeal/declaration', () => {
   };
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-    ({ empty: appeal } = APPEAL_DOCUMENT);
-    appeal.yourAppealSection.otherDocuments.uploadedFiles = [];
 
     jest.resetAllMocks();
   });

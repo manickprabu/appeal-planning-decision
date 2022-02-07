@@ -2,38 +2,26 @@ const appeal = {
   id: 'fc7cb757-fe21-46dd-b3fd-121c385cd884',
   horizonId: 'HORIZON123',
   lpaCode: 'E69999999',
+  decisionDate: new Date(),
   state: 'SUBMITTED',
   appealType: '1005',
-  decisionDate: new Date(),
   eligibility: {
     applicationCategories: 'none_of_these',
     applicationDecision: 'granted',
     enforcementNotice: false,
-  },
-  beforeYouStartSection: {
     typeOfPlanningApplication: 'full-appeal',
   },
-  aboutYouSection: {
-    yourDetails: {
-      isOriginalApplicant: true,
-      appealingOnBehalfOf: '',
+  contactDetailsSection: {
+    isOriginalApplicant: true,
+    contact: {
+      name: 'a name',
+      email: 'testemail@example.com',
+      companyName: 'Test Company',
+    },
+    appealingOnBehalfOf: {
+      name: '',
       companyName: '',
     },
-  },
-  yourAppealSection: {
-    appealStatement: {
-      uploadedFile: {
-        name: 'appealStatement.pdf',
-        originalFileName: 'appealStatement.pdf',
-        id: '87e645e4-1050-458b-93df-1bff89b5b87c',
-      },
-      hasSensitiveInformation: false,
-    },
-  },
-  contactDetailsSection: {
-    name: 'a name',
-    email: 'testemail@example.com',
-    companyName: 'Test Company',
   },
   appealSiteSection: {
     siteAddress: {
@@ -43,17 +31,25 @@ const appeal = {
       county: 'Site County',
       postcode: 'SW1 1AA',
     },
-    ownsSomeOfTheLand: false,
-    ownsAllTheLand: true,
-    knowsTheOwners: 'yes',
-    identifyingTheOwners: 'i-agree',
-    isAgriculturalHolding: true,
-    isAgriculturalHoldingTenant: true,
-    areOtherTenants: true,
-    isVisibleFromRoad: false,
-    visibleFromRoadDetails: 'Access via the road at the side of the property',
-    hasHealthSafetyIssues: true,
-    healthSafetyIssuesDetails: 'The site has poor mobile reception',
+    siteOwnership: {
+      ownsSomeOfTheLand: false,
+      ownsAllTheLand: true,
+      knowsTheOwners: 'yes',
+      hasIdentifiedTheOwners: 'i-agree',
+    },
+    agriculturalHolding: {
+      isAgriculturalHolding: true,
+      isTenant: true,
+      hasOtherTenants: true,
+    },
+    visibleFromRoad: {
+      isVisible: false,
+      details: 'Access via the road at the side of the property',
+    },
+    healthAndSafety: {
+      hasIssues: true,
+      details: 'The site has poor mobile reception',
+    },
   },
   appealSubmission: {
     appealPDFStatement: {
@@ -69,19 +65,11 @@ const appeal = {
   },
   planningApplicationDocumentsSection: {
     applicationNumber: 'ABCDE12345',
-    isDesignAccessStatementSubmitted: true,
     originalApplication: {
       uploadedFile: {
         name: 'originalApplication.pdf',
         originalFileName: 'originalApplication.pdf',
         id: '372c8ba6-dfa6-4bba-bf9c-b024e3d8c282',
-      },
-    },
-    designAccessStatement: {
-      uploadedFile: {
-        name: 'designAccessStatement',
-        originalFileName: 'designAccessStatement',
-        id: '4325a1bb-7bae-4d31-bdeb-8147248def03',
       },
     },
     decisionLetter: {
@@ -90,6 +78,24 @@ const appeal = {
         originalFileName: 'decisionLetter.pdf',
         id: '89b73320-8165-43f9-83e8-43bc0d927140',
       },
+    },
+    designAccessStatement: {
+      isSubmitted: true,
+      uploadedFile: {
+        name: 'designAccessStatement',
+        originalFileName: 'designAccessStatement',
+        id: '4325a1bb-7bae-4d31-bdeb-8147248def03',
+      },
+    },
+  },
+  appealDocumentsSection: {
+    appealStatement: {
+      uploadedFile: {
+        name: 'appealStatement.pdf',
+        originalFileName: 'appealStatement.pdf',
+        id: '87e645e4-1050-458b-93df-1bff89b5b87c',
+      },
+      hasSensitiveInformation: false,
     },
   },
 };
