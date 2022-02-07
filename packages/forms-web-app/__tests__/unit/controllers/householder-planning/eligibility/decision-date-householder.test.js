@@ -11,8 +11,8 @@ jest.mock('../../../../../src/config', () => ({
   },
 }));
 
-const sinon = require('sinon')
-const { rules, constants, validation } = require('@pins/business-rules');
+const sinon = require('sinon');
+const { rules, validation } = require('@pins/business-rules');
 const decisionDateHouseholderController = require('../../../../../src/controllers/householder-planning/eligibility/decision-date-householder');
 const { mockReq, mockRes } = require('../../../mocks');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
@@ -166,9 +166,9 @@ describe('controllers/householder-planning/eligibility/decision-date-householder
         body: {},
       };
 
-      sinon.replace(rules.appeal,  'deadlineDate' , () => new Date().toISOString())
-      sinon.replace(rules.appeal, 'deadlinePeriod', () => ({ time: 1, period: 'weeks' }))
-      sinon.replace(validation.appeal.decisionDate, 'isWithinDecisionDateExpiryPeriod', () => true)
+      sinon.replace(rules.appeal, 'deadlineDate', () => new Date().toISOString());
+      sinon.replace(rules.appeal, 'deadlinePeriod', () => ({ time: 1, period: 'weeks' }));
+      sinon.replace(validation.appeal.decisionDate, 'isWithinDecisionDateExpiryPeriod', () => true);
 
       const error = 'RangeError: Invalid time value';
       createOrUpdateAppeal.mockImplementation(() => Promise.reject(error));
