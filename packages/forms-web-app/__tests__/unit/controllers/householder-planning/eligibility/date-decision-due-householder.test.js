@@ -1,3 +1,6 @@
+const { subMonths, addDays, getYear, getMonth, getDate, startOfDay } = require('date-fns');
+const { constants } = require('@pins/business-rules');
+
 jest.mock('../../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 jest.mock('../../../../../src/config', () => ({
@@ -46,22 +49,23 @@ describe('controllers/householder-planning/date-decision-due-householder', () =>
 
   describe('postDateDecisionDueHouseholder', () => {
     it('should save the appeal and redirect to enforcement-notice if date is within six months', async () => {
+      const decisionDate = addDays(subMonths(startOfDay(new Date()), 6), 1);
       const mockRequest = {
         ...req,
         body: {
-          'date-decision-due-householder-year': '2021',
-          'date-decision-due-householder-month': '10',
-          'date-decision-due-householder-day': '01',
+          'date-decision-due-householder-year': getYear(decisionDate),
+          'date-decision-due-householder-month': getMonth(decisionDate) + 1,
+          'date-decision-due-householder-day': getDate(decisionDate),
         },
       };
-
-      global.Date.now = jest.fn(() => new Date('2021-02-01T00:00:00.000Z').getTime());
+      mockRequest.session.appeal.eligibility.applicationDecision =
+        constants.APPLICATION_DECISION.REFUSED;
 
       await dateDecisionDueHouseholderController.postDateDecisionDueHouseholder(mockRequest, res);
 
       expect(createOrUpdateAppeal).toHaveBeenCalledWith({
         ...appeal,
-        decisionDate: '2021-10-01T00:00:00.000Z',
+        decisionDate: decisionDate.toISOString(),
       });
 
       expect(res.redirect).toHaveBeenCalledWith('/before-you-start/enforcement-notice-householder');
@@ -76,6 +80,8 @@ describe('controllers/householder-planning/date-decision-due-householder', () =>
           'date-decision-due-householder-day': '01',
         },
       };
+      mockRequest.session.appeal.eligibility.applicationDecision =
+        constants.APPLICATION_DECISION.REFUSED;
 
       global.Date.now = jest.fn(() => new Date('2021-10-01T00:00:00.000Z').getTime());
 
@@ -123,6 +129,8 @@ describe('controllers/householder-planning/date-decision-due-householder', () =>
           'date-decision-due-householder-day': '01',
         },
       };
+      mockRequest.session.appeal.eligibility.applicationDecision =
+        constants.APPLICATION_DECISION.REFUSED;
 
       const error = 'RangeError: Invalid time value';
       createOrUpdateAppeal.mockImplementation(() => Promise.reject(error));

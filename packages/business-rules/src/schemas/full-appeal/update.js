@@ -18,7 +18,12 @@ const update = pinsYup
     state: pinsYup.string().oneOf(Object.values(APPEAL_STATE)).required(),
     appealType: pinsYup.string().oneOf(Object.values(APPEAL_ID)).required(),
     decisionDate: pinsYup.lazy((decisionDate) => {
-      return pinsYup.date().isInThePast(decisionDate).transform(parseDateString).required();
+      return pinsYup
+        .date()
+        .isInThePast(decisionDate)
+        .isWithinDeadlinePeriod(decisionDate)
+        .transform(parseDateString)
+        .required();
     }),
     eligibility: pinsYup
       .object()
