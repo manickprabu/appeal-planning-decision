@@ -1,3 +1,7 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const { documentTypes } = require('@pins/common');
 const {
   getAppealStatement,
@@ -6,7 +10,6 @@ const {
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { createDocument } = require('../../../../../src/lib/documents-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const TASK_STATUS = require('../../../../../src/services/task-status/task-statuses');
 const file = require('../../../../fixtures/file-upload');
 const { mockReq, mockRes } = require('../../../mocks');
@@ -25,7 +28,7 @@ describe('controllers/full-appeal/submit-appeal/appeal-statement', () => {
   let res;
   let appeal;
 
-  const sectionName = 'yourAppealSection';
+  const sectionName = 'appealDocumentsSection';
   const taskName = documentTypes.appealStatement.name;
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const fileUploadError = 'Select a file upload';
@@ -38,10 +41,11 @@ describe('controllers/full-appeal/submit-appeal/appeal-statement', () => {
     { text: fileUploadError, href: '#' },
     { text: checkboxError, href: '#' },
   ];
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       [sectionName]: {
         [taskName]: {
@@ -51,13 +55,8 @@ describe('controllers/full-appeal/submit-appeal/appeal-statement', () => {
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
-      sectionName,
-      taskName,
     };
     res = mockRes();
 
@@ -168,8 +167,8 @@ describe('controllers/full-appeal/submit-appeal/appeal-statement', () => {
       expect(req.session.appeal).toEqual(submittedAppeal);
     });
 
-    it('should redirect to the correct page if valid if appeal.yourAppealSection.appealStatement does not exist', async () => {
-      delete appeal.yourAppealSection.appealStatement;
+    it('should redirect to the correct page if valid if appeal.appealDocumentsSection.appealStatement does not exist', async () => {
+      delete appeal.appealDocumentsSection.appealStatement;
 
       const submittedAppeal = {
         ...appeal,

@@ -1,7 +1,10 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const originalApplicantController = require('../../../../../src/controllers/full-appeal/submit-appeal/original-applicant');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const logger = require('../../../../../src/lib/logger');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { VIEW } = require('../../../../../src/lib/full-appeal/views');
 const { mockReq, mockRes } = require('../../../mocks');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
@@ -12,19 +15,17 @@ jest.mock('../../../../../src/lib/logger');
 
 const { FORM_FIELD } = originalApplicantController;
 
-const sectionName = 'aboutYouSection';
-const taskName = 'yourDetails';
+const sectionName = 'contactDetailsSection';
+const taskName = 'isOriginalApplicant';
+const appeal = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
 describe('controllers/full-appeal/submit-appeal/original-applicant', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });
@@ -61,12 +62,7 @@ describe('controllers/full-appeal/submit-appeal/original-applicant', () => {
         ...appeal,
         [sectionName]: {
           ...appeal[sectionName],
-          [taskName]: {
-            appealingOnBehalfOf: '',
-            email: null,
-            isOriginalApplicant: true,
-            name: null,
-          },
+          [taskName]: true,
         },
         sectionStates: {
           ...appeal.sectionStates,
@@ -128,10 +124,12 @@ describe('controllers/full-appeal/submit-appeal/original-applicant', () => {
 
       const mockRequest = {
         ...mockReq(appeal),
-        body: {},
+        body: {
+          'original-application-your-name': 'no',
+        },
       };
 
-      const error = new Error('Cheers');
+      const error = new Error('Internal Server Error');
       createOrUpdateAppeal.mockImplementation(() => Promise.reject(error));
 
       await originalApplicantController.postOriginalApplicant(mockRequest, res);
@@ -144,12 +142,7 @@ describe('controllers/full-appeal/submit-appeal/original-applicant', () => {
         ...appeal,
         [sectionName]: {
           ...appeal[sectionName],
-          [taskName]: {
-            appealingOnBehalfOf: '',
-            email: null,
-            isOriginalApplicant: undefined,
-            name: null,
-          },
+          [taskName]: false,
         },
         sectionStates: {
           ...appeal.sectionStates,

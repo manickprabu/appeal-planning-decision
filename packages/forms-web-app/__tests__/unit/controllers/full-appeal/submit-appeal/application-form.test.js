@@ -1,9 +1,12 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const { documentTypes } = require('@pins/common');
 const {
   getApplicationForm,
   postApplicationForm,
 } = require('../../../../../src/controllers/full-appeal/submit-appeal/application-form');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { createDocument } = require('../../../../../src/lib/documents-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
@@ -30,10 +33,11 @@ describe('controllers/full-appeal/submit-appeal/application-form', () => {
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const errors = { 'file-upload': 'Select a file upload' };
   const errorSummary = [{ text: 'There was an error', href: '#' }];
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       [sectionName]: {
         [taskName]: {
@@ -42,13 +46,8 @@ describe('controllers/full-appeal/submit-appeal/application-form', () => {
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
-      sectionName,
-      taskName,
     };
     res = mockRes();
 

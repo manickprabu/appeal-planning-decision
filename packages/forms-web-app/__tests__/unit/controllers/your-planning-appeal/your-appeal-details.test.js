@@ -1,14 +1,17 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const yourAppealDetailsController = require('../../../../src/controllers/your-planning-appeal/your-appeal-details');
 const { VIEW } = require('../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../mocks');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 
 const appealLPD = 'Some LPD name here';
-
+const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 const req = {
-  ...mockReq(),
+  ...mockReq(appeal),
   session: {
-    ...mockReq().session,
+    ...mockReq(appeal).session,
     appealLPD,
   },
 };
@@ -20,7 +23,7 @@ describe('controllers/your-planning-appeal/your-appeal-details', () => {
       yourAppealDetailsController.getYourAppealDetails(req, res);
 
       expect(res.render).toHaveBeenCalledWith(VIEW.YOUR_PLANNING_APPEAL.YOUR_APPEAL_DETAILS, {
-        appeal: APPEAL_DOCUMENT.empty,
+        appeal,
         appealLPD,
       });
     });

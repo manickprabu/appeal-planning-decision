@@ -1,5 +1,5 @@
 const { isValid, parseISO } = require('date-fns');
-const { rules, validation, constants } = require('@pins/business-rules');
+const { rules, validation } = require('@pins/business-rules');
 const { createOrUpdateAppeal } = require('../../lib/appeals-api-wrapper');
 const logger = require('../../lib/logger');
 const {

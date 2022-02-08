@@ -8,14 +8,14 @@ const {
 const { getTaskStatus } = require('../../../services/task.service');
 
 const sectionName = 'appealSiteSection';
-const taskName = 'isAgriculturalHoldingTenant';
+const taskName = 'agriculturalHolding';
 
 const getAreYouATenant = (req, res) => {
   const {
-    appeal: { [sectionName]: { [taskName]: isAgriculturalHoldingTenant } = {} },
+    appeal: { [sectionName]: { [taskName]: { isTenant } = {} } = {} },
   } = req.session;
   res.render(ARE_YOU_A_TENANT, {
-    isAgriculturalHoldingTenant,
+    isTenant,
   });
 };
 
@@ -33,11 +33,11 @@ const postAreYouATenant = async (req, res) => {
     });
   }
 
-  const isAgriculturalHoldingTenant = body['are-you-a-tenant'] === 'yes';
+  const isTenant = body['are-you-a-tenant'] === 'yes';
 
   try {
-    appeal[sectionName] = appeal[sectionName] || {};
-    appeal[sectionName][taskName] = isAgriculturalHoldingTenant;
+    appeal[sectionName] = appeal[sectionName] || { [taskName]: {} };
+    appeal[sectionName][taskName].isTenant = isTenant;
     appeal.sectionStates[sectionName] = appeal.sectionStates[sectionName] || {};
     appeal.sectionStates[sectionName][taskName] = getTaskStatus(appeal, sectionName, taskName);
     req.session.appeal = await createOrUpdateAppeal(appeal);
@@ -45,15 +45,13 @@ const postAreYouATenant = async (req, res) => {
     logger.error(err);
 
     return res.render(ARE_YOU_A_TENANT, {
-      isAgriculturalHoldingTenant,
+      isTenant,
       errors,
       errorSummary: [{ text: err.toString(), href: '#' }],
     });
   }
 
-  return isAgriculturalHoldingTenant
-    ? res.redirect(`/${OTHER_TENANTS}`)
-    : res.redirect(`/${TELLING_THE_TENANTS}`);
+  return isTenant ? res.redirect(`/${OTHER_TENANTS}`) : res.redirect(`/${TELLING_THE_TENANTS}`);
 };
 
 module.exports = {

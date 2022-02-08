@@ -1,3 +1,7 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const applicantNameController = require('../../../../../src/controllers/full-appeal/submit-appeal/applicant-name');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/full-appeal/views');
@@ -7,26 +11,23 @@ const {
   getNextTask,
   FULL_APPEAL_SECTIONS,
 } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../../src/services/task.service');
 jest.mock('../../../../../src/lib/logger');
 
-const sectionName = 'aboutYouSection';
-const taskName = 'yourDetails';
+const sectionName = 'contactDetailsSection';
+const taskName = 'appealingOnBehalfOf';
+const appeal = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
 describe('controllers/full-appeal/submit-appeal/applicant-name', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });
@@ -63,10 +64,7 @@ describe('controllers/full-appeal/submit-appeal/applicant-name', () => {
           [sectionName]: {
             ...req.session.appeal[sectionName],
             [taskName]: {
-              appealingOnBehalfOf: fakeBehalfAppellantName,
-              email: null,
-              isOriginalApplicant: null,
-              name: null,
+              name: fakeBehalfAppellantName,
             },
           },
         },
@@ -136,11 +134,8 @@ describe('controllers/full-appeal/submit-appeal/applicant-name', () => {
         [sectionName]: {
           ...appeal[sectionName],
           [taskName]: {
-            appealingOnBehalfOf: fakeBehalfAppellantName,
+            name: fakeBehalfAppellantName,
             companyName: fakeCompanyName,
-            email: null,
-            isOriginalApplicant: null,
-            name: null,
           },
         },
         sectionStates: {

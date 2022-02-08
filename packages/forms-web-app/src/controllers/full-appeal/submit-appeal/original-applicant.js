@@ -7,8 +7,8 @@ const {
   },
 } = require('../../../lib/full-appeal/views');
 
-const sectionName = 'aboutYouSection';
-const taskName = 'yourDetails';
+const sectionName = 'contactDetailsSection';
+const taskName = 'isOriginalApplicant';
 
 const FORM_FIELD = {
   'original-application-your-name': {
@@ -41,22 +41,22 @@ exports.postOriginalApplicant = async (req, res) => {
   const { errors = {}, errorSummary = [] } = body;
 
   const { appeal } = req.session;
-  const task = appeal[sectionName][taskName];
+  const section = appeal[sectionName];
   let nextPage = currentPage;
 
   switch (body['original-application-your-name']) {
     case 'yes': {
-      task.isOriginalApplicant = true;
+      section[taskName] = true;
       nextPage = CONTACT_DETAILS;
       break;
     }
     case 'no': {
-      task.isOriginalApplicant = false;
+      section[taskName] = false;
       nextPage = APPLICANT_NAME;
       break;
     }
     default: {
-      task.isOriginalApplicant = undefined;
+      section[taskName] = undefined;
       break;
     }
   }
