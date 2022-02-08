@@ -8,17 +8,20 @@ const { createDocument } = require('../../../lib/documents-api-wrapper');
 const { createOrUpdateAppeal } = require('../../../lib/appeals-api-wrapper');
 const { getTaskStatus } = require('../../../services/task.service');
 
+const sectionName = 'planningApplicationDocumentsSection';
+const taskName = 'decisionLetter';
+
 const getDecisionLetter = (req, res) => {
   const {
     session: {
       appeal,
       appeal: {
         id: appealId,
-        planningApplicationDocumentsSection: { isDesignAccessStatementSubmitted },
+        planningApplicationDocumentsSection: {
+          designAccessStatement: { isSubmitted: isDesignAccessStatementSubmitted },
+        },
       },
     },
-    sectionName,
-    taskName,
   } = req;
   res.render(DECISION_LETTER, {
     appealId,
@@ -35,11 +38,11 @@ const postDecisionLetter = async (req, res) => {
       appeal,
       appeal: {
         id: appealId,
-        planningApplicationDocumentsSection: { isDesignAccessStatementSubmitted },
+        planningApplicationDocumentsSection: {
+          designAccessStatement: { isSubmitted: isDesignAccessStatementSubmitted },
+        },
       },
     },
-    sectionName,
-    taskName,
   } = req;
 
   if (Object.keys(errors).length > 0) {

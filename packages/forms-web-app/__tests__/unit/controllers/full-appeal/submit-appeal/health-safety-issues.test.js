@@ -1,10 +1,13 @@
 const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
+const {
   getHealthSafetyIssues,
   postHealthSafetyIssues,
 } = require('../../../../../src/controllers/full-appeal/submit-appeal/health-safety-issues');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const { getTaskStatus } = require('../../../../../src/services/task.service');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../../mocks');
 const {
   VIEW: {
@@ -21,27 +24,26 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
   let appeal;
 
   const sectionName = 'appealSiteSection';
-  const hasHealthSafetyIssuesTask = 'hasHealthSafetyIssues';
-  const healthSafetyIssuesDetailsTask = 'healthSafetyIssuesDetails';
+  const taskName = 'healthAndSafety';
   const appealId = 'da368e66-de7b-44c4-a403-36e5bf5b000b';
   const errors = { 'health-safety-issues': 'Select an option' };
   const errorSummary = [{ text: 'There was an error', href: '#' }];
+  const model = models.getModel(APPEAL_ID.PLANNING_SECTION_78);
 
   beforeEach(() => {
     appeal = {
-      ...APPEAL_DOCUMENT.empty,
+      ...model,
       id: appealId,
       appealSiteSection: {
-        hasHealthSafetyIssues: true,
-        healthSafetyIssuesDetails: null,
+        healthAndSafety: {
+          hasIssues: true,
+          details: null,
+        },
       },
     };
     req = {
-      ...mockReq(),
+      ...mockReq(appeal),
       body: {},
-      session: {
-        appeal,
-      },
     };
     res = mockRes();
 
@@ -54,8 +56,10 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(HEALTH_SAFETY_ISSUES, {
-        hasHealthSafetyIssues: true,
-        healthSafetyIssuesDetails: null,
+        healthAndSafety: {
+          hasIssues: true,
+          details: null,
+        },
       });
     });
 
@@ -66,8 +70,7 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(HEALTH_SAFETY_ISSUES, {
-        hasHealthSafetyIssues: undefined,
-        healthSafetyIssuesDetails: undefined,
+        healthAndSafety: undefined,
       });
     });
   });
@@ -89,8 +92,10 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
       expect(res.redirect).not.toHaveBeenCalled();
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(HEALTH_SAFETY_ISSUES, {
-        hasHealthSafetyIssues: false,
-        healthSafetyIssuesDetails: null,
+        healthAndSafety: {
+          hasIssues: false,
+          details: null,
+        },
         errors,
         errorSummary,
       });
@@ -116,8 +121,10 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
       expect(res.redirect).not.toHaveBeenCalled();
       expect(res.render).toHaveBeenCalledTimes(1);
       expect(res.render).toHaveBeenCalledWith(HEALTH_SAFETY_ISSUES, {
-        hasHealthSafetyIssues: true,
-        healthSafetyIssuesDetails: null,
+        healthAndSafety: {
+          hasIssues: true,
+          details: null,
+        },
         errors: {},
         errorSummary: [{ text: error.toString(), href: '#' }],
       });
@@ -141,21 +148,16 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       await postHealthSafetyIssues(req, res);
 
-      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, hasHealthSafetyIssuesTask);
-      expect(getTaskStatus).toHaveBeenCalledWith(
-        appeal,
-        sectionName,
-        healthSafetyIssuesDetailsTask
-      );
+      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, taskName);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith(appeal);
       expect(res.redirect).toHaveBeenCalledWith(`/${TASK_LIST}`);
       expect(req.session.appeal).toEqual(submittedAppeal);
     });
 
     it('should redirect to the correct page if `no` has been selected', async () => {
-      appeal.appealSiteSection = {
-        hasHealthSafetyIssues: true,
-        healthSafetyIssuesDetails: null,
+      appeal.appealSiteSection.healthAndSafety = {
+        hasIssues: true,
+        details: null,
       };
 
       const submittedAppeal = {
@@ -175,12 +177,7 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       await postHealthSafetyIssues(req, res);
 
-      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, hasHealthSafetyIssuesTask);
-      expect(getTaskStatus).toHaveBeenCalledWith(
-        appeal,
-        sectionName,
-        healthSafetyIssuesDetailsTask
-      );
+      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, taskName);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith(appeal);
       expect(res.redirect).toHaveBeenCalledWith(`/${TASK_LIST}`);
       expect(req.session.appeal).toEqual(submittedAppeal);
@@ -206,21 +203,16 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       await postHealthSafetyIssues(req, res);
 
-      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, hasHealthSafetyIssuesTask);
-      expect(getTaskStatus).toHaveBeenCalledWith(
-        appeal,
-        sectionName,
-        healthSafetyIssuesDetailsTask
-      );
+      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, taskName);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith(appeal);
       expect(res.redirect).toHaveBeenCalledWith(`/${TASK_LIST}`);
       expect(req.session.appeal).toEqual(submittedAppeal);
     });
 
     it('should redirect to the correct page if `no` has been selected and appeal.appealSiteSection is not defined', async () => {
-      appeal.appealSiteSection = {
-        hasHealthSafetyIssues: true,
-        healthSafetyIssuesDetails: null,
+      appeal.appealSiteSection.healthAndSafety = {
+        hasIssues: true,
+        details: null,
       };
 
       const submittedAppeal = {
@@ -242,12 +234,7 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       await postHealthSafetyIssues(req, res);
 
-      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, hasHealthSafetyIssuesTask);
-      expect(getTaskStatus).toHaveBeenCalledWith(
-        appeal,
-        sectionName,
-        healthSafetyIssuesDetailsTask
-      );
+      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, taskName);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith(appeal);
       expect(res.redirect).toHaveBeenCalledWith(`/${TASK_LIST}`);
       expect(req.session.appeal).toEqual(submittedAppeal);
@@ -273,21 +260,16 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       await postHealthSafetyIssues(req, res);
 
-      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, hasHealthSafetyIssuesTask);
-      expect(getTaskStatus).toHaveBeenCalledWith(
-        appeal,
-        sectionName,
-        healthSafetyIssuesDetailsTask
-      );
+      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, taskName);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith(appeal);
       expect(res.redirect).toHaveBeenCalledWith(`/${TASK_LIST}`);
       expect(req.session.appeal).toEqual(submittedAppeal);
     });
 
     it('should redirect to the correct page if `no` has been selected and appeal.sectionStates.appealSiteSection is not defined', async () => {
-      appeal.appealSiteSection = {
-        hasHealthSafetyIssues: true,
-        healthSafetyIssuesDetails: null,
+      appeal.appealSiteSection.healthAndSafety = {
+        hasIssues: true,
+        details: null,
       };
 
       const submittedAppeal = {
@@ -309,12 +291,7 @@ describe('controllers/full-appeal/submit-appeal/health-safety-issues', () => {
 
       await postHealthSafetyIssues(req, res);
 
-      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, hasHealthSafetyIssuesTask);
-      expect(getTaskStatus).toHaveBeenCalledWith(
-        appeal,
-        sectionName,
-        healthSafetyIssuesDetailsTask
-      );
+      expect(getTaskStatus).toHaveBeenCalledWith(appeal, sectionName, taskName);
       expect(createOrUpdateAppeal).toHaveBeenCalledWith(appeal);
       expect(res.redirect).toHaveBeenCalledWith(`/${TASK_LIST}`);
       expect(req.session.appeal).toEqual(submittedAppeal);

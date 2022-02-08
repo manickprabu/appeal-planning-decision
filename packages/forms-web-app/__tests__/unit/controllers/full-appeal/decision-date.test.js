@@ -15,22 +15,27 @@ jest.mock('../../../../src/config', () => ({
 }));
 
 const sinon = require('sinon');
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const decisionDateController = require('../../../../src/controllers/full-appeal/decision-date');
 const { mockReq, mockRes } = require('../../mocks');
 const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
 const { VIEW } = require('../../../../src/lib/views');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 
 describe('controllers/full-appeal/decision-date', () => {
   let req;
   let res;
-  let appeal;
+
+  const appeal = {
+    ...models.getModel(APPEAL_ID.PLANNING_SECTION_78),
+    appealType: APPEAL_ID.PLANNING_SECTION_78,
+  };
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     sinon.restore();
     jest.resetAllMocks();

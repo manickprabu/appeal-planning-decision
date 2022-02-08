@@ -8,11 +8,12 @@ const { createDocument } = require('../../../lib/documents-api-wrapper');
 const { createOrUpdateAppeal } = require('../../../lib/appeals-api-wrapper');
 const { getTaskStatus } = require('../../../services/task.service');
 
+const sectionName = 'planningApplicationDocumentsSection';
+const taskName = 'originalApplication';
+
 const getApplicationForm = (req, res) => {
   const {
     session: { appeal },
-    sectionName,
-    taskName,
   } = req;
   res.render(APPLICATION_FORM, {
     appealId: appeal.id,
@@ -28,8 +29,6 @@ const postApplicationForm = async (req, res) => {
       appeal,
       appeal: { id: appealId },
     },
-    sectionName,
-    taskName,
   } = req;
 
   if (Object.keys(errors).length > 0) {

@@ -1,8 +1,11 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const enforcementNoticeController = require('../../../../src/controllers/eligibility/enforcement-notice');
 const { createOrUpdateAppeal } = require('../../../../src/lib/appeals-api-wrapper');
 const { VIEW } = require('../../../../src/lib/views');
 const logger = require('../../../../src/lib/logger');
-const { APPEAL_DOCUMENT } = require('../../../../src/lib/empty-appeal');
 const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/appeals-api-wrapper');
@@ -11,13 +14,12 @@ jest.mock('../../../../src/lib/logger');
 describe('controllers/eligibility/enforcement-notice', () => {
   let req;
   let res;
-  let appeal;
+
+  const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });

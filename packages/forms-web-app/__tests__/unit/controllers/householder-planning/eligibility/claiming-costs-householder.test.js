@@ -1,5 +1,8 @@
+const {
+  constants: { APPEAL_ID },
+  models,
+} = require('@pins/business-rules');
 const claimingCostsController = require('../../../../../src/controllers/householder-planning/eligibility/claiming-costs-householder');
-const { APPEAL_DOCUMENT } = require('../../../../../src/lib/empty-appeal');
 const { createOrUpdateAppeal } = require('../../../../../src/lib/appeals-api-wrapper');
 const logger = require('../../../../../src/lib/logger');
 
@@ -12,22 +15,19 @@ const {
 } = require('../../../../../src/lib/householder-planning/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
-jest.mock('../../../../../src/lib/empty-appeal');
 jest.mock('../../../../../src/lib/appeals-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 
 const backLink = '/before-you-start/enforcement-notice-householder';
+const appeal = models.getModel(APPEAL_ID.HOUSEHOLDER);
 
 describe('controllers/householder-planning/claiming-costs-householder', () => {
   let req;
   let res;
-  let appeal;
 
   beforeEach(() => {
-    req = mockReq();
+    req = mockReq(appeal);
     res = mockRes();
-
-    ({ empty: appeal } = APPEAL_DOCUMENT);
 
     jest.resetAllMocks();
   });
