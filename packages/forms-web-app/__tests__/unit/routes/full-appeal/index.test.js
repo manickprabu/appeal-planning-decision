@@ -9,6 +9,7 @@ const outOfTimeRouter = require('../../../../src/routes/full-appeal/out-of-time'
 const enforcementNoticeRouter = require('../../../../src/routes/full-appeal/enforcement-notice');
 const dateDecisionDueRouter = require('../../../../src/routes/full-appeal/date-decision-due');
 const decisionDateRouter = require('../../../../src/routes/full-appeal/decision-date');
+const procedureTypeRouter = require('../../../../src/routes/full-appeal/procedure-type');
 
 describe('routes/full-appeal/index', () => {
   beforeEach(() => {
@@ -28,7 +29,8 @@ describe('routes/full-appeal/index', () => {
     expect(use).toHaveBeenCalledWith(enforcementNoticeRouter);
     expect(use).toHaveBeenCalledWith(decisionDateRouter);
     expect(use).toHaveBeenCalledWith(dateDecisionDueRouter);
+    expect(use).toHaveBeenCalledWith(procedureTypeRouter);
 
-    expect(use.mock.calls.length).toBe(9);
+    expect(use.mock.calls.length).toBe(10);
   });
 });

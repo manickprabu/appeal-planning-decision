@@ -8,6 +8,7 @@ const useADifferentServiceRouter = require('./use-a-different-service');
 const outOfTimeRouter = require('./out-of-time');
 const enforcementNoticeRouter = require('./enforcement-notice');
 const dateDecisionDueRouter = require('./date-decision-due');
+const procedureTypeRouter = require('./procedure-type');
 
 const router = express.Router();
 const decisionDateRouter = require('./decision-date');
@@ -21,5 +22,6 @@ router.use(outOfTimeRouter);
 router.use(enforcementNoticeRouter);
 router.use(decisionDateRouter);
 router.use(dateDecisionDueRouter);
+router.use(procedureTypeRouter);
 
 module.exports = router;
