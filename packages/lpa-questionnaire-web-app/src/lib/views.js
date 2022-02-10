@@ -34,6 +34,7 @@ const VIEW = {
     ENTER_EMAIL_ADDRESS: 'authentication/your-email',
     EMAIL_ADDRESS_CONFIRMATION: 'authentication/confirm-email',
   },
+  PROCEDURE_TYPE: 'procedure-type',
 };
 
 module.exports = {
