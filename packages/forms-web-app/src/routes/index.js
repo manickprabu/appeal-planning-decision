@@ -19,6 +19,7 @@ router.use(guidancePagesRouter);
 router.use('/cookies', cookieRouter);
 router.use('/appellant-submission', checkDecisionDateDeadline, appellantSubmissionRouter);
 router.use('/full-appeal', checkDecisionDateDeadline, fullAppealAppellantSubmissionRouter);
+router.use('/full-appeal', checkDecisionDateDeadline, fullAppealRouter);
 router.use('/eligibility', checkDecisionDateDeadline, eligibilityRouter);
 router.use('/your-planning-appeal', yourPlanningAppealRouter);
 router.use('/before-you-start', checkDecisionDateDeadline, fullAppealRouter);

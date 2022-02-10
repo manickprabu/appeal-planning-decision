@@ -38,6 +38,7 @@ describe('lib/views', () => {
         ENTER_EMAIL_ADDRESS: 'authentication/your-email',
         EMAIL_ADDRESS_CONFIRMATION: 'authentication/confirm-email',
       },
+      PROCEDURE_TYPE: 'procedure-type',
     });
   });
 });
