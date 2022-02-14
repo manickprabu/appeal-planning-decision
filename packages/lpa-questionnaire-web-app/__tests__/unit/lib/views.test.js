@@ -38,6 +38,7 @@ describe('lib/views', () => {
         ENTER_EMAIL_ADDRESS: 'authentication/your-email',
         EMAIL_ADDRESS_CONFIRMATION: 'authentication/confirm-email',
       },
+      INVOVES_LISTED_BUILDING: 'involves-listed-building',
     });
   });
 });

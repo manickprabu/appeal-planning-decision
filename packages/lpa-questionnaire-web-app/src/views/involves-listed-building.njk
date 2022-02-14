@@ -1,0 +1,93 @@
+ {% extends "layouts/main.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "components/appeal-details/macro.njk" import appealDetails %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink,
+    attributes: {
+      'data-cy': 'back'
+    }
+  }) }}
+{% endblock %}
+
+{% block pageTitle %}
+  {% if errorSummary.length %}Error: {% endif %}Does the proposed development involve a listed building? - Full planning appeal questionnaire - Appeal a planning decision - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+  {% if errors %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: errorSummary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="post" novalidate>
+        <span class="govuk-caption-l"><span class="govuk-visually-hidden">Section. </span>Does the proposed development involve a listed building?</span>
+
+        {{ govukRadios({
+          idPrefix: "involves-listed-building",
+          name: "involves-listed-building",
+          fieldset: {
+            legend: {
+              text: "Does the proposed development involve a listed building?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes",
+              checked: true if values['involvesListedBuilding'] === 'yes',
+              conditional: {
+                html: appealRefHtml
+              },
+              attributes: {
+                "data-cy": "involves-listed-building-yes"
+              }
+            },
+            {
+              value: "no",
+              checked: true if values['involvesListedBuilding'] === 'no',
+              text: "No",
+              attributes: {
+                "data-cy": "involves-listed-building-no"
+              }
+            }
+          ],
+          errorMessage: errors['involves-listed-building'] and {
+            text: errors['involves-listed-building'].msg,
+            attributes: {
+              'data-cy': 'involves-listed-building-error'
+            }
+          }
+        }) }}
+
+        {{ govukButton({
+          text: "Save and continue",
+          type: "submit",
+          attributes: {
+            'data-cy': 'save'
+          }
+        }) }}
+      </form>
+    </div>
+
+    {{
+      appealDetails({
+        appeal: appeal
+      })
+    }}
+  </div>
+{% endblock %}
