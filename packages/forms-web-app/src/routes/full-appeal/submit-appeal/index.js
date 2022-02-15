@@ -23,6 +23,8 @@ const declarationInformationRouter = require('./declaration-information');
 const visibleFromRoadRouter = require('./visible-from-road');
 const healthSafetyIssuesRouter = require('./health-safety-issues');
 const identifyingTheOwners = require('./identifying-the-owners');
+const plansDrawingsRouter = require('./plans-drawings');
+const supportingDocumentsRouter = require('./supporting-documents');
 
 const router = express.Router();
 
@@ -50,5 +52,7 @@ router.use(declarationInformationRouter);
 router.use(visibleFromRoadRouter);
 router.use(healthSafetyIssuesRouter);
 router.use(identifyingTheOwners);
+router.use(plansDrawingsRouter);
+router.use(supportingDocumentsRouter);
 
 module.exports = router;

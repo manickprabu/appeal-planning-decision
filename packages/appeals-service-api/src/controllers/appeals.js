@@ -1,26 +1,32 @@
 const uuid = require('uuid');
 const { _ } = require('lodash');
 const logger = require('../lib/logger');
-
 const {
   getAppeal: getAppealFromAppealApiService,
   updateAppeal,
   insertAppeal,
 } = require('../services/appeal.service');
-const { appealDocument } = require('../models/appeal');
-
 const ApiError = require('../error/apiError');
+const { appealDocument } = require('../models/appeal');
+const { featureFlag } = require('../lib/config');
 
 module.exports = {
   async createAppeal(req, res) {
-    const appeal = JSON.parse(JSON.stringify(appealDocument));
-    appeal.id = uuid.v4();
+    let appeal = {};
+
+    logger.debug({ featureFlag }, 'Feature flag in createAppeal');
+
+    if (!featureFlag.newAppealJourney) {
+      appeal = JSON.parse(JSON.stringify(appealDocument));
+    }
 
     const now = new Date(new Date().toISOString());
+    appeal.id = uuid.v4();
     appeal.createdAt = now;
     appeal.updatedAt = now;
 
     logger.debug(`Creating appeal ${appeal.id} ...`);
+    logger.debug({ appeal }, 'Appeal data in createAppeal');
 
     const document = await insertAppeal(appeal);
 
@@ -72,9 +78,13 @@ module.exports = {
       const newAppeal = req.body;
       const oldAppeal = document.appeal;
 
+      logger.debug({ newAppeal }, 'New appeal data in updateAppeal');
+
       const isFirstSubmission = oldAppeal.state === 'DRAFT' && newAppeal.state === 'SUBMITTED';
 
       const updatedDocument = await updateAppeal(_.merge(oldAppeal, newAppeal), isFirstSubmission);
+
+      logger.debug({ updatedDocument }, 'Updated appeal data in updateAppeal');
 
       res.status(200).send(updatedDocument.appeal);
     } catch (e) {

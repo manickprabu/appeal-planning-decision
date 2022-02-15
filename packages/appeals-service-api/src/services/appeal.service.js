@@ -1,3 +1,6 @@
+const {
+  constants: { APPEAL_ID },
+} = require('@pins/business-rules');
 const mongodb = require('../db/db');
 const queue = require('../lib/queue');
 const appealsQueue = require('../lib/sql-appeals-queue');
@@ -11,6 +14,10 @@ const APPEALS = 'appeals';
 
 const validateAppeal = (appeal) => {
   const errors = [];
+
+  if (appeal.appealType !== APPEAL_ID.HOUSEHOLDER) {
+    return errors;
+  }
 
   // Your Details
   // Only accepted states are name and email both empty or both valued
@@ -311,11 +318,13 @@ const updateAppeal = async (appeal, isFirstSubmission = false) => {
 
       await appealsQueue.addAppeal(updatedDocument.value);
 
-      const notify = getNotify(updatedDocument.value.appeal);
-
-      await notify.sendAppealSubmissionConfirmationEmailToAppellant(updatedDocument.value.appeal);
-
-      await notify.sendAppealSubmissionReceivedNotificationEmailToLpa(updatedDocument.value.appeal);
+      if (appeal.appealType === APPEAL_ID.HOUSEHOLDER) {
+        const notify = getNotify(updatedDocument.value.appeal);
+        await notify.sendAppealSubmissionConfirmationEmailToAppellant(updatedDocument.value.appeal);
+        await notify.sendAppealSubmissionReceivedNotificationEmailToLpa(
+          updatedDocument.value.appeal
+        );
+      }
     }
 
     logger.debug(`Updated appeal ${appeal.id}\n`);
