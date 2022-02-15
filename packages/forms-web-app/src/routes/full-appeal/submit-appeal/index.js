@@ -25,6 +25,8 @@ const healthSafetyIssuesRouter = require('./health-safety-issues');
 const identifyingTheOwners = require('./identifying-the-owners');
 const plansDrawingsRouter = require('./plans-drawings');
 const supportingDocumentsRouter = require('./supporting-documents');
+const tellingTheLandowners = require('./telling-the-landowners');
+const tellingTheTenants = require('./telling-the-tenants');
 
 const router = express.Router();
 
@@ -54,5 +56,7 @@ router.use(healthSafetyIssuesRouter);
 router.use(identifyingTheOwners);
 router.use(plansDrawingsRouter);
 router.use(supportingDocumentsRouter);
+router.use(tellingTheLandowners);
+router.use(tellingTheTenants);
 
 module.exports = router;
