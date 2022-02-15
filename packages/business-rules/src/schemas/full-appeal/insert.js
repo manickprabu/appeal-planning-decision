@@ -10,6 +10,7 @@ const {
   SECTION_STATE,
   TYPE_OF_PLANNING_APPLICATION,
 } = require('../../constants');
+const { buildTripleConfirmMessage, validateTripleConfirm } = require('../../utils/triple-confirm');
 
 const insert = pinsYup
   .object()
@@ -115,6 +116,14 @@ const insert = pinsYup
               }
               return pinsYup.string().nullable();
             }),
+            tellingTheLandowners: pinsYup
+              .array()
+              .nullable()
+              .test('allTellingTheLandowners', buildTripleConfirmMessage, validateTripleConfirm),
+            tellingTheTenants: pinsYup
+              .array()
+              .nullable()
+              .test('allTellingTheLandowners', buildTripleConfirmMessage, validateTripleConfirm),
           })
           .noUnknown(true),
         agriculturalHolding: pinsYup
