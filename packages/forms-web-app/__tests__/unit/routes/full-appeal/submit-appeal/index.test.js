@@ -25,6 +25,7 @@ const healthSafetyIssuesRouter = require('../../../../../src/routes/full-appeal/
 const identfyingTheOwnersRouter = require('../../../../../src/routes/full-appeal/submit-appeal/identifying-the-owners');
 const plansDrawingsRouter = require('../../../../../src/routes/full-appeal/submit-appeal/plans-drawings');
 const supportingDocumentsRouter = require('../../../../../src/routes/full-appeal/submit-appeal/supporting-documents');
+const newPlansDrawingsRouter = require('../../../../../src/routes/full-appeal/submit-appeal/new-plans-drawings');
 
 describe('routes/full-appeal/submit-appeal/index', () => {
   beforeEach(() => {
@@ -60,5 +61,6 @@ describe('routes/full-appeal/submit-appeal/index', () => {
     expect(use).toHaveBeenCalledWith(identfyingTheOwnersRouter);
     expect(use).toHaveBeenCalledWith(plansDrawingsRouter);
     expect(use).toHaveBeenCalledWith(supportingDocumentsRouter);
+    expect(use).toHaveBeenCalledWith(newPlansDrawingsRouter);
   });
 });
