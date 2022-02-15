@@ -123,7 +123,7 @@ const insert = pinsYup
             tellingTheTenants: pinsYup
               .array()
               .nullable()
-              .test('allTellingTheLandowners', buildTripleConfirmMessage, validateTripleConfirm),
+              .test('allTellingTheTenants', buildTripleConfirmMessage, validateTripleConfirm),
           })
           .noUnknown(true),
         agriculturalHolding: pinsYup

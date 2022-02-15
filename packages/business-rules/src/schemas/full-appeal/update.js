@@ -98,10 +98,12 @@ const update = pinsYup
             }),
             tellingTheLandowners: pinsYup
               .array()
+              .nullable()
               .test('allTellingTheLandowners', buildTripleConfirmMessage, validateTripleConfirm),
             tellingTheTenants: pinsYup
               .array()
-              .test('allTellingTheLandowners', buildTripleConfirmMessage, validateTripleConfirm),
+              .nullable()
+              .test('allTellingTheTenants', buildTripleConfirmMessage, validateTripleConfirm),
           })
           .noUnknown(true),
         agriculturalHolding: pinsYup
