@@ -10,6 +10,8 @@ const {
   TYPE_OF_PLANNING_APPLICATION,
 } = require('../../constants');
 
+const { buildTripleConfirmMessage, validateTripleConfirm } = require('../../utils/triple-confirm');
+
 const update = pinsYup
   .object()
   .noUnknown(true)
@@ -94,6 +96,14 @@ const update = pinsYup
               }
               return pinsYup.string().nullable();
             }),
+            tellingTheLandowners: pinsYup
+              .array()
+              .nullable()
+              .test('allTellingTheLandowners', buildTripleConfirmMessage, validateTripleConfirm),
+            tellingTheTenants: pinsYup
+              .array()
+              .nullable()
+              .test('allTellingTheTenants', buildTripleConfirmMessage, validateTripleConfirm),
           })
           .noUnknown(true),
         agriculturalHolding: pinsYup

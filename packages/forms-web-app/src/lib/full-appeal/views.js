@@ -32,6 +32,7 @@ const VIEW = {
     NEW_PLANS_DRAWINGS: 'full-appeal/submit-appeal/new-plans-drawings',
     SUPPORTING_DOCUMENTS: 'full-appeal/submit-appeal/supporting-documents',
     NEW_SUPPORTING_DOCUMENTS: 'full-appeal/submit-appeal/new-supporting-documents',
+    SITE_VISIBLE: 'full-appeal/submit-appeal/site-visible',
   },
 };
 
