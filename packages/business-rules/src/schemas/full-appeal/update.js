@@ -86,9 +86,14 @@ const update = pinsYup
         siteOwnership: pinsYup
           .object()
           .shape({
-            ownsSomeOfTheLand: pinsYup.bool().required(),
+            ownsSomeOfTheLand: pinsYup.bool().nullable(),
             ownsAllTheLand: pinsYup.bool().required(),
-            knowsTheOwners: pinsYup.string().oneOf(Object.values(KNOW_THE_OWNERS)).required(),
+            knowsTheOwners: pinsYup.lazy((knowsTheOwners) => {
+              if (knowsTheOwners) {
+                return pinsYup.string().oneOf(Object.values(KNOW_THE_OWNERS));
+              }
+              return pinsYup.string().nullable();
+            }),
             hasIdentifiedTheOwners: pinsYup.bool().nullable(),
             tellingTheLandowners: pinsYup.array().nullable().allOf(STANDARD_TRIPLE_CONFIRM_OPTIONS),
             tellingTheTenants: pinsYup.array().nullable().allOf(STANDARD_TRIPLE_CONFIRM_OPTIONS),
@@ -102,8 +107,8 @@ const update = pinsYup
           .object()
           .shape({
             isAgriculturalHolding: pinsYup.bool().required(),
-            isTenant: pinsYup.bool().required(),
-            hasOtherTenants: pinsYup.bool().required(),
+            isTenant: pinsYup.bool().nullable(),
+            hasOtherTenants: pinsYup.bool().nullable(),
           })
           .noUnknown(true),
         visibleFromRoad: pinsYup
@@ -217,12 +222,12 @@ const update = pinsYup
             uploadedFile: pinsYup
               .object()
               .shape({
-                id: pinsYup.string().trim().uuid().required(),
-                name: pinsYup.string().trim().max(255).required(),
-                fileName: pinsYup.string().trim().max(255).required(),
-                originalFileName: pinsYup.string().trim().max(255).required(),
-                location: pinsYup.string().trim().required(),
-                size: pinsYup.number().required(),
+                id: pinsYup.string().trim().uuid().nullable(),
+                name: pinsYup.string().trim().max(255).nullable(),
+                fileName: pinsYup.string().trim().max(255).nullable(),
+                originalFileName: pinsYup.string().trim().max(255).nullable(),
+                location: pinsYup.string().trim().nullable(),
+                size: pinsYup.number().nullable(),
               })
               .noUnknown(true),
           })
