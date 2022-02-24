@@ -1315,12 +1315,18 @@ describe('schemas/full-appeal/update', () => {
             );
           });
 
-          it('should throw an error when not given a value', async () => {
+          it('should not throw an error when given a null value', async () => {
+            appeal.appealSiteSection.siteOwnership.ownsSomeOfTheLand = null;
+
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
+          });
+
+          it('should not throw an error when not given a value', async () => {
             delete appeal.appealSiteSection.siteOwnership.ownsSomeOfTheLand;
 
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'appealSiteSection.siteOwnership.ownsSomeOfTheLand is a required field',
-            );
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
           });
         });
 
@@ -1344,7 +1350,7 @@ describe('schemas/full-appeal/update', () => {
 
         describe('appealSiteSection.siteOwnership.knowsTheOwners', () => {
           it('should throw an error when given an invalid value', async () => {
-            appeal.appealSiteSection.siteOwnership.knowsTheOwners = 'appeal';
+            appeal.appealSiteSection.siteOwnership.knowsTheOwners = 'perhaps';
 
             await expect(() => update.validate(appeal, config)).rejects.toThrow(
               `appealSiteSection.siteOwnership.knowsTheOwners must be one of the following values: ${Object.values(
@@ -1353,12 +1359,18 @@ describe('schemas/full-appeal/update', () => {
             );
           });
 
-          it('should throw an error when not given a value', async () => {
+          it('should not throw an error when not given a value', async () => {
             delete appeal.appealSiteSection.siteOwnership.knowsTheOwners;
 
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'appealSiteSection.siteOwnership.knowsTheOwners is a required field',
-            );
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
+          });
+
+          it('should not throw an error when given a null value', async () => {
+            appeal.appealSiteSection.siteOwnership.knowsTheOwners = null;
+
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
           });
         });
 
@@ -1523,12 +1535,18 @@ describe('schemas/full-appeal/update', () => {
             );
           });
 
-          it('should throw an error when not given a value', async () => {
+          it('should not throw an error when given a null value', async () => {
+            appeal.appealSiteSection.agriculturalHolding.isTenant = null;
+
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
+          });
+
+          it('should not throw an error when not given a value', async () => {
             delete appeal.appealSiteSection.agriculturalHolding.isTenant;
 
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'appealSiteSection.agriculturalHolding.isTenant is a required field',
-            );
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
           });
         });
 
@@ -1541,12 +1559,18 @@ describe('schemas/full-appeal/update', () => {
             );
           });
 
-          it('should throw an error when not given a value', async () => {
+          it('should not throw an error when given a null value', async () => {
+            appeal.appealSiteSection.agriculturalHolding.hasOtherTenants = null;
+
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
+          });
+
+          it('should not throw an error when not given a value', async () => {
             delete appeal.appealSiteSection.agriculturalHolding.hasOtherTenants;
 
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'appealSiteSection.agriculturalHolding.hasOtherTenants is a required field',
-            );
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
           });
         });
       });
@@ -2376,6 +2400,35 @@ describe('schemas/full-appeal/update', () => {
             );
           });
 
+          describe('planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id', () => {
+            it('should strip leading/trailing spaces', async () => {
+              appeal2.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id =
+                '  271c9b5b-af90-4b45-b0e7-0a7882da1e03  ';
+              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id =
+                '271c9b5b-af90-4b45-b0e7-0a7882da1e03';
+
+              const result = await update.validate(appeal2, config);
+              expect(result).toEqual(appeal);
+            });
+
+            it('should throw an error when not given a UUID', async () => {
+              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id =
+                'abc123';
+
+              await expect(() => update.validate(appeal, config)).rejects.toThrow(
+                'planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id must be a valid UUID',
+              );
+            });
+
+            it('should not throw an error when not given a value', async () => {
+              delete appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile
+                .id;
+
+              const result = await update.validate(appeal, config);
+              expect(result).toEqual(appeal);
+            });
+          });
+
           describe('planningApplicationDocumentsSection.designAccessStatement.uploadedFile.name', () => {
             it('should throw an error when given a value with more than 255 characters', async () => {
               appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.name =
@@ -2396,13 +2449,41 @@ describe('schemas/full-appeal/update', () => {
               expect(result).toEqual(appeal);
             });
 
-            it('should throw an error when not given a value', async () => {
+            it('should not throw an error when not given a value', async () => {
               delete appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile
                 .name;
 
+              const result = await update.validate(appeal, config);
+              expect(result).toEqual(appeal);
+            });
+          });
+
+          describe('planningApplicationDocumentsSection.designAccessStatement.uploadedFile.fileName', () => {
+            it('should throw an error when given a value with more than 255 characters', async () => {
+              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.fileName =
+                'a'.repeat(256);
+
               await expect(() => update.validate(appeal, config)).rejects.toThrow(
-                'planningApplicationDocumentsSection.designAccessStatement.uploadedFile.name is a required field',
+                'planningApplicationDocumentsSection.designAccessStatement.uploadedFile.fileName must be at most 255 characters',
               );
+            });
+
+            it('should strip leading/trailing spaces', async () => {
+              appeal2.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.fileName =
+                '  test-pdf.pdf  ';
+              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.fileName =
+                'test-pdf.pdf';
+
+              const result = await update.validate(appeal2, config);
+              expect(result).toEqual(appeal);
+            });
+
+            it('should not throw an error when not given a value', async () => {
+              delete appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile
+                .fileName;
+
+              const result = await update.validate(appeal, config);
+              expect(result).toEqual(appeal);
             });
           });
 
@@ -2426,43 +2507,51 @@ describe('schemas/full-appeal/update', () => {
               expect(result).toEqual(appeal);
             });
 
-            it('should throw an error when not given a value', async () => {
+            it('should not throw an error when not given a value', async () => {
               delete appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile
                 .originalFileName;
 
-              await expect(() => update.validate(appeal, config)).rejects.toThrow(
-                'planningApplicationDocumentsSection.designAccessStatement.uploadedFile.originalFileName is a required field',
-              );
+              const result = await update.validate(appeal, config);
+              expect(result).toEqual(appeal);
             });
           });
 
-          describe('planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id', () => {
+          describe('planningApplicationDocumentsSection.designAccessStatement.uploadedFile.location', () => {
             it('should strip leading/trailing spaces', async () => {
-              appeal2.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id =
-                '  271c9b5b-af90-4b45-b0e7-0a7882da1e03  ';
-              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id =
-                '271c9b5b-af90-4b45-b0e7-0a7882da1e03';
+              appeal2.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.location =
+                '  test-pdf.pdf  ';
+              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.location =
+                'test-pdf.pdf';
 
               const result = await update.validate(appeal2, config);
               expect(result).toEqual(appeal);
             });
 
-            it('should throw an error when not given a UUID', async () => {
-              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id =
-                'abc123';
+            it('should not throw an error when not given a value', async () => {
+              delete appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile
+                .location;
+
+              const result = await update.validate(appeal, config);
+              expect(result).toEqual(appeal);
+            });
+          });
+
+          describe('planningApplicationDocumentsSection.designAccessStatement.uploadedFile.size', () => {
+            it('should throw an error when not given a number', async () => {
+              appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile.size =
+                'not-a-number';
 
               await expect(() => update.validate(appeal, config)).rejects.toThrow(
-                'planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id must be a valid UUID',
+                'planningApplicationDocumentsSection.designAccessStatement.uploadedFile.size must be a `number` type, but the final value was: `NaN` (cast from the value `1000`).',
               );
             });
 
-            it('should throw an error when not given a value', async () => {
+            it('should not throw an error when not given a value', async () => {
               delete appeal.planningApplicationDocumentsSection.designAccessStatement.uploadedFile
-                .id;
+                .size;
 
-              await expect(() => update.validate(appeal, config)).rejects.toThrow(
-                'planningApplicationDocumentsSection.designAccessStatement.uploadedFile.id is a required field',
-              );
+              const result = await update.validate(appeal, config);
+              expect(result).toEqual(appeal);
             });
           });
         });
