@@ -1466,37 +1466,6 @@ describe('schemas/full-appeal/update', () => {
         });
       });
 
-      describe('appealSiteSection.siteOwnership.tellingTheTenants', () => {
-        it('should throw an error if not all tellingTheTenants options selected', async () => {
-          appeal.appealSiteSection.siteOwnership.tellingTheTenants = [
-            STANDARD_TRIPLE_CONFIRM_OPTIONS[0],
-            STANDARD_TRIPLE_CONFIRM_OPTIONS[2],
-          ];
-
-          await expect(() => update.validate(appeal, config)).rejects.toThrow(
-            `You must have ["toldAboutMyAppeal","withinLast21Days","useCopyOfTheForm"] for appealSiteSection.siteOwnership.tellingTheTenants but you have ["toldAboutMyAppeal","useCopyOfTheForm"]`,
-          );
-        });
-
-        it('should not throw an error if tellingTheTenants is undefined', async () => {
-          delete appeal.appealSiteSection.siteOwnership.tellingTheTenants;
-
-          const result = await update.validate(appeal, config);
-          expect(result).toEqual(appeal);
-        });
-
-        it('should not throw an error if all tellingTheTenants options selected', async () => {
-          appeal.appealSiteSection.siteOwnership.tellingTheTenants = [
-            STANDARD_TRIPLE_CONFIRM_OPTIONS[1],
-            STANDARD_TRIPLE_CONFIRM_OPTIONS[0],
-            STANDARD_TRIPLE_CONFIRM_OPTIONS[2],
-          ];
-
-          const result = await update.validate(appeal, config);
-          expect(result).toEqual(appeal);
-        });
-      });
-
       describe('appealSiteSection.siteOwnership.advertisingYourAppeal', () => {
         it('should throw an error if not all advertisingYourAppeal options selected', async () => {
           appeal.appealSiteSection.siteOwnership.advertisingYourAppeal = [
@@ -1604,6 +1573,37 @@ describe('schemas/full-appeal/update', () => {
 
           it('should not throw an error when not given a value', async () => {
             delete appeal.appealSiteSection.agriculturalHolding.hasOtherTenants;
+
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
+          });
+        });
+
+        describe('appealSiteSection.agriculturalHolding.tellingTheTenants', () => {
+          it('should throw an error if not all tellingTheTenants options selected', async () => {
+            appeal.appealSiteSection.agriculturalHolding.tellingTheTenants = [
+              STANDARD_TRIPLE_CONFIRM_OPTIONS[0],
+              STANDARD_TRIPLE_CONFIRM_OPTIONS[2],
+            ];
+
+            await expect(() => update.validate(appeal, config)).rejects.toThrow(
+              `You must have ["toldAboutMyAppeal","withinLast21Days","useCopyOfTheForm"] for appealSiteSection.agriculturalHolding.tellingTheTenants but you have ["toldAboutMyAppeal","useCopyOfTheForm"]`,
+            );
+          });
+
+          it('should not throw an error if tellingTheTenants is undefined', async () => {
+            delete appeal.appealSiteSection.agriculturalHolding.tellingTheTenants;
+
+            const result = await update.validate(appeal, config);
+            expect(result).toEqual(appeal);
+          });
+
+          it('should not throw an error if all tellingTheTenants options selected', async () => {
+            appeal.appealSiteSection.agriculturalHolding.tellingTheTenants = [
+              STANDARD_TRIPLE_CONFIRM_OPTIONS[1],
+              STANDARD_TRIPLE_CONFIRM_OPTIONS[0],
+              STANDARD_TRIPLE_CONFIRM_OPTIONS[2],
+            ];
 
             const result = await update.validate(appeal, config);
             expect(result).toEqual(appeal);
@@ -3029,103 +3029,39 @@ describe('schemas/full-appeal/update', () => {
           );
         });
 
-        describe('sectionStates.appealSiteSection.siteAddress', () => {
-          it('should throw an error when given an invalid value', async () => {
-            appeal.sectionStates.appealSiteSection.siteAddress = 'NOT COMPLETE';
+        [
+          'siteAddress',
+          'ownsAllTheLand',
+          'agriculturalHolding',
+          'areYouATenant',
+          'tellingTheTenants',
+          'otherTenants',
+          'visibleFromRoad',
+          'healthAndSafety',
+          'someOfTheLand',
+          'knowTheOwners',
+          'identifyingTheLandOwners',
+          'advertisingYourAppeal',
+          'tellingTheLandowners',
+        ].forEach((page) => {
+          describe(`sectionStates.appealSiteSection.${page}`, () => {
+            it('should throw an error when given an invalid value', async () => {
+              appeal.sectionStates.appealSiteSection[page] = 'NOT COMPLETE';
 
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              `sectionStates.appealSiteSection.siteAddress must be one of the following values: ${Object.values(
-                SECTION_STATE,
-              ).join(', ')}`,
-            );
-          });
+              await expect(() => update.validate(appeal, config)).rejects.toThrow(
+                `sectionStates.appealSiteSection.${page} must be one of the following values: ${Object.values(
+                  SECTION_STATE,
+                ).join(', ')}`,
+              );
+            });
 
-          it('should throw an error when not given a value', async () => {
-            delete appeal.sectionStates.appealSiteSection.siteAddress;
+            it('should throw an error when not given a value', async () => {
+              delete appeal.sectionStates.appealSiteSection[page];
 
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'sectionStates.appealSiteSection.siteAddress is a required field',
-            );
-          });
-        });
-
-        describe('sectionStates.appealSiteSection.siteOwnership', () => {
-          it('should throw an error when given an invalid value', async () => {
-            appeal.sectionStates.appealSiteSection.siteOwnership = 'NOT COMPLETE';
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              `sectionStates.appealSiteSection.siteOwnership must be one of the following values: ${Object.values(
-                SECTION_STATE,
-              ).join(', ')}`,
-            );
-          });
-
-          it('should throw an error when not given a value', async () => {
-            delete appeal.sectionStates.appealSiteSection.siteOwnership;
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'sectionStates.appealSiteSection.siteOwnership is a required field',
-            );
-          });
-        });
-
-        describe('sectionStates.appealSiteSection.agriculturalHolding', () => {
-          it('should throw an error when given an invalid value', async () => {
-            appeal.sectionStates.appealSiteSection.agriculturalHolding = 'NOT COMPLETE';
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              `sectionStates.appealSiteSection.agriculturalHolding must be one of the following values: ${Object.values(
-                SECTION_STATE,
-              ).join(', ')}`,
-            );
-          });
-
-          it('should throw an error when not given a value', async () => {
-            delete appeal.sectionStates.appealSiteSection.agriculturalHolding;
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'sectionStates.appealSiteSection.agriculturalHolding is a required field',
-            );
-          });
-        });
-
-        describe('sectionStates.appealSiteSection.visibleFromRoad', () => {
-          it('should throw an error when given an invalid value', async () => {
-            appeal.sectionStates.appealSiteSection.visibleFromRoad = 'NOT COMPLETE';
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              `sectionStates.appealSiteSection.visibleFromRoad must be one of the following values: ${Object.values(
-                SECTION_STATE,
-              ).join(', ')}`,
-            );
-          });
-
-          it('should throw an error when not given a value', async () => {
-            delete appeal.sectionStates.appealSiteSection.visibleFromRoad;
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'sectionStates.appealSiteSection.visibleFromRoad is a required field',
-            );
-          });
-        });
-
-        describe('sectionStates.appealSiteSection.healthAndSafety', () => {
-          it('should throw an error when given an invalid value', async () => {
-            appeal.sectionStates.appealSiteSection.healthAndSafety = 'NOT COMPLETE';
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              `sectionStates.appealSiteSection.healthAndSafety must be one of the following values: ${Object.values(
-                SECTION_STATE,
-              ).join(', ')}`,
-            );
-          });
-
-          it('should throw an error when not given a value', async () => {
-            delete appeal.sectionStates.appealSiteSection.healthAndSafety;
-
-            await expect(() => update.validate(appeal, config)).rejects.toThrow(
-              'sectionStates.appealSiteSection.healthAndSafety is a required field',
-            );
+              await expect(() => update.validate(appeal, config)).rejects.toThrow(
+                `sectionStates.appealSiteSection.${page} is a required field`,
+              );
+            });
           });
         });
       });
