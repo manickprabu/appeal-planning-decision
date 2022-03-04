@@ -114,7 +114,6 @@ const insert = pinsYup
             }),
             hasIdentifiedTheOwners: pinsYup.bool().nullable(),
             tellingTheLandowners: pinsYup.array().nullable().allOf(STANDARD_TRIPLE_CONFIRM_OPTIONS),
-            tellingTheTenants: pinsYup.array().nullable().allOf(STANDARD_TRIPLE_CONFIRM_OPTIONS),
             advertisingYourAppeal: pinsYup
               .array()
               .nullable()
@@ -127,6 +126,7 @@ const insert = pinsYup
             isAgriculturalHolding: pinsYup.bool().nullable(),
             isTenant: pinsYup.bool().nullable(),
             hasOtherTenants: pinsYup.bool().nullable(),
+            tellingTheTenants: pinsYup.array().nullable().allOf(STANDARD_TRIPLE_CONFIRM_OPTIONS),
           })
           .noUnknown(true),
         visibleFromRoad: pinsYup
@@ -389,11 +389,23 @@ const insert = pinsYup
               .string()
               .oneOf(Object.values(SECTION_STATE))
               .default('NOT STARTED'),
-            siteOwnership: pinsYup
+            ownsAllTheLand: pinsYup
               .string()
               .oneOf(Object.values(SECTION_STATE))
               .default('NOT STARTED'),
             agriculturalHolding: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            areYouATenant: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            tellingTheTenants: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            otherTenants: pinsYup
               .string()
               .oneOf(Object.values(SECTION_STATE))
               .default('NOT STARTED'),
@@ -402,6 +414,26 @@ const insert = pinsYup
               .oneOf(Object.values(SECTION_STATE))
               .default('NOT STARTED'),
             healthAndSafety: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            someOfTheLand: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            knowTheOwners: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            identifyingTheLandOwners: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            advertisingYourAppeal: pinsYup
+              .string()
+              .oneOf(Object.values(SECTION_STATE))
+              .default('NOT STARTED'),
+            tellingTheLandowners: pinsYup
               .string()
               .oneOf(Object.values(SECTION_STATE))
               .default('NOT STARTED'),
