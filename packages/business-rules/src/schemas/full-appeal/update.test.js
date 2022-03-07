@@ -336,10 +336,10 @@ describe('schemas/full-appeal/update', () => {
 
       describe('eligibility.applicationCategories', () => {
         it('should throw an error when given an invalid value', async () => {
-          appeal.eligibility.applicationCategories = 'appeal';
+          appeal.eligibility.applicationCategories = ['a_listed_building'];
 
           await expect(() => update.validate(appeal, config)).rejects.toThrow(
-            'eligibility.applicationCategories must match the following: "none_of_these"',
+            'applicationCategories must be one or more of the following values: none_of_these',
           );
         });
 
@@ -347,7 +347,7 @@ describe('schemas/full-appeal/update', () => {
           delete appeal.eligibility.applicationCategories;
 
           await expect(() => update.validate(appeal, config)).rejects.toThrow(
-            'eligibility.applicationCategories is a required field',
+            'applicationCategories must be one or more of the following values: none_of_these',
           );
         });
       });
@@ -394,6 +394,34 @@ describe('schemas/full-appeal/update', () => {
 
           await expect(() => update.validate(appeal, config)).rejects.toThrow(
             'eligibility.enforcementNotice is a required field',
+          );
+        });
+      });
+
+      describe('eligibility.hasPriorApprovalForExistingHome', () => {
+        it('should throw an error when not given a boolean value', async () => {
+          appeal.eligibility = {
+            hasPriorApprovalForExistingHome: 'yes',
+          };
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            'eligibility.hasPriorApprovalForExistingHome must be a `boolean` type, but the final value was: `"yes"`',
+          );
+        });
+
+        it('should throw an error when given a null value', async () => {
+          appeal.eligibility.hasPriorApprovalForExistingHome = null;
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            'eligibility.hasPriorApprovalForExistingHome must be a `boolean` type, but the final value was: `null`',
+          );
+        });
+
+        it('should throw an error when not given a value', async () => {
+          delete appeal.eligibility.hasPriorApprovalForExistingHome;
+
+          await expect(() => update.validate(appeal, config)).rejects.toThrow(
+            'eligibility.hasPriorApprovalForExistingHome is a required field',
           );
         });
       });

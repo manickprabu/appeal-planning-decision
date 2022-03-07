@@ -293,7 +293,17 @@ describe('schemas/full-appeal/insert', () => {
       });
 
       describe('eligibility.applicationCategories', () => {
-        it('should throw an error when given an invalid value', async () => {
+        it('should throw an error when given an invalid array value', async () => {
+          appeal.eligibility.applicationCategories = ['appeal'];
+
+          await expect(() => insert.validate(appeal, config)).rejects.toThrow(
+            `applicationCategories must be one or more of the following values: ${Object.values(
+              APPLICATION_CATEGORIES,
+            ).join(', ')}`,
+          );
+        });
+
+        it('should throw an error when given an invalid string value', async () => {
           appeal.eligibility.applicationCategories = 'appeal';
 
           await expect(() => insert.validate(appeal, config)).rejects.toThrow(
@@ -301,6 +311,20 @@ describe('schemas/full-appeal/insert', () => {
               APPLICATION_CATEGORIES,
             ).join(', ')}`,
           );
+        });
+
+        it('should not throw an error when given multiple values', async () => {
+          appeal.eligibility.applicationCategories = ['a_listed_building', 'major_dwellings'];
+
+          const result = await insert.validate(appeal, config);
+          expect(result).toEqual(appeal);
+        });
+
+        it('should not throw an error when given a string', async () => {
+          appeal.eligibility.applicationCategories = 'a_listed_building';
+
+          const result = await insert.validate(appeal, config);
+          expect(result).toEqual(appeal);
         });
 
         it('should not throw an error when not given a value', async () => {
@@ -363,12 +387,21 @@ describe('schemas/full-appeal/insert', () => {
         });
       });
 
-      it('should not throw an error when multiple values are given', async () => {
-        appeal.eligibility.applicationCategories = ['a_listed_building', 'major_dwellings'];
+      describe('eligibility.hasPriorApprovalForExistingHome', () => {
+        it('should throw an error when not given a boolean value', async () => {
+          appeal.eligibility.hasPriorApprovalForExistingHome = 'yes';
 
-        const result = await insert.validate(appeal, config);
-        appeal.eligibility.applicationCategories = null;
-        expect(result).toEqual(appeal);
+          await expect(() => insert.validate(appeal, config)).rejects.toThrow(
+            'eligibility.hasPriorApprovalForExistingHome must be a `boolean` type, but the final value was: `"yes"`',
+          );
+        });
+
+        it('should not throw an error when not given a value', async () => {
+          delete appeal.eligibility.hasPriorApprovalForExistingHome;
+
+          const result = await insert.validate(appeal, config);
+          expect(result).toEqual(appeal);
+        });
       });
     });
 
