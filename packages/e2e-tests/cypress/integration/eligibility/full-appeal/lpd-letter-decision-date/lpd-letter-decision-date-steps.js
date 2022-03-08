@@ -13,8 +13,8 @@ import {verifyPageHeading} from "../../../../support/common/verify-page-heading"
 import {allowedDatePart, getFutureDate, getPastDate} from "../../../../support/common/getDate";
 import {getDate, getMonth, getYear, format, addMonths} from "date-fns";
 import {
-  enterDateDecisionReceived
-} from "../../../../support/eligibility/date-decision-received/enter-date-decision-received";
+  enterDateDecisionReceived, verifyDecisionDatesHighlights,
+} from '../../../../support/eligibility/date-decision-received/enter-date-decision-received';
 import {
   getPlanningApplicationDecisionError
 } from "../../../../support/eligibility/page-objects/date-decision-due-po";
@@ -31,6 +31,7 @@ import {
 } from "../../../../support/eligibility/date-decision-due/enter-date-decision-due";
 import {getAppealDeadline} from "../../../../support/eligibility/page-objects/shutter-page-po";
 import { getLocalPlanningDepart } from '../../../../support/eligibility/page-objects/local-planning-department-po';
+import { selectNo } from '../../../../support/full-appeal/appeals-service/page-objects/own-the-land-po';
 const pageHeading = 'What\'s the decision date on the letter from the local planning department?';
 const pageTitle = 'What\'s the decision date on the letter from the local planning department? - Before you start - Appeal a planning decision - GOV.UK';
 const url = `/decision-date`;
@@ -47,6 +48,10 @@ Given('appellant navigates to decision date received page for {string}',(applica
   selectPlanningApplicationType(application_type);
   verifyPage(typeOfPlanningPageUrl);
   clickContinueButton();
+  if(application_type==='Prior approval'){
+    selectNo().click();
+    clickContinueButton();
+  }
   selectSiteOption('None of these');
   clickContinueButton();
 });
@@ -115,5 +120,5 @@ Then('progress is halted with an error: {string}', (errorMessage) => {
 });
 
 Then('the correct input {string} is highlighted', (highlights) => {
-  verifyHighlights(highlights);
+  verifyDecisionDatesHighlights(highlights);
 });
