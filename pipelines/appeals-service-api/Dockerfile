@@ -12,8 +12,8 @@ COPY data/lpa-trialists.json /opt/app/data/
 COPY data/lpa-list.csv /opt/app/data/
 
 # This must be built locally from the common package
-COPY --from=pinscrsharedtoolinguks.azurecr.io/applications-service/common:latest /opt/app ../common
-COPY --from=pinscrsharedtoolinguks.azurecr.io/applications-service/business-rules:latest /opt/app ../business-rules
+COPY --from=pinscrsharedtoolinguks.azurecr.io/appeal-planning-decision/common:latest /opt/app ../common
+COPY --from=pinscrsharedtoolinguks.azurecr.io/appeal-planning-decision/business-rules:latest /opt/app ../business-rules
 
 ADD api api
 ADD src src
