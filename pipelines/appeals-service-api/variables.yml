@@ -5,5 +5,5 @@ variables:
   versionNumber: $(version.MajorMinor).$(version.Revision)
   # -----------------------------------------------------------------------
 
-  dockerFilePath: $(Build.SourcesDirectory)/pipelines/applications-service-api/Dockerfile
+  dockerFilePath: $(Build.SourcesDirectory)/pipelines/appeals-service-api/Dockerfile
   repository: appeal-planning-decision/appeals-service-api
