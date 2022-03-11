@@ -10,7 +10,7 @@ resources:
   repositories:
     - repository: templates
       type: github
-      endpoint: Applications Token
+      endpoint: Appeals Token
       name: Planning-Inspectorate/common-pipeline-templates
 
 extends:
