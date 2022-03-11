@@ -19,7 +19,7 @@ extends:
     azurecrName: $(azurecrName)
     authType: acr
     globalVariables:
-      - template: pipelines/common/variables.yml@self
+      - template: pipelines/business-rules/variables.yml@self
       - template: pipelines/variables.yml@self
     projectName: $(projectName)
     validateName: Build and Push
