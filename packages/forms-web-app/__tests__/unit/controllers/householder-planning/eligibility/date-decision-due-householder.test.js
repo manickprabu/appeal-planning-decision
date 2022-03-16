@@ -37,14 +37,30 @@ describe('controllers/householder-planning/date-decision-due-householder', () =>
   });
 
   describe('getDateDecisionDueHouseholder', () => {
-    it('should call the correct template decision date unevaluated', () => {
+    it('should call the correct template with no decision date given', () => {
       dateDecisionDueHouseholderController.getDateDecisionDueHouseholder(req, res);
 
       expect(res.render).toHaveBeenCalledWith(
         VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.DATE_DECISION_DUE_HOUSEHOLDER,
         {
           decisionDate: null,
-          backLink: `/before-you-start/granted-or-refused-householder`,
+        }
+      );
+    });
+
+    it('should call the correct template with a decision date given', () => {
+      appeal.decisionDate = '2022-03-04T16:24:00.000Z';
+
+      dateDecisionDueHouseholderController.getDateDecisionDueHouseholder(req, res);
+
+      expect(res.render).toHaveBeenCalledWith(
+        VIEW.HOUSEHOLDER_PLANNING.ELIGIBILITY.DATE_DECISION_DUE_HOUSEHOLDER,
+        {
+          decisionDate: {
+            day: '04',
+            month: '03',
+            year: '2022',
+          },
         }
       );
     });
@@ -118,7 +134,6 @@ describe('controllers/householder-planning/date-decision-due-householder', () =>
               msg: 'You need to provide a date',
             },
           },
-          backLink: `/before-you-start/granted-or-refused-householder`,
         }
       );
     });
@@ -152,7 +167,6 @@ describe('controllers/householder-planning/date-decision-due-householder', () =>
           },
           errors: {},
           errorSummary: [{ text: error.toString(), href: 'date-decision-due-householder' }],
-          backLink: `/before-you-start/granted-or-refused-householder`,
         }
       );
     });
