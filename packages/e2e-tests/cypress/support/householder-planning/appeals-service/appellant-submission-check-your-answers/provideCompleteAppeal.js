@@ -18,11 +18,6 @@ import { uploadDecisionLetterFile } from '../appellant-submission-decision-lette
 import { checkNoSensitiveInformation } from '../appeal-statement-submission/checkNoSensitiveInformation';
 import { uploadAppealStatementFile } from '../appeal-statement-submission/uploadAppealStatementFile';
 import { uploadSupportingDocuments } from '../appellant-submission-supporting-documents/uploadSupportingDocuments';
-import { provideAddressLine1 } from '../../../../support/common/appeal-submission-appeal-site-address/provideAddressLine1';
-import { provideAddressLine2 } from '../../../../support/common/appeal-submission-appeal-site-address/provideAddressLine2';
-import { provideTownOrCity } from '../../../../support/common/appeal-submission-appeal-site-address/provideTownOrCity';
-import { provideCounty } from '../../../../support/common/appeal-submission-appeal-site-address/provideCounty';
-import { providePostcode } from '../../../../support/common/appeal-submission-appeal-site-address/providePostcode';
 import { answerOwnsTheWholeAppeal } from '../appeal-submission-appeal-site-ownership/answerOwnsTheWholeAppeal';
 import { answerDoesNotOwnTheWholeAppeal } from '../appeal-submission-appeal-site-ownership/answerDoesNotOwnTheWholeAppeal';
 import { answerHaveToldOtherOwnersAppeal } from '../appeal-submission-appeal-site-ownership/answerHaveToldOtherOwnersAppeal';
@@ -38,55 +33,15 @@ import { provideAnswerYes } from '../appellant-submission-your-details/provideAn
 import { provideAnswerNo } from '../appellant-submission-your-details/provideAnswerNo';
 import { goToAppealsPage } from '../../../common/go-to-page/goToAppealsPage';
 import { pageURLAppeal } from '../../../../integration/common/householder-planning/appeals-service/pageURLAppeal';
+import { goToHouseholderAppealSubmitAppealTaskList } from '../goToHouseholderAppealSubmitAppealTaskList';
+import { linkYourDetails } from '../page-objects/task-list-po';
 
 
 export const provideCompleteAppeal = (appeal, options = {}) => {
-  goToAppealsPage(pageURLAppeal.goToHouseholderQuestionPage);
+ cy.url().should('contain', pageURLAppeal.goToTaskListPage );
+  linkYourDetails().click();
 
-  if (appeal.eligibility.householderPlanningPermission) {
-   provideHouseholderAnswerYes();
-  } else {
-   provideHouseholderAnswerNo();
-  }
-  clickSaveAndContinue();
-
-  goToAppealsPage(pageURLAppeal.goToGrantedOrRefusedPermissionPage);
-
-  provideHouseholderPlanningPermissionStatusRefused();
-
-  goToAppealsPage(pageURLAppeal.goToDecisionDatePage);
-
-  provideDecisionDate(appeal.decisionDate);
-
-  if (appeal.eligibility.eligibleLocalPlanningDepartment) {
-   provideEligibleLocalPlanningDepartment(options);
-  } else {
-   provideIneligibleLocalPlanningDepartment();
-  }
-  clickSaveAndContinue();
-
-  goToAppealsPage(pageURLAppeal.goToEnforcementNoticePage);
-
-  provideEnforcementNoticeAnswer(appeal.eligibility.enforcementNotice === true);
-  clickSaveAndContinue();
-
-  if (appeal.eligibility.isListedBuilding) {
-   stateCaseInvolvesListedBuilding();
-  } else {
-   stateCaseDoesNotInvolveAListedBuilding();
-  }
-
-  goToAppealsPage(pageURLAppeal.goToCostsPage);
-  if (appeal.eligibility.isClaimingCosts) {
-   provideCostsAnswerYes();
-  } else {
-   provideCostsAnswerNo();
-  }
-  clickSaveAndContinue();
-
-  goToAppealsPage(pageURLAppeal.goToTaskListPage);
-
-  goToAppealsPage(pageURLAppeal.goToWhoAreYouPage);
+cy.url().should('contain',pageURLAppeal.goToWhoAreYouPage);
 
   if (appeal.aboutYouSection.yourDetails.isOriginalApplicant) {
     provideAnswerYes();
