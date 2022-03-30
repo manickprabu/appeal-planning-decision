@@ -18,15 +18,12 @@ resources:
       endpoint: Appeals Token
       name: Planning-Inspectorate/common-pipeline-templates
   pipelines:
-    - pipeline: azure-functions-ci
-      source: azure-functions CI
+    - pipeline: horizon-functions-ci
+      source: horizon-functions CI
       trigger: 
         branches:
           include: 
             - master
-        paths:
-          include:
-            - packages/horizon-functions
 
 extends:
   template: stages/wrapper_function_app_cd.yml@templates
